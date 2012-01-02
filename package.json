@@ -1,0 +1,10 @@
+{
+  "name": "pinned",
+  "version": "0.0.1",
+  "description": "Incredibly basic bookmarking application.",
+  "dependencies": {
+    "express": ">=2.4.3",
+    "hiredis": "*",
+    "redis": "*"
+  }
+}
