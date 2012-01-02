@@ -19,7 +19,7 @@ app.get('/', function(req, res){
   });
 });
 
-app.listen(process.env.NODE_ENV === 'production' ? 80 : 8000); 
+app.listen(process.env.NODE_PORT || (process.env.NODE_ENV === 'production' ? 80 : 8000)); 
 
 console.log('Server listening on ' + app.address().port);
 

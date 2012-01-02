@@ -1,2 +1,6 @@
 *.sw[a-z]
 node_modules
+
+deploy.conf
+bookmarklet.js
+public/js/bookmark.js
