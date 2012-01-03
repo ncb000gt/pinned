@@ -4,13 +4,17 @@ var express = require('express'),
 var app = module.exports = express.createServer();
 
 app.configure(function(){
-  var pub = __dirname + '/public';
+  app.use(express.static(__dirname + '/public'));
   app.use(app.router);
+});
+
+app.options('/:key', function(req, res) {
+  res.send("", {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "PUT", "Access-Control-Allow-Headers": "Origin, Content-Type"}, 200);
 });
 
 app.put('/:key', function(req, res) {
   db.add(req.params.key);
-  res.send(200);
+  res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
 });
 
 app.get('/', function(req, res){
