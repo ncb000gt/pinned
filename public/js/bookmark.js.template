@@ -1,11 +1,8 @@
 (function() {
+var params = new FormData();
+params.append("token", {{AUTH_TOKEN}});
 var xhr = new XMLHttpRequest();
-var params="token={{AUTH_TOKEN}}";
-xhr.open("PUT", "{{REPLACE_HOST}}/keys/"+encodeURIComponent(window.location), true);
-xhr.onreadystatechange = function() {
-    if(this.readyState == 4) {
-        console.log("Done.");
-    }
-}
+xhr.open("POST", "{{REPLACE_HOST}}/keys/"+encodeURIComponent(window.location));
+/*xhr.setRequestHeader('Content-Type', 'text/plain');*/
 xhr.send(params);
 })();

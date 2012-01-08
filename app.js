@@ -21,9 +21,13 @@ app.options('/keys/:key', function(req, res) {
   res.send("", {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "PUT", "Access-Control-Allow-Headers": "Origin, Content-Type"}, 200);
 });
 
-app.put('/keys/:key', function(req, res) {
-  db.add(req.params.key);
-  res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
+app.post('/keys/:key', function(req, res) {
+  if (req.body.token == config.auth_token) {
+    db.add(req.params.key);
+    res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
+  } else {
+    res.send("", {"Access-Control-Allow-Origin": "*"}, 401);
+  }
 });
 
 app.get('/keys', function(req, res){
