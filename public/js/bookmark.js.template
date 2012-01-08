@@ -1,7 +1,7 @@
 (function() {
 var xhr = new XMLHttpRequest();
-var params="";
-xhr.open("PUT", "{{REPLACE_HOST}}/"+encodeURIComponent(window.location), true);
+var params="token={{AUTH_TOKEN}}";
+xhr.open("PUT", "{{REPLACE_HOST}}/keys/"+encodeURIComponent(window.location), true);
 xhr.onreadystatechange = function() {
     if(this.readyState == 4) {
         console.log("Done.");

@@ -1,0 +1,4 @@
+module.exports = {
+  password: {{PASSWORD}},
+  auth_token: {{AUTH_PHRASE}}
+}
