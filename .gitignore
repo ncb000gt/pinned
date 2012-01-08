@@ -5,3 +5,4 @@ deploy.conf
 bookmarklet.js
 public/js/bookmark.js
 config.js
+.sass-cache
