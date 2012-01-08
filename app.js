@@ -42,7 +42,7 @@ app.get('/', function(req, res){
     res.render('login', {
     });
   } else {
-    var bookmarklet = fs.readFileSync('./bookmarklet.js');
+    var bookmarklet = fs.readFileSync(__dirname + '/bookmarklet.js');
     res.render('home', {
       bookmarklet: bookmarklet,
       pinned: [{url: '/test'}]
