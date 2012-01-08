@@ -1,0 +1,62 @@
+@import "_bundle"
+@import "compass/reset"
+
+body
+  background: url(images/body.background.png)
+  padding-top: 64px
+  font-family: Helvetica, Arial, sans-serif
+  font-size: 12px
+
+a, a:link
+  color: #21A698
+  text-decoration: none
+  
+  &:hover
+    text-decoration: underline
+
+.header
+  @extend .group
+  background: url(images/header.background.png) repeat-x
+  height: 64px
+  padding: 0 10px
+  top: 0
+  position: fixed
+  width: 100%
+  
+  h1
+    @extend .displace
+    background: url(images/logo.png) no-repeat
+    float: left
+    height: 32px
+    width: 103px
+    margin-top: 12px
+
+h2, h3, h4, h5, h6, .title
+  font-family: Arial, sans-serif
+  text-shadow: 1px 2px 0 #F9F9F7, 3px 4px 0 #DDDDDD
+  text-transform: uppercase
+  font-weight: bold
+  color: #000
+  margin: 0 0 12px
+  
+h2
+  font-size: 24px
+h3
+  font-size: 20px
+h4
+  font-size: 18px
+h5
+  font-size: 16px
+
+.content, .footer
+  padding: 10px
+  
+.footer
+  +box-sizing(border-box)
+  background: #FFFFFF
+  border-top: 1px solid #EFEFEF
+  bottom: 0
+  color: #999999
+  padding: 10px
+  position: fixed
+  width: 100%

@@ -1,7 +1,18 @@
 !!! 5
 html
   head
-    title Pinned	
+    title Pinned
+    link(href="css/main.css", rel="stylesheet", type="text/css")
+    script(src="js/head.min.js")
   body
-    #wrapper
-      !{body}
+    #wrap
+      header.header
+        h1 Pinned
+      section.content
+        !{body}
+      footer.footer
+        p Pinned - &copy; 2012
+        script
+          head
+            .js("js/jquery.min.js")
+            .js("js/app.js");

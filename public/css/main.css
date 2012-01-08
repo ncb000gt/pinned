@@ -1,0 +1,167 @@
+/* line 4, sass/_bundle.sass */
+.group, .header {
+  *zoom: 1;
+}
+/* line 38, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.group:after, .header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 7, sass/_bundle.sass */
+.displace, .header h1 {
+  display: block;
+  text-indent: -9999px;
+}
+
+/* line 17, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 20, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1;
+}
+
+/* line 22, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 26, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 28, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 101, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 30, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 114, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 4, sass/main.sass */
+body {
+  background: url(images/body.background.png);
+  padding-top: 64px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+
+/* line 10, sass/main.sass */
+a, a:link {
+  color: #21a698;
+  text-decoration: none;
+}
+/* line 14, sass/main.sass */
+a:hover, a:link:hover {
+  text-decoration: underline;
+}
+
+/* line 17, sass/main.sass */
+.header {
+  background: url(images/header.background.png) repeat-x;
+  height: 64px;
+  padding: 0 10px;
+  top: 0;
+  position: fixed;
+  width: 100%;
+}
+/* line 26, sass/main.sass */
+.header h1 {
+  background: url(images/logo.png) no-repeat;
+  float: left;
+  height: 32px;
+  width: 103px;
+  margin-top: 12px;
+}
+
+/* line 34, sass/main.sass */
+h2, h3, h4, h5, h6, .title {
+  font-family: Arial, sans-serif;
+  text-shadow: 1px 2px 0 #f9f9f7, 3px 4px 0 #dddddd;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
+  margin: 0 0 12px;
+}
+
+/* line 42, sass/main.sass */
+h2 {
+  font-size: 24px;
+}
+
+/* line 44, sass/main.sass */
+h3 {
+  font-size: 20px;
+}
+
+/* line 46, sass/main.sass */
+h4 {
+  font-size: 18px;
+}
+
+/* line 48, sass/main.sass */
+h5 {
+  font-size: 16px;
+}
+
+/* line 51, sass/main.sass */
+.content, .footer {
+  padding: 10px;
+}
+
+/* line 54, sass/main.sass */
+.footer {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  background: white;
+  border-top: 1px solid #efefef;
+  bottom: 0;
+  color: #999999;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+}
