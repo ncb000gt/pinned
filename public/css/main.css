@@ -1,9 +1,9 @@
 /* line 4, sass/_bundle.sass */
-.group, .header {
+.group, .header, .header nav, .header nav > ul {
   *zoom: 1;
 }
 /* line 38, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-.group:after, .header:after {
+.group:after, .header:after, .header nav:after, .header nav > ul:after {
   content: "";
   display: table;
   clear: both;
@@ -102,21 +102,46 @@ a:hover, a:link:hover {
 .header {
   background: url(images/header.background.png) repeat-x;
   height: 64px;
-  padding: 0 10px;
   top: 0;
   position: fixed;
   width: 100%;
 }
-/* line 26, sass/main.sass */
+/* line 25, sass/main.sass */
 .header h1 {
   background: url(images/logo.png) no-repeat;
   float: left;
   height: 32px;
   width: 103px;
   margin-top: 12px;
+  margin-left: 10px;
+}
+/* line 34, sass/main.sass */
+.header nav {
+  float: right;
+  margin: 12px 10px 0;
+}
+/* line 38, sass/main.sass */
+.header nav > ul {
+  float: left;
+  height: 32px;
+  margin-left: 20px;
+}
+/* line 43, sass/main.sass */
+.header nav > ul li {
+  float: left;
+}
+/* line 45, sass/main.sass */
+.header nav > ul li a, .header nav > ul li a:link {
+  display: block;
+  line-height: 32px;
+  padding: 0 12px;
+}
+/* line 49, sass/main.sass */
+.header nav > ul li ul {
+  display: none;
 }
 
-/* line 34, sass/main.sass */
+/* line 53, sass/main.sass */
 h2, h3, h4, h5, h6, .title {
   font-family: Arial, sans-serif;
   text-shadow: 1px 2px 0 #f9f9f7, 3px 4px 0 #dddddd;
@@ -126,32 +151,32 @@ h2, h3, h4, h5, h6, .title {
   margin: 0 0 12px;
 }
 
-/* line 42, sass/main.sass */
+/* line 61, sass/main.sass */
 h2 {
   font-size: 24px;
 }
 
-/* line 44, sass/main.sass */
+/* line 63, sass/main.sass */
 h3 {
   font-size: 20px;
 }
 
-/* line 46, sass/main.sass */
+/* line 65, sass/main.sass */
 h4 {
   font-size: 18px;
 }
 
-/* line 48, sass/main.sass */
+/* line 67, sass/main.sass */
 h5 {
   font-size: 16px;
 }
 
-/* line 51, sass/main.sass */
+/* line 70, sass/main.sass */
 .content, .footer {
   padding: 10px;
 }
 
-/* line 54, sass/main.sass */
+/* line 73, sass/main.sass */
 .footer {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;

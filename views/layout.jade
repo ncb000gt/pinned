@@ -8,11 +8,32 @@ html
     #wrap
       header.header
         h1 Pinned
+        nav
+          ul.view-filter
+            li.current
+              a(href="#grid-view") Grid
+            li
+              a(href="#grid-view") List
+          ul.sort-filter
+            li
+              a(href="#tags-menu") Tags
+              ul
+                li
+                  a(href="#items") Item
+            li
+              a(href="#categories-menu") Categories
+              ul
+                li
+                  a(href="#items") Item
+                  
       section.content
         !{body}
       footer.footer
-        p Pinned - &copy; 2012
+        p 
+          span Pinned - &copy; 2012 
+          a(href="https://github.com/ncb000gt/pinned") Github
         script
           head
             .js("js/jquery.min.js")
+            .js("js/list.min.js")
             .js("js/app.js");
