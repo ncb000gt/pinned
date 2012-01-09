@@ -42,10 +42,18 @@
           url : "/keys",
           dataType : "json",
           success : function(res){
-            for (var i = 0; i < res.length; i++) {
+            var len = res.length,
+                i = 0;
+            for ( ; i < len; i++) {
+
+              var title = res[i].split("/")[res[i].split("/").length - 1] || res[i],
+                  sub = res[i].split("/")[2].replace(".com", ""),
+                  url = res[i];
+
               Pinned.template("pin", { 
-                  title : res[i], 
-                  href : res[i], 
+                  sub : sub, 
+                  title : title == "#" ? url.replace("/#", "") : title, 
+                  href : url, 
                   image : "http://www.gametab.it/wp-content/uploads/2010/10/starwars_hero-300x144.jpg" 
                 }, function(html){
                   content.append(html)

@@ -4,6 +4,7 @@
   "description": "Incredibly basic bookmarking application.",
   "dependencies": {
     "express": ">=2.4.3",
+    "jsdom": "*",
     "hiredis": "*",
     "redis": "*",
     "jade": "*",

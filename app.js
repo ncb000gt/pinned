@@ -1,5 +1,6 @@
 var express = require('express'),
     fs = require('fs'),
+    jsdom = require('jsdom'),
     bcrypt = require('bcrypt'),
     config = require('./config'),
     db = require('./lib/db')();

@@ -196,38 +196,46 @@ h5 {
   border: 1px solid #efefef;
   padding: 15px;
   display: block;
-  font-size: 18px;
   font-family: "Viga", sans-serif;
 }
-/* line 90, sass/main.sass */
-.pin .info a .name {
+/* line 89, sass/main.sass */
+.pin .info a span {
   display: block;
+}
+/* line 92, sass/main.sass */
+.pin .info a .title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-shadow: 2px 3px 0 #efefef;
+}
+/* line 96, sass/main.sass */
+.pin .info a .name {
+  font-size: 12px;
   margin-bottom: 5px;
 }
-/* line 93, sass/main.sass */
+/* line 99, sass/main.sass */
 .pin .info a .date {
-  font-size: 12px;
+  font-size: 10px;
   font-family: arial;
   color: #999999;
-  display: block;
   margin-bottom: 10px;
 }
-/* line 99, sass/main.sass */
+/* line 104, sass/main.sass */
 .pin .info a:hover {
   text-decoration: none;
   border: 1px solid#d5d5d5;
 }
-/* line 103, sass/main.sass */
+/* line 108, sass/main.sass */
 .pin .action {
   display: none;
 }
 
-/* line 107, sass/main.sass */
+/* line 112, sass/main.sass */
 .content, .footer {
   padding: 10px;
 }
 
-/* line 111, sass/main.sass */
+/* line 116, sass/main.sass */
 .footer {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
