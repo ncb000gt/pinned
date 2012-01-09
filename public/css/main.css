@@ -183,17 +183,17 @@ h5 {
   box-sizing: border-box;
   float: left;
   width: auto;
-  border: 1px solid #efefef;
   background: white;
   margin: 0 15px 15px 0;
 }
-/* line 80, sass/main.sass */
+/* line 79, sass/main.sass */
 .pin .info, .pin .action {
   height: 100%;
   float: left;
 }
-/* line 85, sass/main.sass */
+/* line 84, sass/main.sass */
 .pin .info a {
+  border: 1px solid #efefef;
   padding: 15px;
   display: block;
   font-size: 18px;
@@ -215,18 +215,19 @@ h5 {
 /* line 99, sass/main.sass */
 .pin .info a:hover {
   text-decoration: none;
+  border: 1px solid#d5d5d5;
 }
-/* line 102, sass/main.sass */
+/* line 103, sass/main.sass */
 .pin .action {
   display: none;
 }
 
-/* line 106, sass/main.sass */
+/* line 107, sass/main.sass */
 .content, .footer {
   padding: 10px;
 }
 
-/* line 110, sass/main.sass */
+/* line 111, sass/main.sass */
 .footer {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
