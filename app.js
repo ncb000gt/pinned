@@ -39,25 +39,24 @@ app.get('/keys', function(req, res){
 
 app.get('/', function(req, res){
   if (!(req.session && req.session.authed)) {
-    res.render('login', {
+    res.render('index', { 
+      status: req.session.authed 
     });
   } else {
-    var bookmarklet = fs.readFileSync(__dirname + '/bookmarklet.js');
-    res.render('home', {
-      bookmarklet: bookmarklet,
+    res.render('index', {
+      status : req.session.authed,
+      bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
       pinned: [{url: '/test'}]
     });
   }
 });
 
 app.post('/', function(req, res) {
-  if (req.body && req.body.pw) {
-    var pw = req.body.pw;
-    if (bcrypt.compare_sync(pw, config.password)) {
+  if (req.body.pw) {
+    if (bcrypt.compare_sync(req.body.pw, config.password)) {
       req.session.authed = true;
-    }
-  }
-
+    };
+  };
   res.redirect('/');
 });
 

@@ -67,7 +67,44 @@ h4
 h5
   font-size: 16px
 
+.pin
+  @extend .group
+  +box-shadow(4px 4px 1px rgba(0,0,0,.1))
+  +box-sizing(border-box)
+  float: left
+  width: auto
+  border: 1px solid #efefef
+  background: #fff
+  margin: 0 15px 15px 0
+
+  .info, .action
+    height: 100%
+    float: left
+  
+  .info
+    a
+      padding: 15px
+      display: block
+      font-size: 18px
+      font-family: 'Viga', sans-serif
+      .name
+        display: block
+        margin-bottom: 5px
+      .date
+        font-size: 12px
+        font-family: arial
+        color: #999
+        display: block
+        margin-bottom: 10px
+      &:hover
+        text-decoration: none
+
+  .action  
+    display: none
+  
+
 .content, .footer
+  @extend .group
   padding: 10px
   
 .footer

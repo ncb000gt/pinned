@@ -2,38 +2,39 @@
 html
   head
     title Pinned
+    link(href="http://fonts.googleapis.com/css?family=Viga", rel="stylesheet", type="text/css")
     link(href="css/main.css", rel="stylesheet", type="text/css")
     script(src="js/head.min.js")
   body
-    #wrap
-      header.header
-        h1 Pinned
-        nav
-          ul.view-filter
-            li.current
-              a(href="#grid-view") Grid
-            li
-              a(href="#grid-view") List
-          ul.sort-filter
-            li
-              a(href="#tags-menu") Tags
-              ul
-                li
-                  a(href="#items") Item
-            li
-              a(href="#categories-menu") Categories
-              ul
-                li
-                  a(href="#items") Item
-                  
-      section.content
-        !{body}
-      footer.footer
-        p 
-          span Pinned - &copy; 2012 
-          a(href="https://github.com/ncb000gt/pinned") Github
-        script
-          head
-            .js("js/jquery.min.js")
-            .js("js/list.min.js")
-            .js("js/app.js");
+    !{body}
+  script
+    head
+      .js("js/jquery.min.js")
+      .js("js/list.min.js")
+      .js("js/app.js");
+
+  - if (status)
+      script
+        head.ready(function(){ Pinned.status = true; });
+
+  script(type="text/template", id="pin-template")
+    div(class="pin pin-{{pin.id}}")
+      div.info
+        a(href="{{pin.href}}", target="{{pin.target}}")
+          span.icon
+          span.name {{pin.title}}
+          span.date {{pin.date}}
+        div.background(style="background-image: url({{pin.image}})")
+      div.action
+        div.arrow
+        a(href="javascript:;", class="remove") Remove
+        a(href="javascript:;", class="edit") Edit
+
+  script(type="text/template", id="login-template")
+    form(method="POST")
+      p.intro Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi 
+      p
+        label(for="pw") Password
+        input(type="password", id="pw", name="pw")
+      p
+        input(type="submit", value="Login")

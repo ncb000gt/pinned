@@ -1,9 +1,9 @@
 /* line 4, sass/_bundle.sass */
-.group, .header, .header nav, .header nav > ul {
+.group, .header, .header nav, .header nav > ul, .pin, .content, .footer {
   *zoom: 1;
 }
 /* line 38, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-.group:after, .header:after, .header nav:after, .header nav > ul:after {
+.group:after, .header:after, .header nav:after, .header nav > ul:after, .pin:after, .content:after, .footer:after {
   content: "";
   display: table;
   clear: both;
@@ -172,11 +172,61 @@ h5 {
 }
 
 /* line 70, sass/main.sass */
+.pin {
+  -moz-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  width: auto;
+  border: 1px solid #efefef;
+  background: white;
+  margin: 0 15px 15px 0;
+}
+/* line 80, sass/main.sass */
+.pin .info, .pin .action {
+  height: 100%;
+  float: left;
+}
+/* line 85, sass/main.sass */
+.pin .info a {
+  padding: 15px;
+  display: block;
+  font-size: 18px;
+  font-family: "Viga", sans-serif;
+}
+/* line 90, sass/main.sass */
+.pin .info a .name {
+  display: block;
+  margin-bottom: 5px;
+}
+/* line 93, sass/main.sass */
+.pin .info a .date {
+  font-size: 12px;
+  font-family: arial;
+  color: #999999;
+  display: block;
+  margin-bottom: 10px;
+}
+/* line 99, sass/main.sass */
+.pin .info a:hover {
+  text-decoration: none;
+}
+/* line 102, sass/main.sass */
+.pin .action {
+  display: none;
+}
+
+/* line 106, sass/main.sass */
 .content, .footer {
   padding: 10px;
 }
 
-/* line 73, sass/main.sass */
+/* line 110, sass/main.sass */
 .footer {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
