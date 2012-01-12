@@ -36,7 +36,7 @@
         });
       };
       
-      // Home
+      // Index
       if (Pinned.status) {
         $.ajax({
           url : "/keys",
@@ -44,6 +44,7 @@
           success : function(res){
             var len = res.length,
                 i = 0;
+
             for ( ; i < len; i++) {
 
               var title = res[i].split("/")[res[i].split("/").length - 1] || res[i],
@@ -58,7 +59,9 @@
                 }, function(html){
                   content.append(html)
               });
+              
             };
+
           }
         })
       };
