@@ -47,13 +47,11 @@
 
             for ( ; i < len; i++) {
 
-              var title = res[i].split("/")[res[i].split("/").length - 1] || res[i],
-                  sub = res[i].split("/")[2].replace(".com", ""),
-                  url = res[i];
+              var title = sub = url = res[i];
 
               Pinned.template("pin", { 
                   sub : sub, 
-                  title : title == "#" ? url.replace("/#", "") : title, 
+                  title : title, 
                   href : url, 
                   image : "http://www.gametab.it/wp-content/uploads/2010/10/starwars_hero-300x144.jpg" 
                 }, function(html){
