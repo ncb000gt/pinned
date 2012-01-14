@@ -17,7 +17,7 @@
     for(i in data) {
       results = results.replace("{{" + (arguments[0] || "item") + "." + i + "}}", data[i]);
     };
-
+    
     // return onComplete function with element, data, and markup
     return onComplete(results);
   };
@@ -50,16 +50,24 @@
               var title = sub = url = res[i];
 
               Pinned.template("pin", { 
-                  sub : sub, 
+                  sub : sub.split("/")[2].replace(/.com|.net|.org/, ""), 
                   title : title, 
-                  href : url, 
-                  image : "http://www.gametab.it/wp-content/uploads/2010/10/starwars_hero-300x144.jpg" 
+                  href : url,
+                  id: 10+i,
+                  image : "",
+                  show : false,
+                  date : "Jan 15th, 2011"
                 }, function(html){
-                  content.append(html)
+                  content.append(html);
               });
               
             };
 
+            content.masonry({
+              isFitWidth: true,
+              gutterWidth: 15,
+              isResizable: true
+            });
           }
         })
       };

@@ -11,6 +11,7 @@ html
     head
       .js("js/jquery.min.js")
       .js("js/list.min.js")
+      .js("js/jquery.masonry.min.js")
       .js("js/app.js");
 
   - if (status)
@@ -21,21 +22,21 @@ html
     div(class="pin pin-{{pin.id}}")
       div.info
         a(href="{{pin.href}}", target="{{pin.target}}")
-          span.icon
-          span.name {{pin.sub}}
+          span.name.button {{pin.sub}}
           span.title {{pin.title}}
           span.date {{pin.date}}
-        div.background(style="background-image: url({{pin.image}})")
+          // span.background(style="background-image: url({{pin.image}})")
       div.action
         div.arrow
         a(href="javascript:;", class="remove") Remove
         a(href="javascript:;", class="edit") Edit
 
   script(type="text/template", id="login-template")
-    form(method="POST")
-      p.intro Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi 
-      p
-        label(for="pw") Password
-        input(type="password", id="pw", name="pw")
-      p
-        input(type="submit", value="Login")
+    form(class="login", method="POST")
+      div.form
+        div.logo
+        p
+          input(type="password", id="pw", name="pw", placeholder="Password")
+        p
+          input(type="submit", value="Login", class="button")
+      div.platform

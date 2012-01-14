@@ -1,4 +1,4 @@
-/* line 4, sass/_bundle.sass */
+/* line 6, sass/_bundle.sass */
 .group, .header, .header nav, .header nav > ul, .pin, .content, .footer {
   *zoom: 1;
 }
@@ -9,7 +9,7 @@
   clear: both;
 }
 
-/* line 7, sass/_bundle.sass */
+/* line 9, sass/_bundle.sass */
 .displace, .header h1 {
   display: block;
   text-indent: -9999px;
@@ -100,13 +100,14 @@ a:hover, a:link:hover {
 
 /* line 17, sass/main.sass */
 .header {
-  background: url(images/header.background.png) repeat-x;
+  background: white url(images/header.background.png) repeat-x;
   height: 64px;
   top: 0;
   position: fixed;
   width: 100%;
+  z-index: 10;
 }
-/* line 25, sass/main.sass */
+/* line 26, sass/main.sass */
 .header h1 {
   background: url(images/logo.png) no-repeat;
   float: left;
@@ -115,33 +116,33 @@ a:hover, a:link:hover {
   margin-top: 12px;
   margin-left: 10px;
 }
-/* line 34, sass/main.sass */
+/* line 35, sass/main.sass */
 .header nav {
   float: right;
   margin: 12px 10px 0;
 }
-/* line 38, sass/main.sass */
+/* line 39, sass/main.sass */
 .header nav > ul {
   float: left;
   height: 32px;
   margin-left: 20px;
 }
-/* line 43, sass/main.sass */
+/* line 44, sass/main.sass */
 .header nav > ul li {
   float: left;
 }
-/* line 45, sass/main.sass */
+/* line 46, sass/main.sass */
 .header nav > ul li a, .header nav > ul li a:link {
   display: block;
   line-height: 32px;
   padding: 0 12px;
 }
-/* line 49, sass/main.sass */
+/* line 50, sass/main.sass */
 .header nav > ul li ul {
   display: none;
 }
 
-/* line 53, sass/main.sass */
+/* line 54, sass/main.sass */
 h2, h3, h4, h5, h6, .title {
   font-family: Arial, sans-serif;
   text-shadow: 1px 2px 0 #f9f9f7, 3px 4px 0 #dddddd;
@@ -151,27 +152,144 @@ h2, h3, h4, h5, h6, .title {
   margin: 0 0 12px;
 }
 
-/* line 61, sass/main.sass */
+/* line 62, sass/main.sass */
 h2 {
   font-size: 24px;
 }
 
-/* line 63, sass/main.sass */
+/* line 64, sass/main.sass */
 h3 {
   font-size: 20px;
 }
 
-/* line 65, sass/main.sass */
+/* line 66, sass/main.sass */
 h4 {
   font-size: 18px;
 }
 
-/* line 67, sass/main.sass */
+/* line 68, sass/main.sass */
 h5 {
   font-size: 16px;
 }
 
-/* line 70, sass/main.sass */
+/* line 71, sass/main.sass */
+.button {
+  background-color: #21a698;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #21a698), color-stop(50%, #197b71), color-stop(50%, #14665e), color-stop(100%, #197b71));
+  background: -webkit-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
+  background: -moz-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
+  background: -o-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
+  background: -ms-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
+  background: linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: inset 0 1px 0 #25bbab;
+  -webkit-box-shadow: inset 0 1px 0 #25bbab;
+  -o-box-shadow: inset 0 1px 0 #25bbab;
+  box-shadow: inset 0 1px 0 #25bbab;
+  border-color: #197b71 #197b71 #10514a;
+  border-style: solid;
+  border-width: 1px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: "helvetica neue", sans-serif;
+  padding: 7px 0 8px;
+  text-align: center;
+  text-shadow: 0 -1px 1px #000f4d;
+  width: 150px;
+}
+/* line 88, sass/main.sass */
+.button:hover {
+  background-color: #23afa0;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #21a698), color-stop(50%, #14665e), color-stop(50%, #10514a), color-stop(100%, #14665e));
+  background: -webkit-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: -moz-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: -o-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: -ms-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  cursor: pointer;
+}
+/* line 93, sass/main.sass */
+.button:active {
+  -moz-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
+  -webkit-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
+  -o-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
+  box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
+}
+
+/* line 96, sass/main.sass */
+.login {
+  width: 420px;
+  margin: 220px auto 0;
+}
+/* line 99, sass/main.sass */
+.login .form {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #efefef), color-stop(100%, #ffffff));
+  background: -webkit-linear-gradient(top, #efefef, #ffffff);
+  background: -moz-linear-gradient(top, #efefef, #ffffff);
+  background: -o-linear-gradient(top, #efefef, #ffffff);
+  background: -ms-linear-gradient(top, #efefef, #ffffff);
+  background: linear-gradient(top, #efefef, #ffffff);
+  -moz-box-shadow: 0 1px 0 white inset;
+  -webkit-box-shadow: 0 1px 0 white inset;
+  -o-box-shadow: 0 1px 0 white inset;
+  box-shadow: 0 1px 0 white inset;
+  padding: 25px 0;
+  margin: 0 auto;
+  position: relative;
+  top: 35px;
+  text-align: center;
+  width: 340px;
+  border-top: 1px solid #cccccc;
+  border-left: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+}
+/* line 112, sass/main.sass */
+.login .form input[type="submit"] {
+  margin: 20px auto 0;
+}
+/* line 114, sass/main.sass */
+.login .form input[type="password"] {
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #efefef;
+  font-size: 23px;
+  width: 230px;
+  display: block;
+  margin: 0 auto;
+  -moz-box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
+  -webkit-box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
+  -o-box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
+  box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
+}
+/* line 123, sass/main.sass */
+.login .form input[type="password"]:focus {
+  background: #ffffe2;
+  border-color: #eeeeee;
+}
+/* line 126, sass/main.sass */
+.login .form .logo {
+  background: url(images/logo.large.png);
+  height: 55px;
+  left: 50%;
+  margin-left: -90px;
+  position: absolute;
+  top: -40px;
+  width: 181px;
+}
+/* line 134, sass/main.sass */
+.login .platform {
+  background: url(images/login.background.png);
+  height: 132px;
+  width: 420px;
+}
+
+/* line 139, sass/main.sass */
 .pin {
   -moz-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
@@ -181,61 +299,98 @@ h5 {
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+  positon: relative;
   float: left;
-  width: auto;
+  width: 220px;
   background: white;
-  margin: 0 15px 15px 0;
+  margin: 0 auto 15px;
 }
-/* line 79, sass/main.sass */
+/* line 149, sass/main.sass */
 .pin .info, .pin .action {
-  height: 100%;
   float: left;
 }
-/* line 84, sass/main.sass */
+/* line 152, sass/main.sass */
+.pin .info {
+  width: 100%;
+}
+/* line 154, sass/main.sass */
 .pin .info a {
-  border: 1px solid #efefef;
-  padding: 15px;
   display: block;
   font-family: "Viga", sans-serif;
+  border: 1px solid #bbbbbb;
+  background: #f9f9f9;
+  -moz-box-shadow: 0 0 1px 1px #f6f6f6 inset;
+  -webkit-box-shadow: 0 0 1px 1px #f6f6f6 inset;
+  -o-box-shadow: 0 0 1px 1px #f6f6f6 inset;
+  box-shadow: 0 0 1px 1px #f6f6f6 inset;
 }
-/* line 89, sass/main.sass */
+/* line 160, sass/main.sass */
 .pin .info a span {
   display: block;
 }
-/* line 92, sass/main.sass */
+/* line 163, sass/main.sass */
 .pin .info a .title {
+  padding: 0 15px;
   font-size: 16px;
   margin-bottom: 10px;
   text-shadow: 2px 3px 0 #efefef;
+  color: #555555;
+  word-wrap: break-word;
 }
-/* line 96, sass/main.sass */
+/* line 170, sass/main.sass */
 .pin .info a .name {
-  font-size: 12px;
-  margin-bottom: 5px;
+  padding: 6px 8px;
+  margin: 15px 15px 8px;
+  font-size: 13px;
+  font-weight: normal;
+  width: auto;
+  display: inline-block;
 }
-/* line 99, sass/main.sass */
+/* line 177, sass/main.sass */
 .pin .info a .date {
+  padding: 0 15px;
   font-size: 10px;
   font-family: arial;
   color: #999999;
   margin-bottom: 10px;
 }
-/* line 104, sass/main.sass */
+/* line 183, sass/main.sass */
+.pin .info a .background {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
+  border-top: 1px solid white;
+  background-color: #333333;
+  width: 100%;
+  min-height: 200px;
+}
+/* line 190, sass/main.sass */
 .pin .info a:hover {
   text-decoration: none;
-  border: 1px solid#d5d5d5;
 }
-/* line 108, sass/main.sass */
+/* line 192, sass/main.sass */
+.pin .info a:hover .background {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+/* line 194, sass/main.sass */
+.pin .info a:hover .title {
+  color: black;
+}
+/* line 197, sass/main.sass */
 .pin .action {
   display: none;
 }
 
-/* line 112, sass/main.sass */
+/* line 201, sass/main.sass */
 .content, .footer {
   padding: 10px;
 }
 
-/* line 116, sass/main.sass */
+/* line 205, sass/main.sass */
 .footer {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
