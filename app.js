@@ -1,9 +1,13 @@
 var express = require('express'),
     fs = require('fs'),
-    jsdom = require('jsdom'),
     bcrypt = require('bcrypt'),
     config = require('./config'),
-    db = require('./lib/db')();
+    db;
+
+require('./lib/db')({}, function(err, _db) {
+  if (err) throw err;
+  db = _db;
+});
 
 var app = module.exports = express.createServer();
 
@@ -25,7 +29,9 @@ app.options('/keys/:key', function(req, res) {
 
 app.post('/keys/:key', function(req, res) {
   if (req.body.token == config.auth_token) {
-    db.add(req.params.key);
+    db.addOrUpdate(decodeURIComponent(req.params.key), function(err) {
+      if (err) console.log(err);
+    });
     res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
   } else {
     res.send("", {"Access-Control-Allow-Origin": "*"}, 401);
@@ -44,17 +50,21 @@ app.get('/', function(req, res){
       status: req.session.authed 
     });
   } else {
-    res.render('index', {
-      status : req.session.authed,
-      bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
-      pinned: [{url: '/test'}]
+    db.getAll(null, function(err, pins) {
+      if (err) throw err;
+
+      res.render('index', {
+        status : req.session.authed,
+        bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
+        pinned: pins
+      });
     });
   }
 });
 
 app.post('/', function(req, res) {
   if (req.body.pw) {
-    if (bcrypt.compare_sync(req.body.pw, config.password)) {
+    if (bcrypt.compareSync(req.body.pw, config.password)) {
       req.session.authed = true;
     };
   };

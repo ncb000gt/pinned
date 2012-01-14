@@ -4,10 +4,9 @@
   "description": "Incredibly basic bookmarking application.",
   "dependencies": {
     "express": ">=2.4.3",
-    "hiredis": "*",
-    "redis": "*",
     "jade": "*",
     "bcrypt": "*",
-    "read": "*"
+    "read": "*",
+    "mongodb": "0.9.7-3-5"
   }
 }
