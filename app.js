@@ -2,12 +2,7 @@ var express = require('express'),
     fs = require('fs'),
     bcrypt = require('bcrypt'),
     config = require('./config'),
-    db;
-
-require('./lib/db')({}, function(err, _db) {
-  if (err) throw err;
-  db = _db;
-});
+    pins = new (require('./lib/pins'))({});
 
 var app = module.exports = express.createServer();
 
@@ -23,13 +18,22 @@ app.configure(function(){
   app.use(app.router);
 });
 
+app.get('/share', function(req, res) {
+  res.render('index', {
+    status : req.session.authed,
+    bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
+    pinned: pins
+  });
+});
+
+//XXX: THIS SHOULD CHANGE TO /pins/... at some point.
 app.options('/keys/:key', function(req, res) {
   res.send("", {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "PUT", "Access-Control-Allow-Headers": "Origin, Content-Type"}, 200);
 });
 
 app.post('/keys/:key', function(req, res) {
   if (req.body.token == config.auth_token) {
-    db.addOrUpdate(decodeURIComponent(req.params.key), function(err) {
+    pins.addOrUpdate(decodeURIComponent(req.params.key), function(err) {
       if (err) console.log(err);
     });
     res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
@@ -39,7 +43,7 @@ app.post('/keys/:key', function(req, res) {
 });
 
 app.get('/keys', function(req, res){
-  db.getAll(null, function(err, keys) {
+  pins.getAll(null, function(err, keys) {
     res.json(keys);
   });
 });
@@ -50,13 +54,13 @@ app.get('/', function(req, res){
       status: req.session.authed 
     });
   } else {
-    db.getAll(null, function(err, pins) {
+    pins.getAll(null, function(err, _pins) {
       if (err) throw err;
 
       res.render('index', {
         status : req.session.authed,
         bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
-        pinned: pins
+        pinned: _pins
       });
     });
   }
