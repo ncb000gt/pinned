@@ -10,8 +10,8 @@ html
   script
     head
       .js("js/jquery.min.js")
-      .js("js/list.min.js")
       .js("js/jquery.masonry.min.js")
+      .js("js/jquery.timeago.js")
       .js("js/app.js");
 
   - if (status)
@@ -22,7 +22,7 @@ html
     div(class="pin pin-{{pin.id}}")
       div.info
         a(href="{{pin.href}}", target="{{pin.target}}")
-          span.name.button {{pin.sub}}
+          span.name.button {{pin.domain}}
           span.title {{pin.title}}
           span.date {{pin.date}}
           // span.background(style="background-image: url({{pin.image}})")

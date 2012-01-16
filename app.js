@@ -26,14 +26,19 @@ app.get('/share', function(req, res) {
   });
 });
 
-//XXX: THIS SHOULD CHANGE TO /pins/... at some point.
-app.options('/keys/:key', function(req, res) {
+app.options('/pins', function(req, res) {
   res.send("", {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "PUT", "Access-Control-Allow-Headers": "Origin, Content-Type"}, 200);
 });
 
-app.post('/keys/:key', function(req, res) {
+app.post('/pins', function(req, res) {
   if (req.body.token == config.auth_token) {
-    pins.addOrUpdate(decodeURIComponent(req.params.key), function(err) {
+    pins.post(req.body.href, { 
+      "title" : req.body.title, 
+      "domain" : req.body.domain,
+      "target" : req.body.target || "_blank",
+      "image" : req.body.image || false,
+      "show" : req.body.show || true
+    }, function(err) {
       if (err) console.log(err);
     });
     res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
@@ -42,9 +47,9 @@ app.post('/keys/:key', function(req, res) {
   }
 });
 
-app.get('/keys', function(req, res){
-  pins.getAll(null, function(err, keys) {
-    res.json(keys);
+app.get('/pins', function(req, res){
+  pins.get(null, function(err, data) {
+    res.json(data);
   });
 });
 
@@ -54,7 +59,7 @@ app.get('/', function(req, res){
       status: req.session.authed 
     });
   } else {
-    pins.getAll(null, function(err, _pins) {
+    pins.get(null, function(err, _pins) {
       if (err) throw err;
 
       res.render('index', {

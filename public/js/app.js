@@ -39,7 +39,7 @@
       // Index
       if (Pinned.status) {
         $.ajax({
-          url : "/keys",
+          url : "/pins",
           dataType : "json",
           success : function(res){
             var len = res.length,
@@ -47,16 +47,19 @@
 
             for ( ; i < len; i++) {
 
-              var title = sub = url = res[i];
+              var item = res[i];
+              var _time = new Date(item.saved);
+
 
               Pinned.template("pin", { 
-                  sub : sub.split("/")[2].replace(/.com|.net|.org/, ""), 
-                  title : title, 
-                  href : url,
-                  id: 10+i,
-                  image : "",
-                  show : false,
-                  date : "Jan 15th, 2011"
+                  domain : item.domain, 
+                  title : item.title, 
+                  href : item.href,
+                  id: item._id,
+                  target: "_blank",
+                  image : item.image,
+                  show : item.show,
+                  date : $.timeago(_time)
                 }, function(html){
                   content.append(html);
               });
