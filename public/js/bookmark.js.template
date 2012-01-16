@@ -5,12 +5,21 @@
     jQuery.noConflict();
     (function ($) {
       var init = function(){
-        var params = new FormData(),
-            xhr = new XMLHttpRequest();
-        params.append("token", {{AUTH_TOKEN}});
-        xhr.open("POST", "{{REPLACE_HOST}}/keys/"+encodeURIComponent(window.location));
-        xhr.send(params);
-        alert("Sent!");
+        $.ajax({
+          "type" : "POST",
+          "url" : "{{REPLACE_HOST}}/pins",
+          "data" : {
+            "href" : window.location.href,
+            "title" : document.title,
+            "domain" : window.location.host,
+            "show" : true,
+            "token" : {{AUTH_TOKEN}}
+          },
+          "async" : false,
+          "success" : function(){
+              alert("Sent!");
+          }
+        });
       };
       init();
     }(jQuery));
