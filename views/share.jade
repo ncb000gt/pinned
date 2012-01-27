@@ -1,0 +1,34 @@
+div#wrap
+  header.header
+    h1 Pinned
+    nav
+      ul.view-filter
+        li.current
+          a(href="#grid-view") Grid
+        li
+          a(href="#grid-view") List
+      ul.sort-filter
+        li
+          a(href="#tags-menu") Tags
+          ul
+            li
+              a(href="#items") Item
+        li
+          a(href="#categories-menu") Categories
+          ul
+            li
+              a(href="#items") Item
+              
+  section.content
+    ul
+      - each domain in domains
+        li
+          img(src=domain.icon)
+          | #{domain.name}
+
+
+  footer.footer
+    p 
+      span Pinned - &copy; 2012 
+      a(href="https://github.com/ncb000gt/pinned") Github
+

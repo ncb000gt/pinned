@@ -2,7 +2,9 @@ var express = require('express'),
     fs = require('fs'),
     bcrypt = require('bcrypt'),
     config = require('./config'),
-    pins = new (require('./lib/pins'))({});
+    pins = new (require('./lib/pins'))({}),
+    auth = require('./lib/auth'),
+    errors = require('./lib/errors');
 
 var app = module.exports = express.createServer();
 
@@ -26,14 +28,17 @@ app.get('/share', function(req, res) {
   });
 });
 
+//support XSS requests
 app.options('/pins', function(req, res) {
   res.send("", {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "PUT", "Access-Control-Allow-Headers": "Origin, Content-Type"}, 200);
 });
 
-app.post('/pins', function(req, res) {
+//pin url
+app.post('/pin', function(req, res) {
   if (req.body.token == config.auth_token) {
     pins.post(req.body.href, { 
-      "title" : req.body.title, 
+      "href": req.body.href,
+      "title" : req.body.title,
       "domain" : req.body.domain,
       "target" : req.body.target || "_blank",
       "image" : req.body.image || false,
@@ -47,22 +52,32 @@ app.post('/pins', function(req, res) {
   }
 });
 
+//get all pins
 app.get('/pins', function(req, res){
   pins.get(null, function(err, data) {
     res.json(data);
   });
 });
 
-app.get('/', function(req, res){
-  if (!(req.session && req.session.authed)) {
-    res.render('index', { 
-      status: req.session.authed 
+//setup app
+app.get('/setup', function(req, res) {
+});
+
+app.post('/setup', function(req, res) {
+});
+
+app.get('/', function(req, res, next) {
+  if (!(auth.authorized(req))) {
+    res.render('index', {
+      error: (req.session && req.session.error) ? req.session.error.message : null,
+      status: false 
     });
   } else {
     pins.get(null, function(err, _pins) {
       if (err) throw err;
 
       res.render('index', {
+        error: null,
         status : req.session.authed,
         bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
         pinned: _pins
@@ -72,12 +87,20 @@ app.get('/', function(req, res){
 });
 
 app.post('/', function(req, res) {
-  if (req.body.pw) {
-    if (bcrypt.compareSync(req.body.pw, config.password)) {
-      req.session.authed = true;
-    };
-  };
-  res.redirect('/');
+  auth.authorize(req, res, function(err) {
+    if (err) req.session.error = err;
+    res.redirect('/');
+  });
+});
+
+app.error(function(err, req, res, next) {
+  if (err instanceof errors.NotFound) {
+    res.send(404);
+  } else if (err instanceof errors.BadRequest) {
+    res.send(401);
+  } else {
+    next(err);
+  }
 });
 
 app.listen(process.env.NODE_PORT || (process.env.NODE_ENV === 'production' ? 80 : 8000)); 
