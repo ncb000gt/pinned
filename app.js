@@ -5,8 +5,8 @@ var express = require('express'),
     db = require('./lib/db'),
     pins = new (require('./lib/pins'))(),
     users = new (require('./lib/users'))(),
-    setupdb = new db({key: 'setup', collection_name: 'setup'}),
     auth = require('./lib/auth'),
+    setup = require('./lib/setup'),
     errors = require('./lib/errors');
 
 var app = module.exports = express.createServer();
@@ -22,6 +22,8 @@ app.configure(function(){
   }));
   app.use(app.router);
 });
+
+app.use('/setup', express.router(setup));
 
 app.get('/share', function(req, res) {
   res.render('index', {
@@ -59,33 +61,6 @@ app.post('/pin', function(req, res) {
 app.get('/pins', function(req, res){
   pins.get(null, function(err, data) {
     res.json(data);
-  });
-});
-
-//setup app
-app.get('/setup', function(req, res) {
-});
-
-app.post('/setup', function(req, res) {
-  var un = req.body.username;
-  var pw = req.body.password;
-  var email = req.body.email;
-
-  setupdb._get('0', function(err, setup) {
-    if (!err && setup) {
-      res.send(403);
-    } else if (!err) {
-      setupdb.save('0', {'setup':'0', 'updated': []});
-      bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(pw, salt, function(err, hash) {
-          users.save(un, {username: un, hash: hash, email: email});
-          res.send(200);
-        });
-      });
-    } else {
-      console.log(err);
-      res.send(500);
-    }
   });
 });
 
