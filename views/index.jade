@@ -1,10 +1,11 @@
 div#wrap
   header.header
     h1 Pinned
-    - if (bookmarklet)
-      a.bookmarklet(href=bookmarklet) Pin This
     nav
       ul.view-filter
+        li.bookmarklet
+          - if (bookmarklet)
+            a(href=bookmarklet) Pin This
         li.current
           a(href="#grid-view") Grid
         li
