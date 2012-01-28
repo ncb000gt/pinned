@@ -14,7 +14,8 @@ module.exports = {
   setUp: function(cb) {
            var self = this;
 
-           self.db_name = "pinned-test-" + new Date().getTime();
+           self.db_name = "pinned";
+           self.collection_name = "test-" + new Date().getTime();
 
            getDB(self.db_name, function(err, directdb) {
              self.directdb = directdb;
@@ -25,7 +26,7 @@ module.exports = {
               var self = this;
 
               if (self.directdb) {
-                self.directdb.dropDatabase(function() {
+                self.directdb.dropCollection(self.collection_name, function() {
                   self.directdb.close();
                   cb();
                 });
@@ -36,10 +37,12 @@ module.exports = {
           var self = this;
 
           new pinneddb({
+              db_name: self.db_name,
+              collection_name: self.collection_name,
               cb: function(testdb) {
-                test.equal(testdb.db_name, "pinned", "DB name should default to 'pinned'.");
+                test.equal(testdb.db_name, self.db_name, "DB name should default to '"+self.db_name+"'.");
                 test.equal(testdb.key, "href", "The key should default to 'test'.");
-                test.equal(testdb.collection_name, "collector", "Collection name should default to 'collector'.");
+                test.equal(testdb.collection_name, self.collection_name, "Collection name should default to '"+self.collection_name+"'.");
                 test.equal(testdb.host, "localhost", "Host should default to 'localhost'.");
                 test.equal(testdb.port, mongo.Connection.DEFAULT_PORT, "Port should default to '" + mongo.Connection.DEFAULT_PORT + "'.");
                 test.equal(testdb.safe, false, "Safe should default to 'false'.");
@@ -55,15 +58,15 @@ module.exports = {
 
           new pinneddb({
               key: 'test',
-              db_name: 'test',
-              collection_name: 'test',
+              db_name: self.db_name,
+              collection_name: self.collection_name,
               host: '127.0.0.1',
               port: 27017,
               safe: true,
               cb: function(testdb) {
-                test.equal(testdb.db_name, "test", "DB name should be set to 'pinned'.");
+                test.equal(testdb.db_name, self.db_name, "DB name should be set to '"+self.db_name+"'.");
                 test.equal(testdb.key, "test", "The key should be set to 'test'.");
-                test.equal(testdb.collection_name, "test", "Collection name should be set to 'collector'.");
+                test.equal(testdb.collection_name, self.collection_name, "Collection name should be set to '"+self.collection_name+"'.");
                 test.equal(testdb.host, "127.0.0.1", "Host should be set to 'localhost'.");
                 test.equal(testdb.port, 27017, "Port should be set to '10'.");
                 test.equal(testdb.safe, true, "Safe should be set to 'true'.");
@@ -80,6 +83,8 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              collection_name: self.collection_name,
+              safe: true,
               cb: function(testdb) {
                 testdb.save("test", {"test": "test"}, function(err) {
                   //check with directdb
@@ -108,6 +113,7 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              collection_name: self.collection_name,
               safe: true,
               cb: function(testdb) {
                 testdb.save("test", {"test": "test", "new1": "old"}, function(err) {
@@ -151,6 +157,8 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              collection_name: self.collection_name,
+              safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   testdb._get("test", function(err, doc) {
@@ -171,6 +179,8 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              collection_name: self.collection_name,
+              safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   collection.insert({"test": "test"}, {safe: true}, function(err) {
@@ -193,6 +203,8 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              collection_name: self.collection_name,
+              safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
@@ -215,6 +227,8 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              collection_name: self.collection_name,
+              safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   testdb.delete("test", function(err) {
@@ -234,6 +248,8 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              collection_name: self.collection_name,
+              safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   collection.insert({"test": "test"}, {safe: true}, function(err) {
@@ -260,6 +276,8 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              safe: true,
+              collection_name: self.collection_name,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
