@@ -1,7 +1,7 @@
 pinned
 ===========
 
-[![Build Status](https://secure.travis-ci.org/ncb000gt/node.bcrypt.js.png)](http://travis-ci.org/#!/ncb000gt/node.bcrypt.js) 
+[![Build Status](https://secure.travis-ci.org/ncb000gt/pinned.png)](http://travis-ci.org/#!/ncb000gt/pinned) 
 
 Bookmarking applications suck. As it stands now, there isn't much overhead involved with the bookmarking side of things, but there is a massive overhead associatedd with returning to actually read what you've marked. Often we don't want to distract outselves and bookmarking is a great way to setup your "read later" list. The problem is that "read later" lists tend to grow over time and then become so large that you feel a need to declare bankruptcy. This isn't good for anyone.
 
