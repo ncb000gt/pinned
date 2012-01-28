@@ -67,7 +67,6 @@ app.get('/setup', function(req, res) {
 });
 
 app.post('/setup', function(req, res) {
-
   var un = req.body.username;
   var pw = req.body.password;
   var email = req.body.email;
