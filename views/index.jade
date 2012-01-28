@@ -1,6 +1,8 @@
 div#wrap
   header.header
     h1 Pinned
+    - if (bookmarklet)
+      a.bookmarklet(href=bookmarklet) Pin This
     nav
       ul.view-filter
         li.current

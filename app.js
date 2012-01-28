@@ -68,6 +68,7 @@ app.get('/', function(req, res, next) {
   if (!(auth.authorized(req))) {
     res.render('index', {
       error: (req.session && req.session.error) ? req.session.error.message : null,
+      bookmarklet: null,
       status: false 
     });
   } else {
