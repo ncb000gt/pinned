@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "nodeunit": "*"
-  }
+  },
+   "scripts": {
+     "test": "make test"
+   }
 }

@@ -144,6 +144,26 @@ module.exports = {
               }
           });
         },
+  "get one of none": function(test) {
+          test.expect(2);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  testdb._get("test", function(err, doc) {
+                    test.ok(!err, "There should be no error.");
+                    test.ok(!doc, "Document should be empty.");
+
+                    testdb.close();
+                    test.done();
+                  });
+                });
+              }
+          });
+        },
   "get one": function(test) {
           test.expect(2);
           var self = this;
@@ -153,13 +173,108 @@ module.exports = {
               db_name: self.db_name,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
-                  collection.insert({"test": "test"}, function(err) {
+                  collection.insert({"test": "test"}, {safe: true}, function(err) {
                     testdb._get("test", function(err, doc) {
                       test.ok(!err, "There should be no error.");
                       test.equal(doc[testdb.key], "test", "Document key should exist.");
 
                       testdb.close();
                       test.done();
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "get one of many": function(test) {
+          test.expect(2);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
+                    testdb._get("test1", function(err, doc) {
+                      test.ok(!err, "There should be no error.");
+                      test.equal(doc[testdb.key], "test1", "Document key should exist.");
+
+                      testdb.close();
+                      test.done();
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "delete one of none": function(test) {
+          test.expect(1);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  testdb.delete("test", function(err) {
+                    test.ok(!err, "There should be no error.");
+
+                    testdb.close();
+                    test.done();
+                  });
+                });
+              }
+          });
+        },
+  "delete one": function(test) {
+          test.expect(3);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert({"test": "test"}, {safe: true}, function(err) {
+                    testdb.delete("test", function(err) {
+                      test.ok(!err, "There should be no error.");
+                      collection.findOne({"test": "test"}, function(err, doc) {
+                        test.ok(!err, "There should be no error.");
+                        test.ok(!doc, "There should be no doc.");
+
+
+                        testdb.close();
+                        test.done();
+                      });
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "delete one of many": function(test) {
+          test.expect(4);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
+                    testdb.delete("test1", function(err) {
+                      test.ok(!err, "There should be no error.");
+                      collection.findOne({"test": "test1"}, function(err, doc) {
+                        test.ok(!err, "There should be no error.");
+                        test.ok(!doc, "There should be no doc.");
+
+                        collection.findOne({"test": "test2"}, function(err, doc) {
+                          test.equal(doc[testdb.key], "test2", "Document key should exist.");
+                          testdb.close();
+                          test.done();
+                        });
+                      });
                     });
                   });
                 });
