@@ -3,9 +3,13 @@ var mongo = require('mongodb'),
     mongodb = mongo.Db;
 
 function getDB(db_name, cb) {
-  var directdb = new mongodb(db_name, new mongo.Server('localhost', mongo.Connection.DEFAULT_PORT, {}));
+  var directdb = new mongodb(db_name, new mongo.Server("staff.mongohq.com", 10072, mongo.Connection.DEFAULT_PORT, {}));
 
-  directdb.open(cb);
+  directdb.open(function(err, db) {
+    db.authenticate("pinned", "pinned", function(err) {
+      cb(err, db);
+    });
+  });
 }
 
 //Must have the appropriate datastore in order to run these.
@@ -16,6 +20,10 @@ module.exports = {
 
            self.db_name = "pinned";
            self.collection_name = "test-" + new Date().getTime();
+           self.host = "staff.mongohq.com";
+           self.port = 10072;
+           self.username = "pinned";
+           self.password = "pinned";
 
            getDB(self.db_name, function(err, directdb) {
              self.directdb = directdb;
@@ -32,26 +40,6 @@ module.exports = {
                 });
               }
             },
-  "default initialization": function(test) {
-          test.expect(6);
-          var self = this;
-
-          new pinneddb({
-              db_name: self.db_name,
-              collection_name: self.collection_name,
-              cb: function(testdb) {
-                test.equal(testdb.db_name, self.db_name, "DB name should default to '"+self.db_name+"'.");
-                test.equal(testdb.key, "href", "The key should default to 'test'.");
-                test.equal(testdb.collection_name, self.collection_name, "Collection name should default to '"+self.collection_name+"'.");
-                test.equal(testdb.host, "localhost", "Host should default to 'localhost'.");
-                test.equal(testdb.port, mongo.Connection.DEFAULT_PORT, "Port should default to '" + mongo.Connection.DEFAULT_PORT + "'.");
-                test.equal(testdb.safe, false, "Safe should default to 'false'.");
-
-                testdb.close();
-                test.done();
-              }
-          });
-        },
   "custom initialization": function(test) {
           test.expect(6);
           var self = this;
@@ -60,15 +48,17 @@ module.exports = {
               key: 'test',
               db_name: self.db_name,
               collection_name: self.collection_name,
-              host: '127.0.0.1',
-              port: 27017,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 test.equal(testdb.db_name, self.db_name, "DB name should be set to '"+self.db_name+"'.");
                 test.equal(testdb.key, "test", "The key should be set to 'test'.");
                 test.equal(testdb.collection_name, self.collection_name, "Collection name should be set to '"+self.collection_name+"'.");
-                test.equal(testdb.host, "127.0.0.1", "Host should be set to 'localhost'.");
-                test.equal(testdb.port, 27017, "Port should be set to '10'.");
+                test.equal(testdb.host, self.host, "Host should be set to '"+self.host+"'.");
+                test.equal(testdb.port, self.port, "Port should be set to '"+self.port+"'.");
                 test.equal(testdb.safe, true, "Safe should be set to 'true'.");
 
                 testdb.close();
@@ -84,6 +74,10 @@ module.exports = {
               key: "test",
               db_name: self.db_name,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 testdb.save("test", {"test": "test"}, function(err) {
@@ -114,6 +108,10 @@ module.exports = {
               key: "test",
               db_name: self.db_name,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 testdb.save("test", {"test": "test", "new1": "old"}, function(err) {
@@ -158,6 +156,10 @@ module.exports = {
               key: "test",
               db_name: self.db_name,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
@@ -180,6 +182,10 @@ module.exports = {
               key: "test",
               db_name: self.db_name,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
@@ -204,6 +210,10 @@ module.exports = {
               key: "test",
               db_name: self.db_name,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
@@ -228,6 +238,10 @@ module.exports = {
               key: "test",
               db_name: self.db_name,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
@@ -249,6 +263,10 @@ module.exports = {
               key: "test",
               db_name: self.db_name,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
@@ -278,6 +296,10 @@ module.exports = {
               db_name: self.db_name,
               safe: true,
               collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
