@@ -32,7 +32,7 @@ module.exports = {
               }
             },
   "default initialization": function(test) {
-          test.expect(5);
+          test.expect(6);
           var self = this;
 
           new pinneddb({
@@ -42,6 +42,7 @@ module.exports = {
                 test.equal(testdb.collection_name, "collector", "Collection name should default to 'collector'.");
                 test.equal(testdb.host, "localhost", "Host should default to 'localhost'.");
                 test.equal(testdb.port, mongo.Connection.DEFAULT_PORT, "Port should default to '" + mongo.Connection.DEFAULT_PORT + "'.");
+                test.equal(testdb.safe, false, "Safe should default to 'false'.");
 
                 testdb.close();
                 test.done();
@@ -49,7 +50,7 @@ module.exports = {
           });
         },
   "custom initialization": function(test) {
-          test.expect(5);
+          test.expect(6);
           var self = this;
 
           new pinneddb({
@@ -58,12 +59,14 @@ module.exports = {
               collection_name: 'test',
               host: '127.0.0.1',
               port: 27017,
+              safe: true,
               cb: function(testdb) {
                 test.equal(testdb.db_name, "test", "DB name should be set to 'pinned'.");
                 test.equal(testdb.key, "test", "The key should be set to 'test'.");
                 test.equal(testdb.collection_name, "test", "Collection name should be set to 'collector'.");
                 test.equal(testdb.host, "127.0.0.1", "Host should be set to 'localhost'.");
                 test.equal(testdb.port, 27017, "Port should be set to '10'.");
+                test.equal(testdb.safe, true, "Safe should be set to 'true'.");
 
                 testdb.close();
                 test.done();
@@ -105,6 +108,7 @@ module.exports = {
           new pinneddb({
               key: "test",
               db_name: self.db_name,
+              safe: true,
               cb: function(testdb) {
                 testdb.save("test", {"test": "test", "new1": "old"}, function(err) {
                   self.directdb.collection(testdb.collection_name, function(err, collection) {
@@ -113,7 +117,7 @@ module.exports = {
                         test.equal(docs.length, 1, "Should have stored 1 document.");
 
                         var doc = docs[0];
-                        test.equal(doc.new1, "old", "New field should equal value.");
+                        test.equal(doc.new1, "old", "New field should be set to 'old'.");
 
                         testdb.save("test", {"test": "test", "new1": "new"}, function(err) {
                           //check with directdb
@@ -125,7 +129,7 @@ module.exports = {
                                 test.ok(doc.created_on, "Created date should exist.");
                                 test.ok(doc.updated_on, "Updated date should exist.");
                                 test.equal(doc[testdb.key], "test", "Document key should exist.");
-                                test.equal(doc.new1, "new", "New field should equal value.");
+                                test.equal(doc.new1, "new", "New field should be set to 'new'.");
 
                                 testdb.close();
                                 test.done();
@@ -134,6 +138,28 @@ module.exports = {
                           });
                         });
                       });
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "get one": function(test) {
+          test.expect(2);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert({"test": "test"}, function(err) {
+                    testdb._get("test", function(err, doc) {
+                      test.ok(!err, "There should be no error.");
+                      test.equal(doc[testdb.key], "test", "Document key should exist.");
+
+                      testdb.close();
+                      test.done();
                     });
                   });
                 });
