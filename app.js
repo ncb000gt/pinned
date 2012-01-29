@@ -2,9 +2,10 @@ var express = require('express'),
     fs = require('fs'),
     bcrypt = require('bcrypt'),
     db = require('./lib/db'),
-    pins = new (require('./lib/pins'))(),
-    users = new (require('./lib/users'))(),
+    pins = new (require('./lib/dbs/pins'))(),
+    users = new (require('./lib/dbs/users'))(),
     auth = require('./lib/auth'),
+    share = require('./lib/share'),
     setup = require('./lib/setup'),
     errors = require('./lib/errors'),
     config = {};
@@ -31,14 +32,7 @@ app.configure(function(){
 });
 
 app.use('/setup', express.router(setup));
-
-app.get('/share', function(req, res) {
-  res.render('index', {
-    status : req.session.authed,
-    bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
-    pinned: pins
-  });
-});
+app.use('/share', express.router(share));
 
 app.get(/bookmark.js/, function(req, res) {
   var host = 'http://' + req.headers['host'];
