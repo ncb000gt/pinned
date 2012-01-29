@@ -163,7 +163,7 @@ module.exports = {
               safe: true,
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
-                  testdb._get("test", function(err, doc) {
+                  testdb.get("test", function(err, doc) {
                     test.ok(!err, "There should be no error.");
                     test.ok(!doc, "Document should be empty.");
 
@@ -190,7 +190,7 @@ module.exports = {
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   collection.insert({"test": "test"}, {safe: true}, function(err) {
-                    testdb._get("test", function(err, doc) {
+                    testdb.get("test", function(err, doc) {
                       test.ok(!err, "There should be no error.");
                       test.equal(doc[testdb.key], "test", "Document key should exist.");
 
@@ -218,9 +218,185 @@ module.exports = {
               cb: function(testdb) {
                 self.directdb.collection(testdb.collection_name, function(err, collection) {
                   collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
-                    testdb._get("test1", function(err, doc) {
+                    testdb.get("test1", function(err, doc) {
                       test.ok(!err, "There should be no error.");
                       test.equal(doc[testdb.key], "test1", "Document key should exist.");
+
+                      testdb.close();
+                      test.done();
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "find one of none": function(test) {
+          test.expect(3);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
+              safe: true,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  testdb.find({"test": "test"}, function(err, docs) {
+                    test.ok(!err, "There should be no error.");
+                    test.ok(docs, "Docs should not be null/undefined.");
+                    test.equal(docs.length, 0, "Docs should have no items.");
+
+                    testdb.close();
+                    test.done();
+                  });
+                });
+              }
+          });
+        },
+  "find one": function(test) {
+          test.expect(3);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
+              safe: true,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert({"test": "test"}, {safe: true}, function(err) {
+                    testdb.find({"test":"test"}, function(err, docs) {
+                      test.ok(!err, "There should be no error.");
+                      test.ok(docs, "Docs should not be null/undefined.");
+                      test.equal(docs.length, 1, "Docs should have 1 item.");
+
+                      testdb.close();
+                      test.done();
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "find one of many": function(test) {
+          test.expect(4);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
+              safe: true,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
+                    testdb.find({"test": "test1"}, function(err, docs) {
+                      test.ok(!err, "There should be no error.");
+                      test.ok(docs, "Docs should not be null/undefined.");
+                      test.equal(docs.length, 1, "Docs should have 1 item.");
+                      var doc = docs[0];
+                      test.equal(doc[testdb.key], "test1", "Document key should exist.");
+
+                      testdb.close();
+                      test.done();
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "find one of many using string filter": function(test) {
+          test.expect(4);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
+              safe: true,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert([{"test": "test1"}, {"test": "test2"}], {safe: true}, function(err) {
+                    testdb.find("test1", function(err, docs) {
+                      test.ok(!err, "There should be no error.");
+                      test.ok(docs, "Docs should not be null/undefined.");
+                      test.equal(docs.length, 1, "Docs should have 1 item.");
+                      var doc = docs[0];
+                      test.equal(doc[testdb.key], "test1", "Document key should exist.");
+
+                      testdb.close();
+                      test.done();
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "find many of many": function(test) {
+          test.expect(3);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
+              safe: true,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert([{"test": "test1"}, {"test": "test2"}, {"test":"test1"}], {safe: true}, function(err) {
+                    testdb.find({"test":"test1"}, function(err, docs) {
+                      test.ok(!err, "There should be no error.");
+                      test.ok(docs, "Docs should not be null/undefined.");
+                      test.equal(docs.length, 2, "Docs should have 2 item.");
+
+                      testdb.close();
+                      test.done();
+                    });
+                  });
+                });
+              }
+          });
+        },
+  "find all of many": function(test) {
+          test.expect(3);
+          var self = this;
+
+          new pinneddb({
+              key: "test",
+              db_name: self.db_name,
+              collection_name: self.collection_name,
+              host: self.host,
+              port: self.port,
+              username: self.username,
+              password: self.password,
+              safe: true,
+              cb: function(testdb) {
+                self.directdb.collection(testdb.collection_name, function(err, collection) {
+                  collection.insert([{"test": "test1"}, {"test": "test2"}, {"test":"test1"}], {safe: true}, function(err) {
+                    testdb.find(function(err, docs) {
+                      test.ok(!err, "There should be no error.");
+                      test.ok(docs, "Docs should not be null/undefined.");
+                      test.equal(docs.length, 3, "Docs should have 3 item.");
 
                       testdb.close();
                       test.done();
