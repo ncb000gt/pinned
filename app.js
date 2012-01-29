@@ -116,7 +116,7 @@ app.error(function(err, req, res, next) {
   if (err instanceof errors.NotFound) {
     res.send(404);
   } else if (err instanceof errors.BadRequest) {
-    res.send(401);
+    res.send(400);
   } else {
     next(err);
   }
