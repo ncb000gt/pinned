@@ -9,18 +9,21 @@ var express = require('express'),
     setup = require('./lib/setup'),
     errors = require('./lib/errors');
 
+var BOOKMARKLET_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmarklet.js.template', 'utf8');
+var BOOKMARK_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmark.js.template', 'utf8');
+
 var app = module.exports = express.createServer();
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.use(express.static(__dirname + '/public'));
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({
     secret: "say WUUUUT?!?"
   }));
   app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
 });
 
 app.use('/setup', express.router(setup));
@@ -33,27 +36,38 @@ app.get('/share', function(req, res) {
   });
 });
 
-//support XSS requests
-app.options('/pins', function(req, res) {
-  res.send("", {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "PUT", "Access-Control-Allow-Headers": "Origin, Content-Type"}, 200);
+app.get('/bookmark.js', function(req, res) {
+  var host = 'http://' + req.headers['host'];
+  //TODO: need error handling around this.
+  //TODO: consider; per-user auth codes may be a terrible way to go about this task.
+  if (req.session && req.session.user && req.session.user.auth_code) {
+    var auth_code = req.session.user.auth_code;
+    res.send(BOOKMARK_TEMPLATE.replace(/{{REPLACE_HOST}}/g, host).replace(/{{AUTH_TOKEN}}/, "'" + auth_code+ "'").replace(/[\s]/g, " "), {"Content-Type":"application/javascript"});
+  }
 });
 
 //pin url
 app.post('/pin', function(req, res) {
-  if (req.body.token == config.auth_token) {
-    pins.save(req.body.href, { 
-      "href": req.body.href,
-      "title" : req.body.title,
-      "domain" : req.body.domain,
-      "target" : req.body.target || "_blank",
-      "image" : req.body.image || false,
-      "show" : req.body.show || true
-    }, function(err) {
-      if (err) console.log(err);
+  if (req.body && req.body.token) {
+    users.find({'auth_code': req.body.token}, function(err, docs) {
+      if (!err && docs.length > 0) {
+        pins.save(req.body.href, { 
+          "href": req.body.href,
+          "title" : req.body.title,
+          "domain" : req.body.domain,
+          "target" : req.body.target || "_blank",
+          "image" : req.body.image || false,
+          "show" : req.body.show || true
+        }, function(err) {
+          if (err) console.log(err);
+        });
+        return res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
+      } else {
+        return res.send("", {"Access-Control-Allow-Origin": "*"}, 401);
+      }
     });
-    res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
   } else {
-    res.send("", {"Access-Control-Allow-Origin": "*"}, 401);
+    return res.send("", {"Access-Control-Allow-Origin": "*"}, 400);
   }
 });
 
@@ -75,10 +89,12 @@ app.get('/', function(req, res, next) {
     pins.find(function(err, _pins) {
       if (err) throw err;
 
+      var host = 'http://' + req.headers['host'];
+
       res.render('index', {
         error: null,
         status : req.session.authed,
-        bookmarklet: fs.readFileSync(__dirname + '/bookmarklet.js'),
+        bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{[^}]*}}/, host).replace(/[\s]/g, " "),
         pinned: _pins
       });
     });
