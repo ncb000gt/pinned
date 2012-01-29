@@ -46,7 +46,9 @@ app.get('/bookmark.js', function(req, res) {
   //TODO: consider; per-user auth codes may be a terrible way to go about this task.
   if (req.session && req.session.user && req.session.user.auth_code) {
     var auth_code = req.session.user.auth_code;
-    res.send(BOOKMARK_TEMPLATE.replace(/{{REPLACE_HOST}}/g, host).replace(/{{AUTH_TOKEN}}/, "'" + auth_code+ "'").replace(/[\s]/g, " "), {"Content-Type":"application/javascript"});
+    res.send(BOOKMARK_TEMPLATE.replace(/{{REPLACE_HOST}}/g, host).replace(/{{AUTH_TOKEN}}/, "'" + auth_code+ "'"), {"Content-Type":"application/javascript"});
+  } else {
+    res.send(401);
   }
 });
 
