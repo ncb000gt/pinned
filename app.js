@@ -59,8 +59,8 @@ app.post('/pin', function(req, res) {
 
 //get all pins
 app.get('/pins', function(req, res){
-  pins.get(null, function(err, data) {
-    res.json(data);
+  pins.find(function(err, pins) {
+    res.json(pins);
   });
 });
 
@@ -72,7 +72,7 @@ app.get('/', function(req, res, next) {
       status: false 
     });
   } else {
-    pins.get(null, function(err, _pins) {
+    pins.find(function(err, _pins) {
       if (err) throw err;
 
       res.render('index', {
