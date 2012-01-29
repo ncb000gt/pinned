@@ -1,13 +1,17 @@
 var express = require('express'),
     fs = require('fs'),
     bcrypt = require('bcrypt'),
-    config = require('./config'),
     db = require('./lib/db'),
     pins = new (require('./lib/pins'))(),
     users = new (require('./lib/users'))(),
     auth = require('./lib/auth'),
     setup = require('./lib/setup'),
-    errors = require('./lib/errors');
+    errors = require('./lib/errors'),
+    config = {};
+
+try {
+  config = require('./config');
+} catch(e) {}
 
 var BOOKMARKLET_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmarklet.js.template', 'utf8');
 var BOOKMARK_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmark.js.template', 'utf8');
