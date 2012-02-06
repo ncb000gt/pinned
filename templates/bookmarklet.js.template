@@ -1,0 +1,4 @@
+javascript:(
+  function() {
+    document.body.appendChild(document.createElement('script')).src='{{REPLACE_HOST}}/bookmark.js?auth_code={{AUTH_TOKEN}}';
+})();

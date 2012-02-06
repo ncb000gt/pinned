@@ -3,9 +3,6 @@ div#wrap
     h1 Pinned
     nav
       ul.view-filter
-        li.bookmarklet
-          - if (bookmarklet)
-            a.button(href=bookmarklet) Pin This
         li.current
           a(href="#grid-view") Grid
         li
@@ -23,12 +20,15 @@ div#wrap
               a(href="#items") Item
               
   section.content
+    ul
+      - each domain in domains
+        li
+          img(src=domain.icon)
+          | #{domain.name}
+
 
   footer.footer
     p 
       span Pinned - &copy; 2012 
       a(href="https://github.com/ncb000gt/pinned") Github
 
-
-
-          

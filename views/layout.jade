@@ -36,7 +36,12 @@ html
       div.form
         div.logo
         p
-          input(type="password", id="pw", name="pw", placeholder="Password")
+          - if (error)
+            .error #{error}
+        p
+          input(type="text", id="username", name="username", placeholder="Username")
+        p
+          input(type="password", id="password", name="password", placeholder="Password")
         p
           input(type="submit", value="Login", class="button")
       div.platform

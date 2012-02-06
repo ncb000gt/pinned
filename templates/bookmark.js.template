@@ -7,7 +7,7 @@
       var init = function(){
         $.ajax({
           "type" : "POST",
-          "url" : "{{REPLACE_HOST}}/pins",
+          "url" : "{{REPLACE_HOST}}/pin",
           "data" : {
             "href" : window.location.href,
             "title" : document.title,

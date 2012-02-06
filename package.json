@@ -1,12 +1,19 @@
 {
   "name": "pinned",
   "version": "0.0.1",
-  "description": "Incredibly basic bookmarking application.",
+  "description": "Bookmarking the way I want it.",
   "dependencies": {
     "express": ">=2.4.3",
     "jade": "*",
     "bcrypt": "*",
     "read": "*",
-    "mongodb": "0.9.7-3-5"
-  }
+    "mongodb": "0.9.7-3-5",
+    "node-uuid": "*"
+  },
+  "devDependencies": {
+    "nodeunit": "*"
+  },
+   "scripts": {
+     "test": "make test"
+   }
 }
