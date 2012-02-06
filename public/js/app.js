@@ -42,6 +42,7 @@
           url : "/pins",
           dataType : "json",
           success : function(res){
+
             var len = res.length,
                 i = 0;
 
@@ -49,7 +50,6 @@
 
               var item = res[i];
               var _time = new Date(item.saved);
-
 
               Pinned.template("pin", { 
                   domain : item.domain, 
@@ -63,7 +63,7 @@
                 }, function(html){
                   content.append(html);
               });
-              
+
             };
 
             content.masonry({
@@ -71,6 +71,7 @@
               gutterWidth: 15,
               isResizable: true
             });
+
           }
         })
       };
