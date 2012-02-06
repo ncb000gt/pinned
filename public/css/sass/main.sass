@@ -89,7 +89,6 @@ h5
     background-color: lighten($teal, 2%)
     +background(linear-gradient(top, $teal 0%, darken($teal, 15%) 50%, darken($teal, 20%) 50%, darken($teal, 15%) 100%))
     cursor: pointer
-
   &:active
     +box-shadow(0 0 20px 0 darken($teal, 30%) inset, 0 1px 0 white)
 
@@ -152,6 +151,7 @@ h5
   .info
     width: 100%
     a
+      text-align: center
       display: block
       font-family: 'Viga', sans-serif
       border: 1px solid #BBBBBB
@@ -168,12 +168,13 @@ h5
         color: #555
         word-wrap: break-word
       .name
-        padding: 6px 8px
-        margin: 15px 15px 8px
+        padding: 8px 0
+        margin: 0 0 15px
         font-size: 13px
         font-weight: normal
-        width: auto
+        width: 100%
         display: inline-block
+        +border-radius(0)
       .date
         padding: 0 15px
         font-size: 10px
@@ -193,6 +194,10 @@ h5
           +opacity(1)
         .title
           color: #000
+        .name
+          background-color: lighten($teal, 2%)
+          +background(linear-gradient(top, $teal 0%, darken($teal, 15%) 50%, darken($teal, 20%) 50%, darken($teal, 15%) 100%))
+          cursor: pointer
 
   .action  
     display: none

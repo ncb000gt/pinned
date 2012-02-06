@@ -214,7 +214,7 @@ h5 {
   background: linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
   cursor: pointer;
 }
-/* line 93, sass/main.sass */
+/* line 92, sass/main.sass */
 .button:active {
   -moz-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
   -webkit-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
@@ -222,12 +222,12 @@ h5 {
   box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
 }
 
-/* line 96, sass/main.sass */
+/* line 95, sass/main.sass */
 .login {
   width: 420px;
   margin: 220px auto 0;
 }
-/* line 99, sass/main.sass */
+/* line 98, sass/main.sass */
 .login .form {
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #efefef), color-stop(100%, #ffffff));
   background: -webkit-linear-gradient(top, #efefef, #ffffff);
@@ -249,11 +249,11 @@ h5 {
   border-left: 1px solid #cccccc;
   border-right: 1px solid #cccccc;
 }
-/* line 112, sass/main.sass */
+/* line 111, sass/main.sass */
 .login .form input[type="submit"] {
   margin: 20px auto 0;
 }
-/* line 114, sass/main.sass */
+/* line 113, sass/main.sass */
 .login .form input[type="password"] {
   padding: 20px;
   text-align: center;
@@ -267,12 +267,12 @@ h5 {
   -o-box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
   box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
 }
-/* line 123, sass/main.sass */
+/* line 122, sass/main.sass */
 .login .form input[type="password"]:focus {
   background: #ffffe2;
   border-color: #eeeeee;
 }
-/* line 126, sass/main.sass */
+/* line 125, sass/main.sass */
 .login .form .logo {
   background: url(images/logo.large.png);
   height: 55px;
@@ -282,14 +282,14 @@ h5 {
   top: -40px;
   width: 181px;
 }
-/* line 134, sass/main.sass */
+/* line 133, sass/main.sass */
 .login .platform {
   background: url(images/login.background.png);
   height: 132px;
   width: 420px;
 }
 
-/* line 139, sass/main.sass */
+/* line 138, sass/main.sass */
 .pin {
   -moz-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
@@ -305,16 +305,17 @@ h5 {
   background: white;
   margin: 0 auto 15px;
 }
-/* line 149, sass/main.sass */
+/* line 148, sass/main.sass */
 .pin .info, .pin .action {
   float: left;
 }
-/* line 152, sass/main.sass */
+/* line 151, sass/main.sass */
 .pin .info {
   width: 100%;
 }
-/* line 154, sass/main.sass */
+/* line 153, sass/main.sass */
 .pin .info a {
+  text-align: center;
   display: block;
   font-family: "Viga", sans-serif;
   border: 1px solid #bbbbbb;
@@ -339,14 +340,20 @@ h5 {
 }
 /* line 170, sass/main.sass */
 .pin .info a .name {
-  padding: 6px 8px;
-  margin: 15px 15px 8px;
+  padding: 8px 0;
+  margin: 0 0 15px;
   font-size: 13px;
   font-weight: normal;
-  width: auto;
+  width: 100%;
   display: inline-block;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  -o-border-radius: 0;
+  -ms-border-radius: 0;
+  -khtml-border-radius: 0;
+  border-radius: 0;
 }
-/* line 177, sass/main.sass */
+/* line 178, sass/main.sass */
 .pin .info a .date {
   padding: 0 15px;
   font-size: 10px;
@@ -354,7 +361,7 @@ h5 {
   color: #999999;
   margin-bottom: 10px;
 }
-/* line 183, sass/main.sass */
+/* line 184, sass/main.sass */
 .pin .info a .background {
   -moz-background-size: cover;
   -webkit-background-size: cover;
@@ -367,30 +374,41 @@ h5 {
   width: 100%;
   min-height: 200px;
 }
-/* line 190, sass/main.sass */
+/* line 191, sass/main.sass */
 .pin .info a:hover {
   text-decoration: none;
 }
-/* line 192, sass/main.sass */
+/* line 193, sass/main.sass */
 .pin .info a:hover .background {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
-/* line 194, sass/main.sass */
+/* line 195, sass/main.sass */
 .pin .info a:hover .title {
   color: black;
 }
 /* line 197, sass/main.sass */
+.pin .info a:hover .name {
+  background-color: #23afa0;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #21a698), color-stop(50%, #14665e), color-stop(50%, #10514a), color-stop(100%, #14665e));
+  background: -webkit-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: -moz-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: -o-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: -ms-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  background: linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
+  cursor: pointer;
+}
+/* line 202, sass/main.sass */
 .pin .action {
   display: none;
 }
 
-/* line 201, sass/main.sass */
+/* line 206, sass/main.sass */
 .content, .footer {
   padding: 10px;
 }
 
-/* line 205, sass/main.sass */
+/* line 210, sass/main.sass */
 .footer {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
