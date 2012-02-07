@@ -5,7 +5,7 @@ var express = require('express'),
     pins = new (require('./lib/dbs/pins'))(),
     users = new (require('./lib/dbs/users'))(),
     auth = require('./lib/auth'),
-    share = require('./lib/share'),
+    // share = require('./lib/share'),
     setup = require('./lib/setup'),
     errors = require('./lib/errors'),
     config = {};
@@ -32,7 +32,7 @@ app.configure(function(){
 });
 
 app.use('/setup', express.router(setup));
-app.use('/share', express.router(share));
+// app.use('/share', express.router(share));
 
 app.get(/bookmark.js/, function(req, res) {
   var host = 'http://' + req.headers['host'];

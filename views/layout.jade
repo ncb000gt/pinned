@@ -2,13 +2,17 @@
 html
   head
     title Pinned
-    link(href="http://fonts.googleapis.com/css?family=Viga", rel="stylesheet", type="text/css")
+
     link(href="css/main.css", rel="stylesheet", type="text/css")
+    link(href="http://fonts.googleapis.com/css?family=Overlock", rel="stylesheet", type="text/css")
+    link(href="http://fonts.googleapis.com/css?family=Pacifico", rel="stylesheet", type="text/css")
+
     script(src="js/head.min.js")
   body
     !{body}
   script
     head
+      .js("js/path.min.js")
       .js("js/jquery.min.js")
       .js("js/jquery.masonry.min.js")
       .js("js/jquery.timeago.js")
@@ -19,29 +23,40 @@ html
         head.ready(function(){ Pinned.status = true; });
 
   script(type="text/template", id="pin-template")
-    div(class="pin pin-{{pin.id}}")
-      div.info
-        a(href="{{pin.href}}", target="{{pin.target}}")
-          span.name.button {{pin.domain}}
+    div(class="pin pin-{{pin.id}} module")
+      div
+        a(href="{{pin.href}}", target="{{pin.target}}") 
           span.title {{pin.title}}
-          span.date {{pin.date}}
-          // span.background(style="background-image: url({{pin.image}})")
-      div.action
-        div.arrow
-        a(href="javascript:;", class="remove") Remove
-        a(href="javascript:;", class="edit") Edit
+      div.module-footer
+        a(href="{{pin.href}}", target="{{pin.target}}") {{pin.date}}
 
   script(type="text/template", id="login-template")
-    form(class="login", method="POST")
+    form(class="login module", method="POST")
+      div
+        h2 Login
       div.form
-        div.logo
-        p
-          - if (error)
-            .error #{error}
+        - if (error)
+          p.error #{error}
         p
           input(type="text", id="username", name="username", placeholder="Username")
         p
           input(type="password", id="password", name="password", placeholder="Password")
+        p
+          input(type="submit", value="Login", class="button")
+
+  script(type="text/template", id="register-template")
+    form(class="register module", method="POST")
+      div.form
+        - if (error)
+          p.error #{error}
+        p
+          input(type="text", id="username", name="username", placeholder="Username")
+        p
+          input(type="email", id="email", name="email", placeholder="Email")
+        p
+          input(type="password", id="password", name="password", placeholder="Password")
+        p
+          input(type="password", id="confPassword", name="confPassword", placeholder="Confirm Password")
         p
           input(type="submit", value="Login", class="button")
       div.platform

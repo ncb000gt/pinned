@@ -6,3 +6,4 @@ bookmarklet.js
 public/js/bookmark.js
 config.js
 .sass-cache
+.DS_Store

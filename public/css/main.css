@@ -1,21 +1,3 @@
-/* line 6, sass/_bundle.sass */
-.group, .header, .header nav, .header nav > ul, .pin, .content, .footer {
-  *zoom: 1;
-}
-/* line 38, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-.group:after, .header:after, .header nav:after, .header nav > ul:after, .pin:after, .content:after, .footer:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* line 9, sass/_bundle.sass */
-.displace, .header h1 {
-  display: block;
-  text-indent: -9999px;
-}
-
-/* line 17, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -37,404 +19,251 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 20, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 body {
   line-height: 1;
 }
 
-/* line 22, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 26, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 28, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 101, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 30, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 114, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
 
-/* line 4, sass/main.sass */
-body {
-  background: url(images/body.background.png);
-  padding-top: 64px;
-  font-family: Helvetica, Arial, sans-serif;
+.sans-serif, body {
+  font-family: "Overlock";
+  font-weight: 400;
+}
+
+.title, h1, h2, h3, h4 {
+  color: #3c3c3c;
+  text-shadow: 0 1px 0 #fcfcfc;
+  font-family: "Open Sans Condensed", sans-serif;
+  font-weight: 400;
+}
+
+.group, h1, h2, h3, h4, .module, .module div, #wrap nav, #wrap .header {
+  *zoom: 1;
+}
+.group:after, h1:after, h2:after, h3:after, h4:after, .module:after, .module div:after, #wrap nav:after, #wrap .header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.displace, #wrap h1 a {
+  display: block;
+  text-indent: -9999px;
+}
+
+.middle, #wrap, #wrap .content .login, #wrap form input[type="submit"], #wrap form button {
+  margin: 0 auto;
+}
+
+.padding, .module div, #wrap .footer p, #wrap form input[type="text"], #wrap form input[type="password"], #wrap form input[type="email"], #wrap form input[type="submit"], #wrap form button {
+  padding: 7px 14px;
+}
+
+.padding-y, #wrap h1, #wrap nav, #wrap .content {
+  padding: 7px 0;
+}
+
+.padding-x, .module div.module-footer a {
+  padding: 0 14px;
+}
+
+.margin, #wrap .content .login h2, #wrap form .error {
+  margin: 7px 14px;
+}
+
+.margin-y, #wrap .pin {
+  margin: 7px 0;
+}
+
+.margin-x, #wrap h1 a {
+  margin: 0 14px;
+}
+
+.alignLeft, #wrap h1, #wrap nav {
+  float: left;
+}
+
+.alignRight {
+  float: right;
+}
+
+.small, .module div.module-footer, #wrap .footer p, #wrap form input[type="submit"], #wrap form button {
   font-size: 12px;
 }
 
-/* line 10, sass/main.sass */
-a, a:link {
-  color: #21a698;
-  text-decoration: none;
-}
-/* line 14, sass/main.sass */
-a:hover, a:link:hover {
-  text-decoration: underline;
+.medium, .module, #wrap .pin .title, #wrap .pin h1, #wrap .pin h2, #wrap .pin h3, #wrap .pin h4, #wrap form .error, #wrap form input[type="text"], #wrap form input[type="password"], #wrap form input[type="email"] {
+  font-size: 15px;
 }
 
-/* line 17, sass/main.sass */
-.header {
-  background: white url(images/header.background.png) repeat-x;
-  height: 64px;
-  top: 0;
-  position: fixed;
-  width: 100%;
-  z-index: 10;
-}
-/* line 26, sass/main.sass */
-.header h1 {
-  background: url(images/logo.png) no-repeat;
-  float: left;
-  height: 32px;
-  width: 103px;
-  margin-top: 12px;
-  margin-left: 10px;
-}
-/* line 35, sass/main.sass */
-.header nav {
-  float: right;
-  margin: 12px 10px 0;
-}
-/* line 39, sass/main.sass */
-.header nav > ul {
-  float: left;
-  height: 32px;
-  margin-left: 20px;
-}
-/* line 44, sass/main.sass */
-.header nav > ul li {
-  float: left;
-}
-/* line 46, sass/main.sass */
-.header nav > ul li a, .header nav > ul li a:link {
-  display: block;
-  line-height: 32px;
-  padding: 0 12px;
-}
-/* line 50, sass/main.sass */
-.header nav > ul li ul {
-  display: none;
+.large, .title, h1, h2, h3, h4 {
+  font-size: 21px;
 }
 
-/* line 54, sass/main.sass */
-h2, h3, h4, h5, h6, .title {
-  font-family: Arial, sans-serif;
-  text-shadow: 1px 2px 0 #f9f9f7, 3px 4px 0 #dddddd;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: black;
-  margin: 0 0 12px;
-}
-
-/* line 62, sass/main.sass */
-h2 {
-  font-size: 24px;
-}
-
-/* line 64, sass/main.sass */
-h3 {
-  font-size: 20px;
-}
-
-/* line 66, sass/main.sass */
-h4 {
-  font-size: 18px;
-}
-
-/* line 68, sass/main.sass */
-h5 {
-  font-size: 16px;
-}
-
-/* line 71, sass/main.sass */
-.button {
-  background-color: #21a698;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #21a698), color-stop(50%, #197b71), color-stop(50%, #14665e), color-stop(100%, #197b71));
-  background: -webkit-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
-  background: -moz-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
-  background: -o-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
-  background: -ms-linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
-  background: linear-gradient(top, #21a698 0%, #197b71 50%, #14665e 50%, #197b71 100%);
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
-  -moz-box-shadow: inset 0 1px 0 #25bbab;
-  -webkit-box-shadow: inset 0 1px 0 #25bbab;
-  -o-box-shadow: inset 0 1px 0 #25bbab;
-  box-shadow: inset 0 1px 0 #25bbab;
-  border-color: #197b71 #197b71 #10514a;
-  border-style: solid;
-  border-width: 1px;
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  font-family: "helvetica neue", sans-serif;
-  padding: 7px 0 8px;
-  text-align: center;
-  text-shadow: 0 -1px 1px #000f4d;
-  width: 150px;
-}
-/* line 88, sass/main.sass */
-.button:hover {
-  background-color: #23afa0;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #21a698), color-stop(50%, #14665e), color-stop(50%, #10514a), color-stop(100%, #14665e));
-  background: -webkit-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: -moz-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: -o-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: -ms-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  cursor: pointer;
-}
-/* line 92, sass/main.sass */
-.button:active {
-  -moz-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
-  -webkit-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
-  -o-box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
-  box-shadow: 0 0 20px 0 #082623 inset, 0 1px 0 white;
-}
-
-<<<<<<< HEAD
-/* line 95, sass/main.sass */
-=======
-a.button{color: #FFF}
-
-/* line 96, sass/main.sass */
->>>>>>> 79d6327b531482d9604d0460da2b6663e32b7e91
-.login {
-  width: 420px;
-  margin: 220px auto 0;
-}
-/* line 98, sass/main.sass */
-.login .form {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #efefef), color-stop(100%, #ffffff));
-  background: -webkit-linear-gradient(top, #efefef, #ffffff);
-  background: -moz-linear-gradient(top, #efefef, #ffffff);
-  background: -o-linear-gradient(top, #efefef, #ffffff);
-  background: -ms-linear-gradient(top, #efefef, #ffffff);
-  background: linear-gradient(top, #efefef, #ffffff);
-  -moz-box-shadow: 0 1px 0 white inset;
-  -webkit-box-shadow: 0 1px 0 white inset;
-  -o-box-shadow: 0 1px 0 white inset;
-  box-shadow: 0 1px 0 white inset;
-  padding: 25px 0;
-  margin: 0 auto;
-  position: relative;
-  top: 35px;
-  text-align: center;
-  width: 340px;
-  border-top: 1px solid #cccccc;
-  border-left: 1px solid #cccccc;
-  border-right: 1px solid #cccccc;
-}
-/* line 111, sass/main.sass */
-.login .form input[type="submit"] {
-  margin: 20px auto 0;
-}
-<<<<<<< HEAD
-/* line 113, sass/main.sass */
-.login .form input[type="password"] {
-=======
-/* line 114, sass/main.sass */
-.login .form input:not([type="submit"]) {
->>>>>>> 79d6327b531482d9604d0460da2b6663e32b7e91
-  padding: 20px;
-  text-align: center;
-  border: 1px solid #efefef;
-  font-size: 23px;
-  width: 230px;
-  display: block;
-  margin: 0 auto;
-  -moz-box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
-  -webkit-box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
-  -o-box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
-  box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 0 white;
-}
-<<<<<<< HEAD
-/* line 122, sass/main.sass */
-.login .form input[type="password"]:focus {
-=======
-/* line 123, sass/main.sass */
-.login .form input:not([type="submit"]):focus {
->>>>>>> 79d6327b531482d9604d0460da2b6663e32b7e91
-  background: #ffffe2;
-  border-color: #eeeeee;
-}
-/* line 125, sass/main.sass */
-.login .form .logo {
-  background: url(images/logo.large.png);
-  height: 55px;
-  left: 50%;
-  margin-left: -90px;
-  position: absolute;
-  top: -40px;
-  width: 181px;
-}
-/* line 133, sass/main.sass */
-.login .platform {
-  background: url(images/login.background.png);
-  height: 132px;
-  width: 420px;
-}
-
-/* line 138, sass/main.sass */
-.pin {
-  -moz-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 4px 4px 1px rgba(0, 0, 0, 0.1);
+.module {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-  positon: relative;
-  float: left;
-  width: 220px;
-  background: white;
-  margin: 0 auto 15px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: 0 2px 2px #ededed;
+  -webkit-box-shadow: 0 2px 2px #ededed;
+  -o-box-shadow: 0 2px 2px #ededed;
+  box-shadow: 0 2px 2px #ededed;
+  background-color: #fcfcfc;
 }
-/* line 148, sass/main.sass */
-.pin .info, .pin .action {
-  float: left;
+.module div:first-child {
+  background-color: #f7f7f7;
 }
-/* line 151, sass/main.sass */
-.pin .info {
-  width: 100%;
-}
-/* line 153, sass/main.sass */
-.pin .info a {
-  text-align: center;
-  display: block;
-  font-family: "Viga", sans-serif;
-  border: 1px solid #bbbbbb;
-  background: #f9f9f9;
-  -moz-box-shadow: 0 0 1px 1px #f6f6f6 inset;
-  -webkit-box-shadow: 0 0 1px 1px #f6f6f6 inset;
-  -o-box-shadow: 0 0 1px 1px #f6f6f6 inset;
-  box-shadow: 0 0 1px 1px #f6f6f6 inset;
-}
-/* line 160, sass/main.sass */
-.pin .info a span {
-  display: block;
-}
-/* line 163, sass/main.sass */
-.pin .info a .title {
-  padding: 0 15px;
-  font-size: 16px;
-  margin-bottom: 10px;
-  text-shadow: 2px 3px 0 #efefef;
-  color: #555555;
-  word-wrap: break-word;
-}
-/* line 170, sass/main.sass */
-.pin .info a .name {
-  padding: 8px 0;
-  margin: 0 0 15px;
-  font-size: 13px;
-  font-weight: normal;
-  width: 100%;
-  display: inline-block;
-  -moz-border-radius: 0;
-  -webkit-border-radius: 0;
-  -o-border-radius: 0;
-  -ms-border-radius: 0;
-  -khtml-border-radius: 0;
-  border-radius: 0;
-}
-/* line 178, sass/main.sass */
-.pin .info a .date {
-  padding: 0 15px;
-  font-size: 10px;
-  font-family: arial;
+.module div.module-footer {
   color: #999999;
-  margin-bottom: 10px;
 }
-/* line 184, sass/main.sass */
-.pin .info a .background {
-  -moz-background-size: cover;
-  -webkit-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  opacity: 0.8;
-  border-top: 1px solid white;
-  background-color: #333333;
-  width: 100%;
-  min-height: 200px;
+.module div.module-footer border {
+  top: 1px solid #f7f7f7;
 }
-/* line 191, sass/main.sass */
-.pin .info a:hover {
+.module div.module-footer a {
+  color: #999999;
+  display: block;
+  background-image: url("images/pinned.icon.link.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+.module div.module-footer a:hover {
+  color: #0073cc;
+}
+
+a {
+  color: #0090ff;
   text-decoration: none;
 }
-/* line 193, sass/main.sass */
-.pin .info a:hover .background {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1;
+a:hover {
+  color: #0073cc;
 }
-/* line 195, sass/main.sass */
-.pin .info a:hover .title {
-  color: black;
+
+body {
+  background-color: #ededed;
+  background-image: url("images/pinned.bg.png");
 }
-/* line 197, sass/main.sass */
-.pin .info a:hover .name {
-  background-color: #23afa0;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #21a698), color-stop(50%, #14665e), color-stop(50%, #10514a), color-stop(100%, #14665e));
-  background: -webkit-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: -moz-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: -o-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: -ms-linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  background: linear-gradient(top, #21a698 0%, #14665e 50%, #10514a 50%, #14665e 100%);
-  cursor: pointer;
+
+#wrap {
+  width: 960px;
 }
-/* line 202, sass/main.sass */
-.pin .action {
+#wrap h1 {
+  width: 480px;
+}
+#wrap h1 a {
+  width: 64px;
+  height: 68px;
+  background-image: url("images/pinned.logo.png");
+}
+#wrap nav {
   display: none;
+  width: 480px;
 }
-
-/* line 206, sass/main.sass */
-.content, .footer {
-  padding: 10px;
+#wrap .header {
+  background-color: #fcfcfc;
+  border-bottom: 4px solid #cccccc;
 }
-
-/* line 210, sass/main.sass */
-.footer {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-  background: white;
-  border-top: 1px solid #efefef;
+#wrap .footer {
+  width: 960px;
+  position: fixed;
   bottom: 0;
+  left: 50%;
+  margin-left: -480px;
+}
+#wrap .footer p {
+  text-transform: uppercase;
   color: #999999;
-  padding: 10px;
-  position: fixed;
-  width: 100%;
+  background-color: #fcfcfc;
+  border-top: 4px solid #cccccc;
+}
+#wrap .content {
+  padding-left: 8px;
+}
+#wrap .content .login {
+  text-align: center;
+  width: 320px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -160px;
+  margin-top: -160px;
+}
+#wrap .pin {
+  width: 225px;
+}
+#wrap form .error {
+  color: red;
+}
+#wrap form input[type="text"], #wrap form input[type="password"], #wrap form input[type="email"] {
+  border: 0;
+  text-align: center;
+  margin: 14px 0 0;
+  -moz-box-shadow: inset 0 1px 2px #cccccc;
+  -webkit-box-shadow: inset 0 1px 2px #cccccc;
+  -o-box-shadow: inset 0 1px 2px #cccccc;
+  box-shadow: inset 0 1px 2px #cccccc;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #fcffe8;
+}
+#wrap form input[type="text"]:focus, #wrap form input[type="password"]:focus, #wrap form input[type="email"]:focus {
+  background-color: #fcfcfc;
+}
+#wrap form input[type="submit"], #wrap form button {
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  width: 160px;
+  border: 0;
+  text-align: center;
+  background-color: #222222;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  color: #f7f7f7;
+}
+#wrap form input[type="submit"]:hover, #wrap form button:hover {
+  background-color: #3c3c3c;
 }

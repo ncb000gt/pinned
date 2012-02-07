@@ -1,222 +1,127 @@
-@import "_bundle"
 @import "compass/reset"
+@import "_bundle"
+@import "_font"
+@import "_general"
 
 body
-  background: url(images/body.background.png)
-  padding-top: 64px
-  font-family: Helvetica, Arial, sans-serif
-  font-size: 12px
+  @extend .sans-serif
+  background:
+    color: $w3
+    image: url("images/pinned.bg.png")
 
-a, a:link
-  color: $teal
-  text-decoration: none
-  
-  &:hover
-    text-decoration: underline
+#wrap
+  width: $fwidth
+  @extend .middle
 
-.header
-  @extend .group
-  background: #fff url(images/header.background.png) repeat-x
-  height: 64px
-  top: 0
-  position: fixed
-  width: 100%
-  z-index: 10
-  
-  h1
-    @extend .displace
-    background: url(images/logo.png) no-repeat
-    float: left
-    height: 32px
-    width: 103px
-    margin-top: 12px
-    margin-left: 10px
-    
+  h1 
+    @extend .padding-y
+    @extend .alignLeft
+    width: $hwidth
+    a
+      @extend .margin-x
+      @extend .displace
+      width: 64px
+      height: 68px
+      background:
+        image: url("images/pinned.logo.png")
   nav
+
+    // TEMPORARY
+    display: none
+
     @extend .group
-    float: right
-    margin: 12px 10px 0
-    > ul
-      @extend .group
-      float: left
-      height: 32px
-      margin-left: 20px
-      li 
-        float: left
-        a, a:link
-          display: block
-          line-height: 32px
-          padding: 0 12px
-        ul
-          display: none
+    @extend .padding-y
+    @extend .alignLeft
+    width: $hwidth
+    
+
+  .header
+    @extend .group
+    background:
+      color: $w4
+    border:
+      bottom: 4px solid $w1
+
+  .footer
+    width: $fwidth
+    position: fixed
+    bottom: 0
+    left: 50%
+    margin-left: -$hwidth
+
+    p
+      @extend .padding
+      @extend .small
+      text-transform: uppercase
+      color: $w0
+      background:
+        color: $w4
+      border:
+        top: 4px solid $w1
+
+  .content
+    @extend .padding-y
+    padding-left: 8px
+    .login
+      @extend .middle
+      text-align: center
+      width: $pwidth
+      position: absolute
+      top: 50%
+      left: 50%
+      margin-left: -($pwidth / 2)
+      margin-top: -($pwidth / 2)
+      h2
+        @extend .margin
+
+  .pin
+    @extend .margin-y
+    width: $qwidth - 15
+
+    .title
+      @extend .medium
+
+  form
+
+    .error
+      @extend .medium
+      @extend .margin
+      color: $error
+
+    input[type="text"], input[type="password"], input[type="email"]
+      @extend .medium
+      @extend .padding
+      border: 0
+      text-align: center
+      margin: 14px 0 0
+      +box-shadow(inset 0 1px 2px $w1)
+      +border-radius(4px)
+      background:
+        color: $warn
+      
+      &:focus
+        background:
+          color: $w4
+
+    input[type="submit"], button
+      @extend .small
+      @extend .padding
+      @extend .middle
+      +border-radius(4px)
+      cursor: pointer
+      display: block
+      width: $mwidth
+      border: 0
+      text-align: center
+      background: 
+        color: $b0
+      margin-top: 14px
+      margin-bottom: 14px
+      color: $w5
+
+      &:hover
+        background:
+          color: $b1
       
 
-h2, h3, h4, h5, h6, .title
-  font-family: Arial, sans-serif
-  text-shadow: 1px 2px 0 #F9F9F7, 3px 4px 0 #DDDDDD
-  text-transform: uppercase
-  font-weight: bold
-  color: #000
-  margin: 0 0 12px
-  
-h2
-  font-size: 24px
-h3
-  font-size: 20px
-h4
-  font-size: 18px
-h5
-  font-size: 16px
 
-.button
-  background-color: $teal
-  +background(linear-gradient(top, $teal 0%, darken($teal, 10%) 50%, darken($teal, 15%) 50%, darken($teal, 10%) 100%))
-  +border-radius(5px)
-  +box-shadow(inset 0 1px 0 lighten($teal, 5%))
-  border-color: darken($teal, 10%) darken($teal, 10%) darken($teal, 20%)
-  border-style: solid
-  border-width: 1px
-  color: #FFFFFF
-  font: 
-    weight: bold
-    size: 16px 
-    family: "helvetica neue", sans-serif
-  padding: 7px 0 8px
-  text-align: center
-  text-shadow: 0 -1px 1px #000F4D
-  width: 150px
-  &:hover
-    background-color: lighten($teal, 2%)
-    +background(linear-gradient(top, $teal 0%, darken($teal, 15%) 50%, darken($teal, 20%) 50%, darken($teal, 15%) 100%))
-    cursor: pointer
-  &:active
-    +box-shadow(0 0 20px 0 darken($teal, 30%) inset, 0 1px 0 white)
-
-a.button
-  color: #FFF
-
-.login
-  width: 420px
-  margin: 220px auto 0
-  .form
-    +background(linear-gradient(top, #efefef, #FFFFFF))
-    +box-shadow(0 1px 0 #FFFFFF inset)
-    padding: 25px 0
-    margin: 0 auto
-    position: relative
-    top: 35px
-    text-align: center
-    width: 340px
-    border:
-      top: 1px solid #ccc
-      left: 1px solid #ccc
-      right: 1px solid #ccc
-    input[type="submit"]
-      margin: 20px auto 0
-    input:not([type="submit"])
-      padding: 20px
-      text-align: center
-      border: 1px solid #efefef
-      font-size: 23px
-      width: 230px
-      display: block
-      margin: 0 auto
-      +box-shadow(inset 0 10px 10px rgba(0,0,0,.1), 0 1px 0 #fff)
-      &:focus
-        background: #FFFFE2
-        border-color: #eee
-    .logo
-      background: url(images/logo.large.png)
-      height: 55px
-      left: 50%
-      margin-left: -90px
-      position: absolute
-      top: -40px
-      width: 181px
-  .platform
-    background: url(images/login.background.png)
-    height: 132px
-    width: 420px
-
-.pin
-  @extend .group
-  +box-shadow(4px 4px 1px rgba(0,0,0,.1))
-  +box-sizing(border-box)
-  positon: relative
-  float: left
-  width: 220px
-  background: #fff
-  margin: 0 auto 15px
-
-  .info, .action
-    float: left
-  
-  .info
-    width: 100%
-    a
-      text-align: center
-      display: block
-      font-family: 'Viga', sans-serif
-      border: 1px solid #BBBBBB
-      background: #f9f9f9
-      +box-shadow(0 0 1px 1px #F6F6F6 inset)
-      span
-        display: block
-
-      .title
-        padding: 0 15px
-        font-size: 16px
-        margin-bottom: 10px
-        text-shadow: 2px 3px 0 #efefef
-        color: #555
-        word-wrap: break-word
-      .name
-        padding: 8px 0
-        margin: 0 0 15px
-        font-size: 13px
-        font-weight: normal
-        width: 100%
-        display: inline-block
-        +border-radius(0)
-      .date
-        padding: 0 15px
-        font-size: 10px
-        font-family: arial
-        color: #999
-        margin-bottom: 10px
-      .background
-        +background-size(cover)
-        +opacity(.8)
-        border-top: 1px solid #fff
-        background-color: #333
-        width: 100%
-        min-height: 200px
-      &:hover
-        text-decoration: none
-        .background
-          +opacity(1)
-        .title
-          color: #000
-        .name
-          background-color: lighten($teal, 2%)
-          +background(linear-gradient(top, $teal 0%, darken($teal, 15%) 50%, darken($teal, 20%) 50%, darken($teal, 15%) 100%))
-          cursor: pointer
-
-  .action  
-    display: none
-  
-
-.content, .footer
-  @extend .group
-  padding: 10px
-  
-.footer
-  +box-sizing(border-box)
-  background: #FFFFFF
-  border-top: 1px solid #EFEFEF
-  bottom: 0
-  color: #999999
-  padding: 10px
-  position: fixed
-  width: 100%
-  
