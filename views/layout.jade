@@ -31,7 +31,7 @@ html
         a(href="{{pin.href}}", target="{{pin.target}}") {{pin.date}}
 
   script(type="text/template", id="login-template")
-    form(class="login module", method="POST")
+    form(class="login module", method="POST", action="#/")
       div
         h2 Login
       div.form
@@ -62,6 +62,6 @@ html
         p
           input(type="password", id="confPassword", name="confPassword", placeholder="Confirm Password")
         p
-          input(type="submit", value="Login", class="button")
+          input(type="submit", value="Register", class="button")
       div.module-footer
         a(href="#/") Back to login
