@@ -62,7 +62,7 @@ body
   .content
     @extend .padding-y
     padding-left: 8px
-    .login
+    .login, .register
       @extend .middle
       text-align: center
       width: $pwidth
@@ -73,6 +73,10 @@ body
       margin-top: -($pwidth / 2)
       h2
         @extend .margin
+      a
+        background: none
+        display: block
+        margin: 0 0 14px
 
   .pin
     @extend .margin-y

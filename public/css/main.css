@@ -80,7 +80,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   text-indent: -9999px;
 }
 
-.middle, #wrap, #wrap .content .login, #wrap form input[type="submit"], #wrap form button {
+.middle, #wrap, #wrap .content .login, #wrap .content .register, #wrap form input[type="submit"], #wrap form button {
   margin: 0 auto;
 }
 
@@ -96,7 +96,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   padding: 0 14px;
 }
 
-.margin, #wrap .content .login h2, #wrap form .error {
+.margin, #wrap .content .login h2, #wrap .content .register h2, #wrap form .error {
   margin: 7px 14px;
 }
 
@@ -213,7 +213,7 @@ body {
 #wrap .content {
   padding-left: 8px;
 }
-#wrap .content .login {
+#wrap .content .login, #wrap .content .register {
   text-align: center;
   width: 320px;
   position: absolute;
@@ -221,6 +221,11 @@ body {
   left: 50%;
   margin-left: -160px;
   margin-top: -160px;
+}
+#wrap .content .login a, #wrap .content .register a {
+  background: none;
+  display: block;
+  margin: 0 0 14px;
 }
 #wrap .pin {
   width: 225px;

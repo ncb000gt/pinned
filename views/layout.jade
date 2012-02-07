@@ -5,7 +5,7 @@ html
 
     link(href="css/main.css", rel="stylesheet", type="text/css")
     link(href="http://fonts.googleapis.com/css?family=Overlock", rel="stylesheet", type="text/css")
-    link(href="http://fonts.googleapis.com/css?family=Pacifico", rel="stylesheet", type="text/css")
+    link(href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300", rel="stylesheet", type="text/css")
 
     script(src="js/head.min.js")
   body
@@ -43,9 +43,13 @@ html
           input(type="password", id="password", name="password", placeholder="Password")
         p
           input(type="submit", value="Login", class="button")
+      div.module-footer
+        a(href="#/register") Register
 
   script(type="text/template", id="register-template")
     form(class="register module", method="POST")
+      div
+        h2 Register
       div.form
         - if (error)
           p.error #{error}
@@ -59,4 +63,5 @@ html
           input(type="password", id="confPassword", name="confPassword", placeholder="Confirm Password")
         p
           input(type="submit", value="Login", class="button")
-      div.platform
+      div.module-footer
+        a(href="#/") Back to login

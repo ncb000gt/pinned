@@ -82,7 +82,7 @@
   */
   Pinned.application.login = function(){
     return Pinned.template("login", {}, function(res){
-        $(".content").append(res);
+        $(".content").empty().append(res);
     });
   };
 
@@ -91,7 +91,9 @@
   };
 
   Pinned.application.register = function(){
-    
+    return Pinned.template("register", {}, function(res){
+        $(".content").empty().append(res);
+    });
   };
 
   Pinned.settings = {};
