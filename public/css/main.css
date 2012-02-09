@@ -120,11 +120,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-size: 12px;
 }
 
-.medium, .module, #wrap .pin .title, #wrap .pin h1, #wrap .pin h2, #wrap .pin h3, #wrap .pin h4, #wrap form .error, #wrap form input[type="text"], #wrap form input[type="password"], #wrap form input[type="email"] {
+.medium, .module, #wrap form .error, #wrap form input[type="text"], #wrap form input[type="password"], #wrap form input[type="email"] {
   font-size: 15px;
 }
 
-.large, .title, h1, h2, h3, h4 {
+.large, .title, h1, h2, h3, h4, #wrap .pin .title, #wrap .pin h1, #wrap .pin h2, #wrap .pin h3, #wrap .pin h4 {
   font-size: 21px;
 }
 
@@ -139,10 +139,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   -ms-border-radius: 4px;
   -khtml-border-radius: 4px;
   border-radius: 4px;
-  -moz-box-shadow: 0 2px 2px #ededed;
-  -webkit-box-shadow: 0 2px 2px #ededed;
-  -o-box-shadow: 0 2px 2px #ededed;
-  box-shadow: 0 2px 2px #ededed;
+  -moz-box-shadow: 0 2px 2px #e3e3e3;
+  -webkit-box-shadow: 0 2px 2px #e3e3e3;
+  -o-box-shadow: 0 2px 2px #e3e3e3;
+  box-shadow: 0 2px 2px #e3e3e3;
   background-color: #fcfcfc;
 }
 .module div:first-child {
@@ -211,7 +211,7 @@ body {
   border-top: 4px solid #cccccc;
 }
 #wrap .content {
-  padding-left: 8px;
+  padding-left: 18px;
 }
 #wrap .content .login, #wrap .content .register {
   text-align: center;
@@ -220,15 +220,22 @@ body {
   top: 50%;
   left: 50%;
   margin-left: -160px;
-  margin-top: -160px;
 }
 #wrap .content .login a, #wrap .content .register a {
   background: none;
   display: block;
   margin: 0 0 14px;
 }
+#wrap .content .login {
+  min-height: 256px;
+  margin-top: -128px;
+}
+#wrap .content .register {
+  min-height: 350px;
+  margin-top: -175px;
+}
 #wrap .pin {
-  width: 225px;
+  width: 220px;
 }
 #wrap form .error {
   color: red;

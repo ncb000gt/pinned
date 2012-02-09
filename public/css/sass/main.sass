@@ -61,7 +61,7 @@ body
 
   .content
     @extend .padding-y
-    padding-left: 8px
+    padding-left: 18px
     .login, .register
       @extend .middle
       text-align: center
@@ -70,7 +70,6 @@ body
       top: 50%
       left: 50%
       margin-left: -($pwidth / 2)
-      margin-top: -($pwidth / 2)
       h2
         @extend .margin
       a
@@ -78,12 +77,22 @@ body
         display: block
         margin: 0 0 14px
 
+    .login
+      $height: 256px
+      min-height: $height
+      margin-top: -($height / 2)
+    
+    .register
+      $height: 350px
+      min-height: $height
+      margin-top: -($height / 2)
+
   .pin
     @extend .margin-y
-    width: $qwidth - 15
+    width: 220px
 
     .title
-      @extend .medium
+      @extend .large
 
   form
 

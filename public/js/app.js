@@ -35,13 +35,17 @@
 
   Pinned.application = {};
   Pinned.application.home = function(){
-    
+
+    if ( $(".content").data()["masonry"] ) delete $(".content").data()["masonry"];
+
     if (!Pinned.status) return Path.dispatch("#/login");
 
     $.ajax({
-      url : "/pins",
-      dataType : "json",
-      success : function(res){
+      "url" : "/pins",
+      "dataType" : "json",
+      "success" : function(res){
+
+        $(".content").empty();
 
         var len = res.length,
             i = 0;
@@ -49,7 +53,7 @@
         for ( ; i < len; i++) {
 
           var item = res[i];
-          var _time = new Date(item.saved);
+          var _time = new Date(item.created_on);
 
           Pinned.template("pin", {
               domain : item.domain,
@@ -87,12 +91,45 @@
   };
 
   Pinned.application.logout = function(){
-    
+
   };
 
   Pinned.application.register = function(){
+
+    if (Pinned.status) return Path.dispatch("#/");
+
     return Pinned.template("register", {}, function(res){
+        
         $(".content").empty().append(res);
+        
+        
+        $(".register input[type=submit]").click(function(e){
+          e.preventDefault();
+          
+          var username = $("input#username").val();
+          var password = $("input#password").val();
+          var confPassword = $("input#confPassword").val();
+          var email = $("input#email").val();
+
+          if ( username === "") return alert("Please enter a username");
+          if ( email === "") return alert("Please enter an email");
+          if ( password === "") return alert("Please enter a password");
+          if ( password !== confPassword) return alert("Please make sure your password matches the 'confirm password'");
+
+          $.ajax({
+            "url" : "/setup",
+            "data" : {
+              "username" : username,
+              "email" : email,
+              "password" : password
+            }, 
+            "method" : "post",
+            "success" : function(res){
+              console.log(res);
+            }
+          });
+        });
+
     });
   };
 
