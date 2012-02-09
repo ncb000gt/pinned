@@ -36,10 +36,15 @@ app.use('/setup', express.router(setup));
 
 app.get(/bookmark.js/, function(req, res) {
   var host = 'http://' + req.headers['host'];
-
   //TODO: consider; per-user auth codes may be a terrible way to go about this task.
   if (req.query && req.query.auth_code) {
-    return res.send(BOOKMARK_TEMPLATE.replace(/{{REPLACE_HOST}}/g, host).replace(/{{AUTH_TOKEN}}/, "'" + req.query.auth_code+ "'"), {"Content-Type":"application/javascript"});
+    return res.send(
+      BOOKMARK_TEMPLATE
+        .replace(/{{REPLACE_HOST}}/g, host)
+        .replace(/{{AUTH_TOKEN}}/, "'" + req.query.auth_code+ "'"), {
+          "Content-Type" : "application/javascript"
+        }
+    );
   }
   return res.send(401);
 });
@@ -104,6 +109,12 @@ app.post('/', function(req, res) {
     if (err) req.session.error = err;
     res.redirect('/');
   });
+});
+
+app.get('/logout', function(req, res) {
+  req.session.authed = false;
+  req.session.user = null;
+  return res.redirect('/');
 });
 
 app.error(function(err, req, res, next) {
