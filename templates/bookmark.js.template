@@ -16,8 +16,33 @@
             "token" : {{AUTH_TOKEN}}
           },
           "async" : false,
-          "success" : function(){
-              alert("Sent!");
+          "success" : function(res){
+              
+              $("#pinned_dialog").remove();
+
+              var markup_dialog = [
+                '<div id="pinned_dialog" style="display:none;">',
+                  '<h2>Pinned - Success!</h2>',
+                  '<div class="info">',
+                    '<p class="message">You pinned the following, </p>',
+                    '<p>',
+                      '<strong>The URL: </strong> ' + window.location.href,
+                    '</p>',
+                    '<p>',
+                      '<strong>The Title: </strong> ' + document.title,
+                    '</p>',
+                    '<p>',
+                      '<strong>The Domain: </strong> ' + window.location.host,
+                    '</p>',
+                  '</div>',
+                  '<div class="image">',
+                    '{{the_image}}',
+                  '</div>',
+                '</div>'
+              ].join("");
+
+              $("body").prepend(markup_dialog);
+              $("#pinned_dialog").fadeIn();
           }
         });
       };
