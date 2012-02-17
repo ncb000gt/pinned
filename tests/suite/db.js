@@ -1,34 +1,11 @@
-var mongo = require('mongodb'),
-    pinneddb = require('../lib/db'),
-    mongodb = mongo.Db;
-
-function getDB(db_name, cb) {
-  var directdb = new mongodb(db_name, new mongo.Server("staff.mongohq.com", 10072, mongo.Connection.DEFAULT_PORT, {}));
-
-  directdb.open(function(err, db) {
-    db.authenticate("pinned", "pinned", function(err) {
-      cb(err, db);
-    });
-  });
-}
+var utils = require('../utils'),
+    pinneddb = require('../../lib/db');
 
 //Must have the appropriate datastore in order to run these.
 //Also, must be running on default ports.
 module.exports = {
   setUp: function(cb) {
-           var self = this;
-
-           self.db_name = "pinned";
-           self.collection_name = "test-" + new Date().getTime();
-           self.host = "staff.mongohq.com";
-           self.port = 10072;
-           self.username = "pinned";
-           self.password = "pinned";
-
-           getDB(self.db_name, function(err, directdb) {
-             self.directdb = directdb;
-             cb();
-           });
+           utils.setUpDB.call(this, cb);
          },
   tearDown: function(cb) {
               var self = this;

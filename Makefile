@@ -1,4 +1,4 @@
-TESTS = tests/*.js
+TESTS = tests/suite/*.js
 
 all: test
 
