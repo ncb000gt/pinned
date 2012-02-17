@@ -4,9 +4,9 @@ var express = require('express'),
     db = require('./lib/db'),
     pins = new (require('./lib/dbs/pins'))(),
     users = new (require('./lib/dbs/users'))(),
-    auth = require('./lib/auth'),
     // share = require('./lib/share'),
-    setup = require('./lib/setup'),
+    auth = require('./lib/user_functions'),
+    setup = require('./lib/urls/setup'),
     errors = require('./lib/errors'),
     config = {};
 
@@ -81,6 +81,22 @@ app.get('/pins', function(req, res){
   });
 });
 
+app.post('/login', function(req, res) {
+  auth.authorize(req, res, function(err) {
+    if (err) req.session.error = err;
+    res.redirect('/');
+  });
+});
+
+app.get('/logout', function(req, res) {
+  req.session.authed = false;
+  req.session.user = null;
+  return res.redirect('/');
+});
+
+app.post('/register', function(req, res) {
+});
+
 app.get('/', function(req, res, next) {
   if (!(auth.authorized(req))) {
     res.render('index', {
@@ -102,19 +118,6 @@ app.get('/', function(req, res, next) {
       });
     });
   }
-});
-
-app.post('/', function(req, res) {
-  auth.authorize(req, res, function(err) {
-    if (err) req.session.error = err;
-    res.redirect('/');
-  });
-});
-
-app.get('/logout', function(req, res) {
-  req.session.authed = false;
-  req.session.user = null;
-  return res.redirect('/');
 });
 
 app.error(function(err, req, res, next) {
