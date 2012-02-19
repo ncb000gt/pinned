@@ -98,12 +98,14 @@ app.get('/logout', function(req, res) {
 app.post('/register', function(req, res) {
   if(req.body.username && req.body.password && req.body.email) {
     setupdb.get('0', function(err, doc) {
+      var authed = false;
       if (err || !doc) {
         setupdb.save('0', {'setup':'0', updated: new Date().getTime()});
+        authed = true;
       }
+      user_functions.genUser({username: req.body.username, password: req.body.password, email: req.body.email, authorized: authed});
+      res.send(200);
     });
-    user_functions.genUser({username: req.body.username, password: req.body.password, email: req.body.email});
-    res.send(200);
   } else {
     res.send(400);
   }
