@@ -8,7 +8,8 @@
     "bcrypt": "*",
     "read": "*",
     "mongodb": "0.9.7-3-5",
-    "node-uuid": "*"
+    "node-uuid": "*",
+    "request": "*"
   },
   "devDependencies": {
     "nodeunit": "*"

@@ -26,5 +26,15 @@ module.exports = {
       self.directdb = directdb;
       cb();
     });
+  },
+  'tearDownDB': function(cb) {
+    var self = this;
+
+    if (self.directdb) {
+      self.directdb.dropCollection(self.collection_name, function() {
+        self.directdb.close();
+        cb();
+      });
+    }
   }
 };

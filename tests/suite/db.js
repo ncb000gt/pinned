@@ -4,19 +4,12 @@ var utils = require('../utils'),
 //Must have the appropriate datastore in order to run these.
 //Also, must be running on default ports.
 module.exports = {
-  setUp: function(cb) {
-           utils.setUpDB.call(this, cb);
-         },
-  tearDown: function(cb) {
-              var self = this;
-
-              if (self.directdb) {
-                self.directdb.dropCollection(self.collection_name, function() {
-                  self.directdb.close();
-                  cb();
-                });
-              }
-            },
+  'setUp': function(cb) {
+    utils.setUpDB.call(this, cb);
+  },
+  'tearDown': function(cb) {
+    utils.tearDownDB.call(this, cb);
+  },
   "custom initialization": function(test) {
           test.expect(6);
           var self = this;
