@@ -117,15 +117,15 @@
           if ( password !== confPassword) return alert("Please make sure your password matches the 'confirm password'");
 
           $.ajax({
-            "url" : "/setup",
+            "url" : "/register",
             "data" : {
               "username" : username,
               "email" : email,
               "password" : password
             }, 
-            "method" : "post",
+            "type" : "post",
             "success" : function(res){
-              console.log(res);
+              window.location = '/';
             }
           });
         });

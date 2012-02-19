@@ -5,9 +5,10 @@ var express = require('express'),
     pins = new (require('./lib/dbs/pins'))(),
     users = new (require('./lib/dbs/users'))(),
     // share = require('./lib/share'),
-    auth = require('./lib/user_functions'),
+    user_functions = require('./lib/user_functions'),
     setup = require('./lib/urls/setup'),
     errors = require('./lib/errors'),
+    setupdb = new db({key: 'setup', collection_name: 'setup'}),
     config = {};
 
 try {
@@ -82,7 +83,7 @@ app.get('/pins', function(req, res){
 });
 
 app.post('/login', function(req, res) {
-  auth.authorize(req, res, function(err) {
+  user_functions.authorize(req, res, function(err) {
     if (err) req.session.error = err;
     res.redirect('/');
   });
@@ -95,10 +96,21 @@ app.get('/logout', function(req, res) {
 });
 
 app.post('/register', function(req, res) {
+  if(req.body.username && req.body.password && req.body.email) {
+    setupdb.get('0', function(err, doc) {
+      if (err || !doc) {
+        setupdb.save('0', {'setup':'0', updated: new Date().getTime()});
+      }
+    });
+    user_functions.genUser({username: req.body.username, password: req.body.password, email: req.body.email});
+    res.send(200);
+  } else {
+    res.send(400);
+  }
 });
 
 app.get('/', function(req, res, next) {
-  if (!(auth.authorized(req))) {
+  if (!(user_functions.authorized(req))) {
     res.render('index', {
       error: (req.session && req.session.error) ? req.session.error.message : null,
       bookmarklet: null,

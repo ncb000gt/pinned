@@ -25,11 +25,8 @@ Pinned is self hosted (at the moment). You need to obtain the source, obtain the
 * `git clone git://github.com/ncb000gt/pinned.git`
 * Get and install MongoDB
 * `npm install .`
-* Within the pinned directory: `scripts/build_templates`
-  * Host: You need to add `http` or `https` (however, the code currently doesn't check for https to use the appropriate module... *cough*)
-  * Password: For logging into the main app
-  * Authentication Phrase: This is for the bookmarklet when sending data back to the server. It's a _really_ minor security bit that is easy enough to get if someone wanted...
 * Within the Pinned directory: `node app.js`
+* Setup an account (and the app) by going to http://<domain>:<port>/#/register.
 
 
 Contributors
