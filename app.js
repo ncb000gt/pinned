@@ -86,7 +86,7 @@ app.get('/pins', function(req, res){
         item.title = title;
       }
       return item;
-    });
+    }));
   });
 });
 
