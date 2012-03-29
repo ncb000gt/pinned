@@ -78,7 +78,15 @@ app.post('/pin', function(req, res) {
 //get all pins
 app.get('/pins', function(req, res){
   pins.find(function(err, pins) {
-    res.json(pins);
+    res.json(pins.map(function(item) {
+      var url = item.title;
+      if (title.match(/https?:\/\//)) {
+        var s = title.split('/');
+        title = s[s.length-1];
+        item.title = title;
+      }
+      return item;
+    });
   });
 });
 
