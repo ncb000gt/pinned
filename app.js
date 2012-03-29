@@ -79,7 +79,8 @@ app.post('/pin', function(req, res) {
 app.get('/pins', function(req, res){
   pins.find(function(err, pins) {
     res.json(pins.map(function(item) {
-      var url = item.title;
+      var title = item.title;
+      if (!title) title = item.href;
       if (title && title.match(/https?:\/\//)) {
         var s = title.split('/');
         title = s[s.length-1];
