@@ -77,7 +77,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .displace, #wrap h1 a {
   display: block;
-  text-indent: -9999px;
 }
 
 .middle, #wrap, #wrap .content .login, #wrap .content .register, #wrap form input[type="submit"], #wrap form button {
@@ -183,11 +182,14 @@ body {
 }
 #wrap h1 {
   width: 480px;
+  background: url("images/pinned.logo.png") no-repeat 10px 10px;
 }
 #wrap h1 a {
   width: 64px;
   height: 68px;
-  background-image: url("images/pinned.logo.png");
+  margin-left: 93px;
+  font-size: 2.5em;
+  padding-top:4px;
 }
 #wrap nav {
   display: none;
@@ -235,7 +237,7 @@ body {
   margin-top: -175px;
 }
 #wrap .pin {
-  width: 220px;
+  width: 60%;
 }
 #wrap form .error {
   color: red;

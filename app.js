@@ -1,6 +1,7 @@
 var express = require('express'),
     fs = require('fs'),
     bcrypt = require('bcrypt'),
+    timeago = require('timeago'),
     db = require('./lib/db'),
     pins = new (require('./lib/dbs/pins'))(),
     users = new (require('./lib/dbs/users'))(),
@@ -75,6 +76,18 @@ app.post('/pin', function(req, res) {
   }
 });
 
+function pinMap(item) {
+  var title = item.title;
+  if (!title) title = item.href;
+  if (title && title.match(/https?:\/\//)) {
+    var s = title.split('/');
+    title = s[s.length-1];
+    item.title = title;
+  }
+  item.date = timeago(new Date(item.created_on));
+
+  return item;
+}
 //get all pins
 app.get('/pins', function(req, res){
   var offset = req.query.offset,
@@ -84,16 +97,15 @@ app.get('/pins', function(req, res){
   if (offset || offset === 0) findObj.skip = offset;
   if (size) findObj.limit = size;
   pins.find({}, findObj, function(err, pins) {
-    res.json(pins.map(function(item) {
-      var title = item.title;
-      if (!title) title = item.href;
-      if (title && title.match(/https?:\/\//)) {
-        var s = title.split('/');
-        title = s[s.length-1];
-        item.title = title;
-      }
-      return item;
-    }));
+    res.json(pins.map(pinMap));
+  });
+});
+
+app.get('/login', function(req, res) {
+  return res.render('login', {
+    error: (req.session && req.session.error) ? req.session.error.message : null,
+    bookmarklet: null,
+    status: false 
   });
 });
 
@@ -108,6 +120,14 @@ app.get('/logout', function(req, res) {
   req.session.authed = false;
   req.session.user = null;
   return res.redirect('/');
+});
+
+app.get('/register', function(req, res) {
+  return res.render('register', {
+    error: (req.session && req.session.error) ? req.session.error.message : null,
+    bookmarklet: null,
+    status: false 
+  });
 });
 
 app.post('/register', function(req, res) {
@@ -128,11 +148,7 @@ app.post('/register', function(req, res) {
 
 app.get('/', function(req, res, next) {
   if (!(user_functions.authorized(req))) {
-    res.render('index', {
-      error: (req.session && req.session.error) ? req.session.error.message : null,
-      bookmarklet: null,
-      status: false 
-    });
+    res.redirect('/login');
   } else {
     pins.find(function(err, _pins) {
       if (err) throw err;
@@ -141,9 +157,9 @@ app.get('/', function(req, res, next) {
 
       res.render('index', {
         error: null,
-        status : req.session.authed,
+        status: req.session.authed,
         bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
-        pinned: _pins
+        pinned: _pins.map(pinMap)
       });
     });
   }

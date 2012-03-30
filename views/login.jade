@@ -1,0 +1,14 @@
+form(class="login module", method="POST", action="")
+  div
+    h2 Login
+  div.form
+    - if (error)
+      p.error #{error}
+    p
+      input(type="text", id="username", name="username", placeholder="Username")
+    p
+      input(type="password", id="password", name="password", placeholder="Password")
+    p
+      input(type="submit", value="Login", class="button")
+  div.module-footer
+    a(href="/register") Register
