@@ -77,7 +77,13 @@ app.post('/pin', function(req, res) {
 
 //get all pins
 app.get('/pins', function(req, res){
-  pins.find(function(err, pins) {
+  var offset = req.query.offset,
+      size = req.query.size;
+
+  var findObj = {};
+  if (offset || offset === 0) findObj.skip = offset;
+  if (size) findObj.limit = size;
+  pins.find({}, findObj, function(err, pins) {
     res.json(pins.map(function(item) {
       var title = item.title;
       if (!title) title = item.href;
