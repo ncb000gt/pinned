@@ -156,7 +156,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .module div.module-footer a {
   color: #999999;
   display: block;
-  background-image: url("images/pinned.icon.link.png");
+  background-image: url("/images/pinned.icon.link.png");
   background-repeat: no-repeat;
   background-position: 0 0;
 }
@@ -174,7 +174,7 @@ a:hover {
 
 body {
   background-color: #ededed;
-  background-image: url("images/pinned.bg.png");
+  background-image: url("/images/pinned.bg.png");
 }
 
 #wrap {
@@ -182,7 +182,7 @@ body {
 }
 #wrap h1 {
   width: 480px;
-  background: url("images/pinned.logo.png") no-repeat 10px 10px;
+  background: url("/images/pinned.logo.png") no-repeat 10px 10px;
 }
 #wrap h1 a {
   width: 64px;

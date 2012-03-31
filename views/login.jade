@@ -5,9 +5,9 @@ form(class="login module", method="POST", action="")
     - if (error)
       p.error #{error}
     p
-      input(type="text", id="username", name="username", placeholder="Username")
+      input(type="text", id="username", name="username", value="Username")
     p
-      input(type="password", id="password", name="password", placeholder="Password")
+      input(type="password", id="password", name="password", value="Password")
     p
       input(type="submit", value="Login", class="button")
   div.module-footer
