@@ -176,6 +176,8 @@ app.get('/', function(req, res, next) {
       var host = 'http://' + req.headers['host'];
 
       pins.find({}, {fields: ['tags']}, function(err, tags) {
+        //consider a separate collection of tags just for this purpose...?
+        //bad approach if large separate arrays of tags...
         tags = tags.reduce(function(a, b) {
           a = a.tags || [];
           b = b.tags || [];

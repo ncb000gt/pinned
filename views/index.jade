@@ -11,9 +11,12 @@
     div
       h4 Tags
     .group
-      - each tag in tags
-        - if (tag.selected)
-          a.tag.selected(href=tag.url) #{tag.value}
-        - if (!(tag.selected))
-          a.tag(href=tag.url) #{tag.value}
+      - if (tags && tags.length)
+        - each tag in tags
+          - if (tag.selected)
+            a.tag.selected(href=tag.url) #{tag.value}
+          - if (!(tag.selected))
+            a.tag(href=tag.url) #{tag.value}
+      - if (!tags || !(tags.length))
+        span No Tags
   .categories
