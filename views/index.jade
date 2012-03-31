@@ -7,7 +7,13 @@
       div.module-footer
         a(href=pin.href, target=pin.target) #{pin.date}
 .filters
-  .tags
-    - each tag in tags
-      .tag #{tag}
+  .module
+    div
+      h4 Tags
+    .group
+      - each tag in tags
+        - if (tag.selected)
+          a.tag.selected(href=tag.url) #{tag.value}
+        - if (!(tag.selected))
+          a.tag(href=tag.url) #{tag.value}
   .categories

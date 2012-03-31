@@ -214,6 +214,7 @@ body {
 }
 #wrap .content {
   padding-left: 18px;
+  overflow:hidden;
 }
 #wrap .content .login, #wrap .content .register {
   text-align: center;
@@ -236,8 +237,16 @@ body {
   min-height: 350px;
   margin-top: -175px;
 }
+#wrap .pins{
+  float:left;
+}
+#wrap .filters{
+  float:right;
+  margin-right:15px;
+  width:15%
+}
+.pins{width:75%;}
 #wrap .pin {
-  width: 60%;
 }
 #wrap form .error {
   color: red;
@@ -280,4 +289,20 @@ body {
 }
 #wrap form input[type="submit"]:hover, #wrap form button:hover {
   background-color: #3c3c3c;
+}
+.module .tag{
+  padding:4px;
+  margin:2px;
+}
+.module .tag.selected{
+  background:#0090ff;
+  padding:4px;
+  margin:2px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  color: #fcfcfc;
 }

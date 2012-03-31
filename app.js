@@ -2,7 +2,9 @@ var express = require('express'),
     fs = require('fs'),
     bcrypt = require('bcrypt'),
     timeago = require('timeago'),
+    querystring = require('querystring'),
     db = require('./lib/db'),
+    ObjectId = require('mongodb').ObjectID,
     pins = new (require('./lib/dbs/pins'))(),
     users = new (require('./lib/dbs/users'))(),
     // share = require('./lib/share'),
@@ -52,6 +54,17 @@ app.get(/bookmark.js/, function(req, res) {
 });
 
 //pin url
+app.get('/pin/:pin/delete', function(req, res) {
+  var pinId = req.params.pin;
+  if (pinId) {
+    return pins.bulkDelete(ObjectId(pinId), function(err) {
+      return res.send(200);
+    });
+  } else {
+    return res.send(404);
+  }
+});
+
 app.post('/pin', function(req, res) {
   if (req.body && req.body.token) {
     users.find({'auth_code': req.body.token}, function(err, docs) {
@@ -150,16 +163,65 @@ app.get('/', function(req, res, next) {
   if (!(user_functions.authorized(req))) {
     res.redirect('/login');
   } else {
-    pins.find(function(err, _pins) {
+    var qtags = req.query.tags;
+    var findObj = {};
+    if (qtags) {
+      if (qtags[qtags.length-1] == ',') qtags = qtags.substring(0, qtags.length-2);
+      qtags = qtags.split(',');
+      findObj.tags = { $in: qtags };
+    }
+    pins.find(findObj, {},function(err, _pins) {
       if (err) throw err;
 
       var host = 'http://' + req.headers['host'];
 
-      res.render('index', {
-        error: null,
-        status: req.session.authed,
-        bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
-        pinned: _pins.map(pinMap)
+      pins.find({}, {fields: ['tags']}, function(err, tags) {
+        tags = tags.reduce(function(a, b) {
+          a = a.tags || [];
+          b = b.tags || [];
+
+          if (typeof(a) == 'string') a = [a];
+          if (typeof(b) == 'string') b = [b];
+
+          for (var i = 0; i < b.length; i++) {
+            if (a.indexOf(b[i]) < 0) a.push(b[i]);
+          }
+
+          return a;
+        }).map(function(tag) {
+          var ntags = (qtags || []).map(function(tag) { return tag; });
+          tag = {value: tag};
+          tag.url = req.path;
+          var q = {};
+          for (var p in req.query) {
+            q[p] = req.query[p];
+          }
+
+          var tagidx = -1;
+          if (qtags && (tagidx = qtags.indexOf(tag.value)) >= 0) {
+            tag.selected = true;
+            ntags.splice(tagidx, 1);
+          } else {
+            if (!ntags) ntags = [];
+            ntags.push(tag.value);
+          }
+          if (ntags && ntags.length > 0) {
+            q.tags = ntags.join(',');
+          } else {
+            delete q.tags;
+          }
+          var qstring = querystring.stringify(q);
+          if (qstring) tag.url += '?' + qstring;
+          return tag;
+        });
+
+        res.render('index', {
+          error: null,
+          status: req.session.authed,
+          bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
+          pinned: _pins.map(pinMap),
+          tags: tags
+        });
       });
     });
   }
