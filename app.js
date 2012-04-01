@@ -202,57 +202,54 @@ app.get('/', function(req, res, next) {
 
       var host = 'http://' + req.headers['host'];
 
-      pins.mr([], {}, {tags: []}, function(obj, prev) { if (obj.tags) { prev.tags = prev.tags.concat(obj.tags); } }, function(err, tags) {
-        //consider a separate collection of tags just for this purpose...?
-        //bad approach if large separate arrays of tags...
-        if (tags.length < 2) tags.push(''); //artificially push to make sure we reduce 
-
-        tags = tags.reduce(function(a, b) {
-          a = a.tags || [];
-          b = b.tags || [];
-
-          if (typeof(a) == 'string') a = [a];
-          if (typeof(b) == 'string') b = [b];
-
-          for (var i = 0; i < b.length; i++) {
-            if (a.indexOf(b[i]) < 0) a.push(b[i]);
+      pins.mr([], {}, {tags: []}, function(obj, prev) {
+        if (obj.tags) {
+          var accum = prev.tags, otags = obj.tags;
+          for(var i = 0; i < otags.length; i++) {
+            var o = otags[i];
+            if (accum.indexOf(o) >= 0) continue;
+            accum.push(o);
           }
+          prev.tags = accum;
+        } }, function(err, tags) {
+          //consider a separate collection of tags just for this purpose...?
+          //bad approach if large separate arrays of tags...
+          tags = tags[0].tags
 
-          return a;
-        }).map(function(tag) {
-          var ntags = (qtags || []).map(function(tag) { return tag; }); //deep copy.
-          tag = {value: tag};
-          tag.url = req.path;
-          var q = {};
-          for (var p in req.query) {
-            q[p] = req.query[p];
-          }
+          tags = tags.map(function(tag) {
+            var ntags = (qtags || []).map(function(tag) { return tag; }); //deep copy.
+            tag = {value: tag};
+            tag.url = req.path;
+            var q = {};
+            for (var p in req.query) {
+              q[p] = req.query[p];
+            }
 
-          var tagidx = -1;
-          if (qtags && (tagidx = qtags.indexOf(tag.value)) >= 0) {
-            tag.selected = true;
-            ntags.splice(tagidx, 1);
-          } else {
-            if (!ntags) ntags = [];
-            ntags.push(tag.value);
-          }
-          if (ntags && ntags.length > 0) {
-            q.tags = ntags.join(',');
-          } else {
-            delete q.tags;
-          }
-          var qstring = querystring.stringify(q);
-          if (qstring) tag.url += '?' + qstring;
-          return tag;
-        });
+            var tagidx = -1;
+            if (qtags && (tagidx = qtags.indexOf(tag.value)) >= 0) {
+              tag.selected = true;
+              ntags.splice(tagidx, 1);
+            } else {
+              if (!ntags) ntags = [];
+              ntags.push(tag.value);
+            }
+            if (ntags && ntags.length > 0) {
+              q.tags = ntags.join(',');
+            } else {
+              delete q.tags;
+            }
+            var qstring = querystring.stringify(q);
+            if (qstring) tag.url += '?' + qstring;
+            return tag;
+          });
 
-        res.render('index', {
-          error: null,
-          status: req.session.authed,
-          bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
-          pinned: _pins.map(pinMap),
-          tags: tags
-        });
+          res.render('index', {
+            error: null,
+            status: req.session.authed,
+            bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
+            pinned: _pins.map(pinMap),
+            tags: tags
+          });
       });
     });
   }
