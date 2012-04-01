@@ -147,8 +147,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .module div:first-child {
   background-color: #f7f7f7;
 }
+.module .module-footer div:first-child {background:#fcfcfc}
+.tags .module div:first-child {
+  background-color: #f7f7f7;
+}
+.module-footer .info{float:left;}
+.module-footer .info div{padding:0 0 2px 0;}
+.module-footer .controls{float:right;}
+.controls .delete{
+  background-image:url(/images/pinned.icon.trash.png);
+  background-repeat: no-repeat;
+  background-position:0 4px;
+  padding-left: 18px
+}
+.controls .tags{
+  background-image:url(/images/pinned.icon.tag.png);
+  background-repeat: no-repeat;
+  background-position:0 3px;
+  padding-left: 18px
+}
 .module div.module-footer {
   color: #999999;
+  overflow:hidden;
 }
 .module div.module-footer border {
   top: 1px solid #f7f7f7;
@@ -156,9 +176,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .module div.module-footer a {
   color: #999999;
   display: block;
-  background-image: url("/images/pinned.icon.link.png");
-  background-repeat: no-repeat;
-  background-position: 0 0;
+  /*background-image: url("/images/pinned.icon.link.png");*/
+  /*background-repeat: no-repeat;*/
+  /*background-position: 0 0;*/
 }
 .module div.module-footer a:hover {
   color: #0073cc;
@@ -191,13 +211,19 @@ body {
   font-size: 2.5em;
   padding-top:4px;
 }
-#wrap nav {
-  display: none;
-  width: 480px;
+#wrap .nav {
+  display: block;
+  float:right;
+  padding-right: 15px;
+  margin-top: 28px;
+}
+#wrap .nav li:before {
+  content: "\0020 \0020 \0020 \00BB \0020";
 }
 #wrap .header {
   background-color: #fcfcfc;
   border-bottom: 4px solid #cccccc;
+  overflow:hidden;
 }
 #wrap .footer {
   width: 960px;
@@ -270,7 +296,7 @@ body {
 #wrap form input[type="text"]:focus, #wrap form input[type="password"]:focus, #wrap form input[type="email"]:focus {
   background-color: #fcfcfc;
 }
-#wrap form input[type="submit"], #wrap form button {
+#wrap form input[type="submit"], #wrap .button {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   -o-border-radius: 4px;
@@ -287,7 +313,7 @@ body {
   margin-bottom: 14px;
   color: #f7f7f7;
 }
-#wrap form input[type="submit"]:hover, #wrap form button:hover {
+#wrap form input[type="submit"]:hover, #wrap .button:hover {
   background-color: #3c3c3c;
 }
 .module .tag{
@@ -306,3 +332,28 @@ body {
   border-radius: 4px;
   color: #fcfcfc;
 }
+.module-footer div.tags{
+  clear:both;
+  margin-top:3px;
+  border-top:2px solid #ccc;
+  padding-top:3px;
+}
+#wrap .module-footer div.tags form.module .form .msg {
+  padding: 3px;
+  margin:3px 35%;
+}
+.success {
+  border: 1px solid #690;
+  color: #690;
+}
+.error {
+  border: 1px solid #770000;
+  color: #770000;
+}
+#wrap .module-footer .module input, #wrap .module-footer .module .button {
+  margin:3px 35%;
+}
+#wrap .module-footer .module input[type="submit"] {
+  margin-left:38%;
+}
+.hidden{display:none}

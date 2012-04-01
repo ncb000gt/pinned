@@ -54,11 +54,25 @@ app.get(/bookmark.js/, function(req, res) {
 });
 
 //pin url
+app.post('/pin/:pin/tag', function(req, res) {
+  var pinId = req.params.pin;
+  var tags = req.body.tags;
+  if (pinId) {
+    return pins.save({_id: ObjectId(pinId)}, {tags: tags.split(',')}, function(err) {
+      if (req.headers['x-requested-with'] == 'XMLHttpRequest') return res.send(200);
+      return res.redirect('/');
+    });
+  } else {
+    return res.send(404);
+  }
+});
+
 app.get('/pin/:pin/delete', function(req, res) {
   var pinId = req.params.pin;
   if (pinId) {
-    return pins.bulkDelete(ObjectId(pinId), function(err) {
-      return res.send(200);
+    return pins.bulkDelete({_id: ObjectId(pinId)}, function(err) {
+      if (req.headers['x-requested-with'] == 'XMLHttpRequest') return res.send(200);
+      return res.redirect('/');
     });
   } else {
     return res.send(404);
@@ -178,6 +192,8 @@ app.get('/', function(req, res, next) {
       pins.find({}, {fields: ['tags']}, function(err, tags) {
         //consider a separate collection of tags just for this purpose...?
         //bad approach if large separate arrays of tags...
+        if (tags.length < 2) tags.push(''); //artificially push to make sure we reduce 
+
         tags = tags.reduce(function(a, b) {
           a = a.tags || [];
           b = b.tags || [];
@@ -190,7 +206,8 @@ app.get('/', function(req, res, next) {
           }
 
           return a;
-        }).map(function(tag) {
+        });
+        tags = tags.map(function(tag) {
           var ntags = (qtags || []).map(function(tag) { return tag; });
           tag = {value: tag};
           tag.url = req.path;

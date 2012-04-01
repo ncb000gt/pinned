@@ -12,26 +12,12 @@ html
       header.header
         h1 
           a(href="/") Pinned
-        nav
-          ul.view-filter
-            li.bookmarklet
-              - if (bookmarklet)
-                a.button(href=bookmarklet) Pin This
-            li.current
-              a(href="#grid-view") Grid
+        ul.nav
+          - if (bookmarklet)
             li
-              a(href="#grid-view") List
-          ul.sort-filter
-            li
-              a(href="#tags-menu") Tags
-              ul
-                li
-                  a(href="#items") Item
-            li
-              a(href="#categories-menu") Categories
-              ul
-                li
-                  a(href="#items") Item
+              a(href=bookmarklet, title="Pin This") 'Pin This' Bookmarklet
+          li
+            a(href="/logout") Logout
 
       section.content
         !{body}

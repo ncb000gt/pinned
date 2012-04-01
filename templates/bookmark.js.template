@@ -1,6 +1,6 @@
 (function (window, document) {
   var s = document.createElement('script');
-  s.setAttribute('src', '{{REPLACE_HOST}}/js/jquery.min.js');
+  s.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
   s.onload = function () {
     jQuery.noConflict();
     (function ($) {
