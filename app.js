@@ -67,6 +67,18 @@ app.post('/pin/:pin/tag', function(req, res) {
   }
 });
 
+app.post('/pin/:pin/read', function(req, res) {
+  var pinId = req.params.pin;
+  if (pinId) {
+    return pins.save({_id: ObjectId(pinId)}, {read: true}, function(err) {
+      if (req.headers['x-requested-with'] == 'XMLHttpRequest') return res.send(200);
+      return res.redirect('/');
+    });
+  } else {
+    return res.send(404);
+  }
+});
+
 app.get('/pin/:pin/delete', function(req, res) {
   var pinId = req.params.pin;
   if (pinId) {
@@ -190,7 +202,7 @@ app.get('/', function(req, res, next) {
 
       var host = 'http://' + req.headers['host'];
 
-      pins.find({}, {fields: ['tags']}, function(err, tags) {
+      pins.mr([], {}, {tags: []}, function(obj, prev) { if (obj.tags) { prev.tags = prev.tags.concat(obj.tags); } }, function(err, tags) {
         //consider a separate collection of tags just for this purpose...?
         //bad approach if large separate arrays of tags...
         if (tags.length < 2) tags.push(''); //artificially push to make sure we reduce 
@@ -207,9 +219,8 @@ app.get('/', function(req, res, next) {
           }
 
           return a;
-        });
-        tags = tags.map(function(tag) {
-          var ntags = (qtags || []).map(function(tag) { return tag; });
+        }).map(function(tag) {
+          var ntags = (qtags || []).map(function(tag) { return tag; }); //deep copy.
           tag = {value: tag};
           tag.url = req.path;
           var q = {};
