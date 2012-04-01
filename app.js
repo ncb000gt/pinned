@@ -81,15 +81,16 @@ app.get('/pin/:pin/delete', function(req, res) {
 
 app.post('/pin', function(req, res) {
   if (req.body && req.body.token) {
-    users.find({'auth_code': req.body.token}, function(err, docs) {
-      if (!err && docs.length > 0) {
+    users.find({'auth_code': req.body.token}, function(err, users) {
+      if (!err && users.length > 0) {
         pins.save(req.body.href, { 
           "href": req.body.href,
           "title" : req.body.title,
           "domain" : req.body.domain,
           "target" : req.body.target || "_blank",
           "image" : req.body.image || false,
-          "show" : req.body.show || true
+          "show" : req.body.show || true,
+          "username": users[0].username
         }, function(err) {
           if (err) console.log(err);
         });
