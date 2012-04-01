@@ -14,17 +14,16 @@
 
   $('.tags form').submit(function() {
     var el = $(this);
-    console.log(el);
     var msg = el.find('.msg');
-    console.log(msg);
-    console.log(el.find('#tags'));
     $.post(el.attr('action'), {tags: el.find('#tags').val()}, function(data) {
     }).success(function() {
       msg.text('Your tags were saved!');
+      msg.removeClass('error');
       msg.toggleClass('success');
       msg.toggleClass('hidden');
     }).error(function() {
       msg.text('There was a problem saving your tags!');
+      msg.removeClass('success');
       msg.toggleClass('error');
       msg.toggleClass('hidden');
     }).complete(function() {
