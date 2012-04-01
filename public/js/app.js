@@ -45,7 +45,6 @@
     $('.pin-'+pinid+' .delete_yes').click(function() {
       $.get(url, function(data) {
       }).success(function() {
-        console.log(el.parentsUntil('.pin'))
         el.parents('.pin').toggleClass('hidden');
       });
     });
