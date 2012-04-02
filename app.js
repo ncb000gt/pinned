@@ -179,7 +179,8 @@ app.post('/register', function(req, res) {
         authed = true;
       }
       user_functions.genUser({username: req.body.username, password: req.body.password, email: req.body.email, authorized: authed});
-      res.send(200);
+      if (req.headers['x-requested-with'] == 'XMLHttpRequest') return res.send(200);
+      return res.redirect('/');
     });
   } else {
     res.send(400);
