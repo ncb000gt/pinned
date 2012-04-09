@@ -271,6 +271,12 @@ body {
   margin-right:15px;
   width:22%
 }
+.filters .tags {
+  overflow:hidden;
+}
+.tags .tag {
+  float:left;
+}
 .pins{width:75%;}
 #wrap .pin {
 }
