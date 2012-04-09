@@ -3,6 +3,11 @@ var express = require('express'),
     bcrypt = require('bcrypt'),
     timeago = require('timeago'),
     querystring = require('querystring'),
+    mongoDB = require('mongodb').Db,
+    mongoServer = require('mongodb').Server,
+    sessionServerConfig = new mongoServer('localhost', 27017, {auto_reconnect: true})
+    mongodb = new mongoDB('pinned', sessionServerConfig, {}),
+    mongostore = require('connect-mongodb'),
     db = require('./lib/db'),
     ObjectId = require('mongodb').ObjectID,
     pins = new (require('./lib/dbs/pins'))(),
@@ -29,7 +34,9 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({
-    secret: "say WUUUUT?!?"
+    cookie: {maxAge: 60000 * 20},
+    secret: "say WUUUUT?!?",
+    store: new mongostore({db: mongodb})
   }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));

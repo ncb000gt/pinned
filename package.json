@@ -10,7 +10,8 @@
     "mongodb": "0.9.7-3-5",
     "node-uuid": "*",
     "request": "*",
-    "timeago": "*"
+    "timeago": "*",
+    "connect-mongodb": "*"
   },
   "devDependencies": {
     "nodeunit": "*"
