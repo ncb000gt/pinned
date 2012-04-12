@@ -125,7 +125,7 @@ app.post('/pin', function(req, res) {
 
 function pinMap(item) {
   var title = item.title;
-  if (!title) title = item.href;
+  if (!title || title.replace(/\s/, '') == "") title = item.href;
   if (title && title.match(/https?:\/\//)) {
     var s = title.split('/');
     title = s[s.length-1];
