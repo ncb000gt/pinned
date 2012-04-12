@@ -123,6 +123,10 @@ app.post('/pin', function(req, res) {
   }
 });
 
+//app.post('/test', function(req, res) {
+  //return res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
+//});
+
 function pinMap(item) {
   var title = item.title;
   if (!title) title = item.href;

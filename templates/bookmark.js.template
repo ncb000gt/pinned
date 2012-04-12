@@ -19,30 +19,61 @@
           "success" : function(res){
               
               $("#pinned_dialog").remove();
+              var imgs = $('img').map(function() {
+                var img = $(this).attr('src');
+                if (!img) return;
+                if (img && !(img.match(/:\/\//))) {
+                var loc = window.location;
+                  if (img[0] == '/') {
+                    img = loc.protocol + '//' + loc.host + ((loc[loc.length - 1] == '/') ? '' : '/') + img;
+                  } else {
+                    img = loc.protocol + '//' + loc.host + (loc.path || '') + ((loc[loc.length - 1] == '/') ? '' : '/') + img;
+                  }
+                }
+
+                return img;
+              });
+              var the_img = (imgs) ? imgs[0] : null;
 
               var markup_dialog = [
-                '<div id="pinned_dialog" style="display:none;">',
-                  '<h2>Pinned - Success!</h2>',
-                  '<div class="info">',
-                    '<p class="message">You pinned the following, </p>',
-                    '<p>',
-                      '<strong>The URL: </strong> ' + window.location.href,
-                    '</p>',
-                    '<p>',
-                      '<strong>The Title: </strong> ' + document.title,
-                    '</p>',
-                    '<p>',
-                      '<strong>The Domain: </strong> ' + window.location.host,
-                    '</p>',
-                  '</div>',
-                  '<div class="image">',
-                    '{{the_image}}',
+                '<div id="pinned">',
+                  '<style>',
+                  '#pinned_dialog{width:50%;color:#3c3c3c;left:25%;top:0;border:3px solid #333;border-top:0;position:absolute;background:#fcfcfc;padding:10px;-moz-border-radius: 4px;-webkit-border-radius: 4px;-o-border-radius: 4px;-ms-border-radius: 4px;-khtml-border-radius: 4px;border-radius: 4px;}',
+                  '#pinned_dialog img{border:0;}',
+                  '#pinned_dialog h2{color:#690;}',
+                  '#pinned #close{background:#000;color:#fcfcfc;border:0;position:relative;padding:3px 5px}',
+                  '</style>',
+                  '<div id="pinned_dialog" style="display:none;">',
+                    '<h2>Pinned - Success!</h2>',
+                    '<div class="info">',
+                      '<p class="message">You pinned the following, </p>',
+                      '<p>',
+                        '<strong>The URL: </strong> ' + window.location.href,
+                      '</p>',
+                      '<p>',
+                        '<strong>The Title: </strong> ' + document.title,
+                      '</p>',
+                      '<p>',
+                        '<strong>The Domain: </strong> ' + window.location.host,
+                      '</p>',
+                    '</div>',
+                    ((the_img) ? 
+                    '<div class="image">' +
+                      '<img src="' + the_img + '" />' +
+                    '</div>'
+                    : ''),
+                    '<a href="#" id="close">Close</a>',
                   '</div>',
                 '</div>'
               ].join("");
 
               $("body").prepend(markup_dialog);
               $("#pinned_dialog").fadeIn();
+              $("#pinned #close").click(function() {
+                $("#pinned_dialog").fadeOut();
+
+                return false;
+              });
           }
         });
       };
