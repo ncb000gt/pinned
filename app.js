@@ -26,7 +26,7 @@ try {
 var BOOKMARKLET_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmarklet.js.template', 'utf8');
 var BOOKMARK_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmark.js.template', 'utf8');
 
-var app = module.exports = express.createServer();
+var app = module.exports = express();
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -42,7 +42,8 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
-app.use('/setup', express.router(setup));
+app.get('/setup', setup.get);
+app.post('/setup', setup.post);
 // app.use('/share', express.router(share));
 
 app.get(/bookmark.js/, function(req, res) {
@@ -267,19 +268,21 @@ app.get('/', function(req, res, next) {
   }
 });
 
-app.error(function(err, req, res, next) {
-  if (err instanceof errors.NotFound) {
-    res.send(404);
-  } else if (err instanceof errors.BadRequest) {
-    res.send(400);
-  } else {
-    next(err);
-  }
-});
+//app.error(function(err, req, res, next) {
+  //if (err instanceof errors.NotFound) {
+    //res.send(404);
+  //} else if (err instanceof errors.BadRequest) {
+    //res.send(400);
+  //} else {
+    //next(err);
+  //}
+//});
 
-app.listen(process.env.NODE_PORT || (process.env.NODE_ENV === 'production' ? 80 : 8000)); 
+var port = (process.env.NODE_PORT || (process.env.NODE_ENV === 'production' ? 80 : 8000)); 
 
-console.log('Server listening on ' + app.address().port);
+app.listen(port);
+
+console.log('Server listening on ' + port);
 
 process.on("exit", function() {
   console.log("Shutdown Server.");

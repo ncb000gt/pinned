@@ -1,18 +1,21 @@
-form(class="register module", method="POST", action="")
-  div
-    h2 Register
-  div.form
-    - if (error)
-      p.error #{error}
-    p
-      input(type="text", id="username", name="username", placeholder="Username")
-    p
-      input(type="email", id="email", name="email", placeholder="Email")
-    p
-      input(type="password", id="password", name="password", placeholder="Password")
-    p
-      input(type="password", id="confPassword", name="confPassword", placeholder="Confirm Password")
-    p
-      input(type="submit", value="Register", class="button")
-  div.module-footer
-    a(href="/login") Back to login
+extends layout
+
+block content
+  form(class="register module", method="POST", action="")
+    div
+      h2 Register
+    div.form
+      - if (error)
+        p.error #{error}
+      p
+        input(type="text", id="username", name="username", placeholder="Username")
+      p
+        input(type="email", id="email", name="email", placeholder="Email")
+      p
+        input(type="password", id="password", name="password", placeholder="Password")
+      p
+        input(type="password", id="confPassword", name="confPassword", placeholder="Confirm Password")
+      p
+        input(type="submit", value="Register", class="button")
+    div.module-footer
+      a(href="/login") Back to login
