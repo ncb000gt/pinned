@@ -50,12 +50,12 @@ app.get(/bookmark.js/, function(req, res) {
   var host = 'http://' + req.headers['host'];
   //TODO: consider; per-user auth codes may be a terrible way to go about this task.
   if (req.query && req.query.auth_code) {
+    res.set('Content-Type', 'application/javascript');
     return res.send(
+      200,
       BOOKMARK_TEMPLATE
         .replace(/{{REPLACE_HOST}}/g, host)
-        .replace(/{{AUTH_TOKEN}}/, "'" + req.query.auth_code+ "'"), {
-          "Content-Type" : "application/javascript"
-        }
+        .replace(/{{AUTH_TOKEN}}/, "'" + req.query.auth_code+ "'")
     );
   }
   return res.send(401);
@@ -227,7 +227,7 @@ app.get('/', function(req, res, next) {
         } }, function(err, tags) {
           //consider a separate collection of tags just for this purpose...?
           //bad approach if large separate arrays of tags...
-          tags = tags[0].tags
+          tags = (tags && tags.length) ? tags[0].tags : [];
 
           tags = tags.map(function(tag) {
             var ntags = (qtags || []).map(function(tag) { return tag; }); //deep copy.
