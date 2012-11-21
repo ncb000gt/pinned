@@ -34,7 +34,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({
-    cookie: {maxAge: 60000 * 20},
+    cookie: {maxAge: 60000 * 60 * 24},
     secret: "say WUUUUT?!?",
     store: new mongostore({db: mongodb})
   }));
@@ -140,16 +140,22 @@ function pinMap(item) {
 
   return item;
 }
+
 //get all pins
-app.get('/pins', function(req, res){
+app.get('/api/pins', function(req, res) {
   var offset = req.query.offset,
       size = req.query.size;
 
   var findObj = {};
   if (offset || offset === 0) findObj.skip = offset;
   if (size) findObj.limit = size;
-  pins.find({}, findObj, function(err, pins) {
-    res.json(pins.map(pinMap));
+  return pins.page({}, findObj, function(err, _pins) {
+    return pins.count({}, function(err, count) {
+      return res.json({
+        total: count,
+             results: _pins.map(pinMap)
+      });
+    });
   });
 });
 

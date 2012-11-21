@@ -1,39 +1,8 @@
 extends layout
 
 block content
-  .pins
-    - each pin in pinned
-      .pin
-        - if (pin.img)
-          img(src=pin.img)
-        div(class="pin-" + pin._id + " module")
-          div
-            a(href=pin.href, target="_blank")
-              span.title #{pin.title}
-          div.module-footer
-            .info
-              .author #{pin.username}
-              .date #{pin.date}
-            .controls
-              a.delete(href='/pin/' + pin._id + '/delete') Delete
-              a.tags(href='/pin/' + pin._id + '/tag') Tags
-            .delete.hidden
-              .module
-                div
-                  h4 Are you sure you want to delete this? 
-                .buttons
-                  button.delete_yes.button Yes
-                  button.delete_no.button No
-            .tags.hidden
-              form.module(action='/pin/' + pin._id + '/tag', method="POST")
-                div
-                  h4 Add Tags
-                div.form
-                  p.msg.hidden
-                  p
-                    input(type="text",name="tags",id="tags",value=(pin.tags||"Tags"))
-                  p
-                    input.button(type="submit",value="Save Tags")
+  #pins
+
   .filters
     .module
       div
