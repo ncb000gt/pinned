@@ -1,19 +1,21 @@
 extends layout
 
 block content
-  #pins
+  .span9.offset2
+    #pins.pins
 
-  .filters
-    .module
-      div
-        h4 Tags
-      .group.tags
-        - if (tags && tags.length)
-          - each tag in tags
-            - if (tag.selected)
-              a.tag.selected(href=tag.url) #{tag.value}
-            - if (!(tag.selected))
-              a.tag(href=tag.url) #{tag.value}
-        - if (!tags || !(tags.length))
-          span No Tags Found
-    .categories
+  .span2
+    .filters
+      .module
+        div
+          h4 Tags
+        .group.tags
+          - if (tags && tags.length)
+            - each tag in tags
+              - if (tag.selected)
+                a.tag.selected(href=tag.url) #{tag.value}
+              - if (!(tag.selected))
+                a.tag(href=tag.url) #{tag.value}
+          - if (!tags || !(tags.length))
+            span No Tags Found
+      .categories

@@ -100,10 +100,11 @@ app.get('/pin/:pin/delete', function(req, res) {
 });
 
 app.post('/pin', function(req, res) {
+  res.set('Access-Control-Allow-Origin', '*');
   if (req.body && req.body.token) {
     users.find({'auth_code': req.body.token}, function(err, users) {
       if (!err && users.length > 0) {
-        pins.save(req.body.href, { 
+        pins.save(req.body.href, {
           "href": req.body.href,
           "title" : req.body.title,
           "domain" : req.body.domain,
@@ -114,19 +115,15 @@ app.post('/pin', function(req, res) {
         }, function(err) {
           if (err) console.log(err);
         });
-        return res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
+        return res.send("", 200);
       } else {
-        return res.send("", {"Access-Control-Allow-Origin": "*"}, 401);
+        return res.send("", 401);
       }
     });
   } else {
-    return res.send("", {"Access-Control-Allow-Origin": "*"}, 400);
+    return res.send("", 400);
   }
 });
-
-//app.post('/test', function(req, res) {
-  //return res.send("", {"Access-Control-Allow-Origin": "*"}, 200);
-//});
 
 function pinMap(item) {
   var title = item.title;
@@ -153,7 +150,7 @@ app.get('/api/pins', function(req, res) {
     return pins.count({}, function(err, count) {
       return res.json({
         total: count,
-             results: _pins.map(pinMap)
+        results: _pins.map(pinMap)
       });
     });
   });

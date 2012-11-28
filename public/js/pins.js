@@ -1,7 +1,7 @@
 'use strict';
 
-!function() {
-  Pinned.collections.Pins = Backbone.Collection.extend({
+define(['underscore', 'jquery', 'backbone', "mustache", "text!views/pin.html"], function(_, $, Backbone, Mustache, pinTmpl, undefined) {
+  var Pins = Backbone.Collection.extend({
     "url": '/api/pins',
     "parse": function(resp) {
       this.totalPages = Math.ceil(resp.total / this.perPage);
@@ -10,25 +10,22 @@
     }
   });
 
-  Pinned.views.Pin = Backbone.View.extend({
-    "className": 'pin',
-    "template": 'pin',
+  var Pin = Backbone.View.extend({
+    "className": 'pin span2',
     "render": function() {
       var self = this;
 
-      Pinned.loadTemplate(self.template, function(tmpl) {
-        self.$el.html(tmpl(self.model.toJSON()));
-        self.trigger('rendered', self.$el);
-      });
+      self.$el.html(Mustache.render(pinTmpl, self.model.toJSON()));
+      self.trigger('rendered', self.$el);
     }
   });
 
-  Pinned.views.PinList = Backbone.View.extend({
+  var PinList = Backbone.View.extend({
     "initialize": function() {
       this.offset = 0;
       this.size = 10;
 
-      this.collection = new Pinned.collections.Pins({
+      this.collection = new Pins({
         "model": Backbone.Model
       });
       this.collection.bind('reset', $.proxy(this.render, this));
@@ -49,7 +46,7 @@
     "add": function(model) {
       console.log('add');
       var self = this;
-      var pin = new Pinned.views.Pin({
+      var pin = new Pin({
         "model": model
       });
       pin.bind('rendered', function($pin) {
@@ -58,4 +55,6 @@
       pin.render();
     }
   });
-}();
+
+  return PinList;
+});

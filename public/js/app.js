@@ -1,18 +1,6 @@
 'use strict';
 
 !function($, undefined){
-  //login forms
-  $('form input').each(function() {
-    var item = $(this);
-    var placeholders = ['Username', 'Password', 'Tags'];
-    var placeholder = item.val();
-    item.focus(function() {
-      if (placeholders.indexOf(item.val()) >= 0) item.val('');
-    });
-    item.blur(function() {
-      if (item.val() == '') item.val(placeholder);
-    });
-  });
 
   //$('.tags form').submit(function() {
     //var el = $(this);
