@@ -11,7 +11,7 @@ define(['underscore', 'jquery', 'backbone', "mustache", "text!views/pin.html"], 
   });
 
   var Pin = Backbone.View.extend({
-    "className": 'pin span2',
+    "className": 'pin pull-left',
     "render": function() {
       var self = this;
 
