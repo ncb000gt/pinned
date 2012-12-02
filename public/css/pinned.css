@@ -5039,6 +5039,9 @@ h4 {
   overflow: hidden;
   background-color: #f8f8f8;
 }
+.pin:hover {
+  background-color: #0090ff;
+}
 .pin-inner {
   width: 100px;
 }
