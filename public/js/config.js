@@ -3,6 +3,7 @@ requirejs.config({
   "paths": {
     "bootstrap": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/bootstrap.min",
     "jquery": "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min",
+    "jquery-ui": "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min",
     "underscore": "//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min",
     "backbone": "//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min",
     "modernizr": "//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min",

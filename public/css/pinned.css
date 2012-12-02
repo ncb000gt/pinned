@@ -5052,3 +5052,6 @@ h4 {
 .pin-extra:hover {
   border-color: #333333;
 }
+.pin-actions a {
+  color: #3c3c3c;
+}

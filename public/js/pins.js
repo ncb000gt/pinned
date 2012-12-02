@@ -1,6 +1,6 @@
 'use strict';
 
-define(['underscore', 'jquery', 'backbone', "mustache", "text!views/pin.html"], function(_, $, Backbone, Mustache, pinTmpl, undefined) {
+define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views/pin.html"], function(_, $, _jqui, Backbone, Mustache, pinTmpl, undefined) {
   var Pins = Backbone.Collection.extend({
     "url": '/api/pins',
     "parse": function(resp) {
@@ -12,11 +12,38 @@ define(['underscore', 'jquery', 'backbone', "mustache", "text!views/pin.html"], 
 
   var Pin = Backbone.View.extend({
     "className": 'pin pull-left',
+    "events": {
+      "click .pin-extra": "toggleInner"
+    },
     "render": function() {
       var self = this;
 
       self.$el.html(Mustache.render(pinTmpl, self.model.toJSON()));
+      self.$infoEl = self.$el.find('.pin-info');
+      self.$actionEl = self.$el.find('.pin-actions');
+      self.$extraEl = self.$el.find('.pin-extra');
       self.trigger('rendered', self.$el);
+    },
+    "toggleInner": function(e) {
+      var self = this;
+      if (e && e.target) e.preventDefault();
+
+      var i = self.$extraEl.find('i');
+      if (self.$infoEl.css('display') === 'none') {
+        self.$actionEl.toggle('slide', { "direction": "right"}, 300, function() {
+          self.$infoEl.toggle('slide', { "direction": "left"}, 300);
+        });
+
+        i.removeClass('icon-chevron-right');
+        i.addClass('icon-chevron-left');
+      } else {
+        self.$infoEl.toggle('slide', { "direction": "left"}, 300, function() {
+          self.$actionEl.toggle('slide', { "direction": "right"}, 300);
+        });
+
+        i.removeClass('icon-chevron-left');
+        i.addClass('icon-chevron-right');
+      }
     }
   });
 
@@ -36,7 +63,6 @@ define(['underscore', 'jquery', 'backbone', "mustache", "text!views/pin.html"], 
       this.collection.fetch({data: {offset: this.offset, size: this.size}});
     },
     "render": function() {
-      console.log('render');
       var self = this;
 
       _.each(self.collection.models, function(model) {
@@ -44,7 +70,6 @@ define(['underscore', 'jquery', 'backbone', "mustache", "text!views/pin.html"], 
       });
     },
     "add": function(model) {
-      console.log('add');
       var self = this;
       var pin = new Pin({
         "model": model
