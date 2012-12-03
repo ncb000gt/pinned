@@ -5053,5 +5053,6 @@ h4 {
   border-color: #333333;
 }
 .pin-actions a {
+  display: block;
   color: #3c3c3c;
 }

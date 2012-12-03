@@ -10,18 +10,10 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
     }
   });
 
-  var DeleteModal = Backbone.View.extend({
+  var ModalView = Backbone.View.extend({
     "className": "modal fade hide",
-    "events": {
-      "click .cancel": "cancel",
-      "click .delete": "delete"
-    },
     "initialize": function() {
       this.render();
-    },
-    "render": function() {
-      this.$el.html(Mustache.render(deleteModalTmpl, {}));
-      this.show();
     },
     "show": function() {
       this.$el.modal('show');
@@ -29,8 +21,16 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
     "hide": function() {
       this.$el.modal('hide');
     },
-    "cancel": function() {
-      this.$el.modal('hide');
+  });
+
+  var DeleteModal = ModalView.extend({
+    "events": {
+      "click .cancel": "hide",
+      "click .delete": "delete"
+    },
+    "render": function() {
+      this.$el.html(Mustache.render(deleteModalTmpl, {}));
+      this.show();
     },
     "delete": function() {
       this.trigger('delete', this.model);
@@ -137,7 +137,6 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
     "remove": function(model, $el) {
       this.collection.remove(model);
       $el.toggle('slide', {"direction": 'left'}, function() {
-        console.log('test');
         $el.remove();
       });
     }
