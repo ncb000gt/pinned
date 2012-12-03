@@ -3,6 +3,8 @@ var express = require('express'),
     bcrypt = require('bcrypt'),
     timeago = require('timeago'),
     querystring = require('querystring'),
+    uuid = require('node-uuid'),
+
     mongoDB = require('mongodb').Db,
     mongoServer = require('mongodb').Server,
     sessionServerConfig = new mongoServer('localhost', 27017, {auto_reconnect: true})
@@ -28,19 +30,18 @@ var BOOKMARK_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmark.js.temp
 
 var app = module.exports = express();
 
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.cookieParser());
-  app.use(express.session({
+app.use(express.bodyParser())
+  .use(express.logger('dev'))
+  .use(express.cookieParser())
+  .use(express.static(__dirname + '/public'))
+  .use(express.session({
     cookie: {maxAge: 60000 * 60 * 24},
     secret: "say WUUUUT?!?",
     store: new mongostore({db: mongodb})
-  }));
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-});
+  }))
+  .use(app.router);
+app.set('view engine', 'jade')
+app.set('views', __dirname + '/views')
 
 app.get('/setup', setup.get);
 app.post('/setup', setup.post);
@@ -87,24 +88,14 @@ app.post('/pin/:pin/read', function(req, res) {
   }
 });
 
-app.get('/pin/:pin/delete', function(req, res) {
-  var pinId = req.params.pin;
-  if (pinId) {
-    return pins.bulkDelete({_id: ObjectId(pinId)}, function(err) {
-      if (req.headers['x-requested-with'] == 'XMLHttpRequest') return res.send(200);
-      return res.redirect('/');
-    });
-  } else {
-    return res.send(404);
-  }
-});
-
 app.post('/pin', function(req, res) {
   res.set('Access-Control-Allow-Origin', '*');
   if (req.body && req.body.token) {
     users.find({'auth_code': req.body.token}, function(err, users) {
       if (!err && users.length > 0) {
-        pins.save(req.body.href, {
+        var id = uuid.v4();
+        pins.save(id, {
+          "id": id,
           "href": req.body.href,
           "title" : req.body.title,
           "domain" : req.body.domain,
@@ -139,6 +130,19 @@ function pinMap(item) {
 }
 
 //get all pins
+app.del('/api/pins/:pin', function(req, res) {
+  var pinId = req.params.pin;
+  if (pinId) {
+    return pins.bulkDelete({id: pinId}, function(err) {
+      if (err) return res.send(500, err);
+
+      return res.send();
+    });
+  } else {
+    return res.send(404);
+  }
+});
+
 app.get('/api/pins', function(req, res) {
   var offset = req.query.offset,
       size = req.query.size;

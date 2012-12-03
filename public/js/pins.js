@@ -1,6 +1,6 @@
 'use strict';
 
-define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views/pin.html"], function(_, $, _jqui, Backbone, Mustache, pinTmpl, undefined) {
+define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views/pin.html", "text!views/delete-modal.html"], function(_, $, _jqui, Backbone, Mustache, pinTmpl, deleteModalTmpl, undefined) {
   var Pins = Backbone.Collection.extend({
     "url": '/api/pins',
     "parse": function(resp) {
@@ -10,10 +10,41 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
     }
   });
 
+  var DeleteModal = Backbone.View.extend({
+    "className": "modal fade hide",
+    "events": {
+      "click .cancel": "cancel",
+      "click .delete": "delete"
+    },
+    "initialize": function() {
+      this.render();
+    },
+    "render": function() {
+      this.$el.html(Mustache.render(deleteModalTmpl, {}));
+      this.show();
+    },
+    "show": function() {
+      this.$el.modal('show');
+    },
+    "hide": function() {
+      this.$el.modal('hide');
+    },
+    "cancel": function() {
+      this.$el.modal('hide');
+    },
+    "delete": function() {
+      this.trigger('delete', this.model);
+      this.$el.modal('hide');
+    }
+  });
+
   var Pin = Backbone.View.extend({
     "className": 'pin pull-left',
     "events": {
-      "click .pin-extra": "toggleInner"
+      "click .pin-extra": "toggleInner",
+      "click .pin-moreinfo": "showMoreInfo",
+      "click .pin-tag": "showTag",
+      "click .pin-delete": "showDelete"
     },
     "render": function() {
       var self = this;
@@ -44,6 +75,29 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
         i.removeClass('icon-chevron-left');
         i.addClass('icon-chevron-right');
       }
+    },
+    "showMoreInfo": function(e) {
+      var self = this;
+      if (e && e.target) e.preventDefault();
+    },
+    "showTag": function(e) {
+      var self = this;
+      if (e && e.target) e.preventDefault();
+    },
+    "showDelete": function(e) {
+      var self = this;
+      if (e && e.target) e.preventDefault();
+
+      var deleteModal = new DeleteModal({
+        "model": self.model
+      });
+      deleteModal.bind('delete', function() {
+        self.delete();
+      });
+    },
+    "delete": function() {
+      this.model.destroy();
+      this.trigger('delete', this.model, this.$el);
     }
   });
 
@@ -77,7 +131,15 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
       pin.bind('rendered', function($pin) {
         self.$el.prepend($pin);
       });
+      pin.bind('delete', $.proxy(self.remove, self));
       pin.render();
+    },
+    "remove": function(model, $el) {
+      this.collection.remove(model);
+      $el.toggle('slide', {"direction": 'left'}, function() {
+        console.log('test');
+        $el.remove();
+      });
     }
   });
 
