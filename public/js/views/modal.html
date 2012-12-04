@@ -3,11 +3,11 @@
   <h3>{{title}}</h3>
 </div>
 <div class="modal-body">
-  {{& body}}
+  {{{body}}}
 </div>
 <div class="modal-footer">
   {{#buttons}}
-    <a href="#" class="btn {{class}}">{{title}}</a>
+  <a href="#" class="btn {{class}}" {{{attrs}}}>{{title}}</a>
   {{/buttons}}
 </div>
 

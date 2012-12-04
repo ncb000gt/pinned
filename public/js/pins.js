@@ -1,6 +1,6 @@
 'use strict';
 
-define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views/pin.html", "text!views/modal.html", "text!views/delete-modal.html"], function(_, $, _jqui, Backbone, Mustache, pinTmpl, modalTmpl, deleteModalTmpl, undefined) {
+define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views/pin.html", "text!views/modal.html", "text!views/delete-modal.html", "text!views/info-modal.html"], function(_, $, _jqui, Backbone, Mustache, pinTmpl, modalTmpl, deleteModalTmpl, infoModalTmpl, undefined) {
   var Pins = Backbone.Collection.extend({
     "url": '/api/pins',
     "parse": function(resp) {
@@ -38,13 +38,29 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
         "body": Mustache.render(deleteModalTmpl, {}),
         "buttons": [
           { "class": 'cancel', "title": 'Cancel' },
-          { "class": 'btn-warning delete', "title": 'Delete' }
+          { "class": 'btn-danger delete', "title": 'Delete' }
         ]
       };
     },
     "delete": function() {
       this.trigger('delete', this.model);
       this.$el.modal('hide');
+    }
+  });
+
+  var InfoModal = ModalView.extend({
+    "events": {
+      "click .cancel": "hide",
+    },
+    "modalData": function() {
+      console.log(this.model);
+      return {
+        "title": "Pin Info",
+        "body": Mustache.render(infoModalTmpl, this.model.toJSON()),
+        "buttons": [
+          { "class": 'cancel', "title": 'Close' }
+        ]
+      };
     }
   });
 
@@ -89,6 +105,10 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
     "showMoreInfo": function(e) {
       var self = this;
       if (e && e.target) e.preventDefault();
+
+      var infoModal = new InfoModal({
+        "model": self.model
+      });
     },
     "showTag": function(e) {
       var self = this;
