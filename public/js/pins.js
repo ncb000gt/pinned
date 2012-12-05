@@ -53,7 +53,6 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views
       "click .cancel": "hide",
     },
     "modalData": function() {
-      console.log(this.model);
       return {
         "title": "Pin Info",
         "body": Mustache.render(infoModalTmpl, this.model.toJSON()),
