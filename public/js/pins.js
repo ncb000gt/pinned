@@ -1,65 +1,12 @@
 'use strict';
 
-define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", "text!views/pin.html", "text!views/modal.html", "text!views/delete-modal.html", "text!views/info-modal.html"], function(_, $, _jqui, Backbone, Mustache, pinTmpl, modalTmpl, deleteModalTmpl, infoModalTmpl, undefined) {
+define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/delete', 'modals/info', "text!views/pin.html"], function(_, $, _jqui, Backbone, Mustache, DeleteModal, InfoModal, pinTmpl, undefined) {
   var Pins = Backbone.Collection.extend({
     "url": '/api/pins',
     "parse": function(resp) {
       this.totalPages = Math.ceil(resp.total / this.perPage);
 
       return resp.results;
-    }
-  });
-
-  var ModalView = Backbone.View.extend({
-    "className": "modal fade hide",
-    "initialize": function() {
-      this.render(this.modalData());
-    },
-    "render": function(data) {
-      this.$el.html(Mustache.render(modalTmpl, data));
-      this.show();
-    },
-    "show": function() {
-      this.$el.modal('show');
-    },
-    "hide": function() {
-      this.$el.modal('hide');
-    },
-  });
-
-  var DeleteModal = ModalView.extend({
-    "events": {
-      "click .cancel": "hide",
-      "click .delete": "delete"
-    },
-    "modalData": function() {
-      return {
-        "title": "Delete Pin",
-        "body": Mustache.render(deleteModalTmpl, {}),
-        "buttons": [
-          { "class": 'cancel', "title": 'Cancel' },
-          { "class": 'btn-danger delete', "title": 'Delete' }
-        ]
-      };
-    },
-    "delete": function() {
-      this.trigger('delete', this.model);
-      this.$el.modal('hide');
-    }
-  });
-
-  var InfoModal = ModalView.extend({
-    "events": {
-      "click .cancel": "hide",
-    },
-    "modalData": function() {
-      return {
-        "title": "Pin Info",
-        "body": Mustache.render(infoModalTmpl, this.model.toJSON()),
-        "buttons": [
-          { "class": 'cancel', "title": 'Close' }
-        ]
-      };
     }
   });
 
