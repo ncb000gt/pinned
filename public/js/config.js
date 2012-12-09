@@ -1,4 +1,5 @@
 requirejs.config({
+	"waitSeconds": 15,
   "baseUrl": "../js",
   "paths": {
     "bootstrap": "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/bootstrap.min",

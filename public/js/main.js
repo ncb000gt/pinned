@@ -1,3 +1,5 @@
+'use strict';
+
 define(["modernizr", "jquery", "backbone", "bootstrap", "pins"], function(Modernizr, $, Backbone, Bootstrap, Pins, undefined) {
   return {
     "run": function() {

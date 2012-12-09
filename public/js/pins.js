@@ -1,6 +1,6 @@
 'use strict';
 
-define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/delete', 'modals/info', "text!views/pin.html"], function(_, $, _jqui, Backbone, Mustache, DeleteModal, InfoModal, pinTmpl, undefined) {
+define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/delete', 'modals/info', 'modals/tag', "text!views/pin.html"], function(_, $, _jqui, Backbone, Mustache, DeleteModal, InfoModal, TagModal, pinTmpl, undefined) {
   var Pins = Backbone.Collection.extend({
     "url": '/api/pins',
     "parse": function(resp) {
@@ -52,24 +52,28 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/del
       var self = this;
       if (e && e.target) e.preventDefault();
 
-      var infoModal = new InfoModal({
+      new InfoModal({
         "model": self.model
       });
     },
     "showTag": function(e) {
       var self = this;
       if (e && e.target) e.preventDefault();
+
+      new TagModal({
+        "model": self.model
+      });
     },
     "showDelete": function(e) {
       var self = this;
       if (e && e.target) e.preventDefault();
 
-      var deleteModal = new DeleteModal({
+      new DeleteModal({
         "model": self.model
-      });
-      deleteModal.bind('delete', function() {
-        self.delete();
-      });
+      })
+        .bind('delete', function() {
+          self.delete();
+        });
     },
     "delete": function() {
       this.model.destroy();

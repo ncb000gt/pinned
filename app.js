@@ -12,7 +12,8 @@ var express = require('express'),
     mongostore = require('connect-mongodb'),
     db = require('./lib/db'),
     ObjectId = require('mongodb').ObjectID,
-    pins = new (require('./lib/dbs/pins'))(),
+    pins = new db({collection_name: 'pins', key: 'id'}),
+		tags = new db({collection_name: 'tags', key: 'id'}),
     users = new (require('./lib/dbs/users'))(),
     // share = require('./lib/share'),
     user_functions = require('./lib/user_functions'),
@@ -63,19 +64,6 @@ app.get(/bookmark.js/, function(req, res) {
 });
 
 //pin url
-app.post('/pin/:pin/tag', function(req, res) {
-  var pinId = req.params.pin;
-  var tags = req.body.tags;
-  if (pinId) {
-    return pins.save({_id: ObjectId(pinId)}, {tags: tags.split(',')}, function(err) {
-      if (req.headers['x-requested-with'] == 'XMLHttpRequest') return res.send(200);
-      return res.redirect('/');
-    });
-  } else {
-    return res.send(404);
-  }
-});
-
 app.post('/pin/:pin/read', function(req, res) {
   var pinId = req.params.pin;
   if (pinId) {
@@ -129,6 +117,95 @@ function pinMap(item) {
   return item;
 }
 
+app.get('/api/:pin/tags', function(req, res) {
+	var pinId = req.params.pin;
+	if (pinId) {
+		return pins.get(pinId, function(err, pin) {
+			if (err) return res.send(500, err);
+
+			var tagIds = (pin.tags || []).map(function(tag) {
+				return {id: tag};
+			});
+			return tags.find({"$or": tagIds}, function(err, tags) {
+				return res.json(tags);
+			});
+		});
+	} else {
+		return res.send(400, "Pin not specified.");
+	}
+});
+
+app.del('/api/:pin/tags/:tag', function(req, res) {
+	var pinId = req.params.pin;
+	var tag = req.params.tag;
+	//check to see if tag is set to a name...
+	return tags.find({name: tag}, function(err, t) {
+		if (err) return res.send(500, err);
+
+		function removeTag(tagId) {
+			return pins.get(pinId, function(err, pin) {
+				var tags = pin.tags;
+				var idx = tags.indexOf(tagId);
+
+				if (idx <= 0) {
+					//not sure 200 is what we want here...
+					return res.send(200);
+				} else {
+					tags.splice(idx, 1);
+
+					return pins.update(pinId, {"$set": { "tags": tags }}, function(err) {
+						if (err) return res.send(500, err);
+
+						return res.send(200);
+					});
+				}
+			});
+		}
+
+		if (t && t.length > 0) {
+			return removeTag(t[0].id);
+		} else {
+			return removeTag(tag);
+		}
+	});
+});
+
+app.put('/api/:pin/tags/:tag', function(req, res) {
+  var pinId = req.params.pin;
+	var tagName = req.params.tag;
+  if (pinId && tagName) {
+		var tagId = uuid.v4();
+		tagName = tagName.toLowerCase();
+		return tags.find({name: tagName}, function(err, tag) {
+			function up(_tagId) {
+				return pins.get(pinId, function(err, p) {
+					if (p && p.tags.indexOf(_tagId) <= 0) {
+						//should this be a 200? probably not.
+						return res.send(200);
+					}
+					return pins.update(pinId, {"$push": {"tags": _tagId}}, function(err) {
+						if (err) return res.send(500, err);
+
+						return res.send(200);
+					});
+				});
+			}
+			if (!tag || tag.length === 0) {
+				return tags.save(tagId, {id: tagId, name: tagName}, function(err) {
+					if (err) return res.send(500, err);
+					//could just skip this and go to the next line of code, but returns and sends could cause a conflict if there is an error...
+					
+					return up(tagId);
+				});
+			} else {
+				return up(tagId);
+			}
+		});
+	} else {
+		return res.send(400);
+	}
+});
+
 //get all pins
 app.del('/api/pins/:pin', function(req, res) {
   var pinId = req.params.pin;
@@ -141,6 +218,12 @@ app.del('/api/pins/:pin', function(req, res) {
   } else {
     return res.send(404);
   }
+});
+
+app.get('/api/tags', function(req, res) {
+	return tags.find({}, function(err, tags) {
+		return res.json(tags);
+	});
 });
 
 app.get('/api/pins', function(req, res) {
@@ -217,59 +300,19 @@ app.get('/', function(req, res, next) {
       qtags = qtags.split(',');
       findObj.tags = { $in: qtags };
     }
-    pins.find(findObj, {},function(err, _pins) {
+    pins.find(findObj, function(err, _pins) {
       if (err) throw err;
 
       var host = 'http://' + req.headers['host'];
 
-      pins.mr([], {}, {tags: []}, function(obj, prev) {
-        if (obj.tags) {
-          var accum = prev.tags, otags = obj.tags;
-          for(var i = 0; i < otags.length; i++) {
-            var o = otags[i];
-            if (accum.indexOf(o) >= 0) continue;
-            accum.push(o);
-          }
-          prev.tags = accum;
-        } }, function(err, tags) {
-          //consider a separate collection of tags just for this purpose...?
-          //bad approach if large separate arrays of tags...
-          tags = (tags && tags.length) ? tags[0].tags : [];
-
-          tags = tags.map(function(tag) {
-            var ntags = (qtags || []).map(function(tag) { return tag; }); //deep copy.
-            tag = {value: tag};
-            tag.url = req.path;
-            var q = {};
-            for (var p in req.query) {
-              q[p] = req.query[p];
-            }
-
-            var tagidx = -1;
-            if (qtags && (tagidx = qtags.indexOf(tag.value)) >= 0) {
-              tag.selected = true;
-              ntags.splice(tagidx, 1);
-            } else {
-              if (!ntags) ntags = [];
-              ntags.push(tag.value);
-            }
-            if (ntags && ntags.length > 0) {
-              q.tags = ntags.join(',');
-            } else {
-              delete q.tags;
-            }
-            var qstring = querystring.stringify(q);
-            if (qstring) tag.url += '?' + qstring;
-            return tag;
-          });
-
-          res.render('index', {
-            error: null,
-            status: req.session.authed,
-            bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
-            pinned: _pins.map(pinMap),
-            tags: tags
-          });
+			tags.find({}, function(err, _tags) {
+				res.render('index', {
+					error: null,
+					status: req.session.authed,
+					bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
+					pinned: _pins.map(pinMap),
+					tags: _tags
+				});
       });
     });
   }

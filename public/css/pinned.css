@@ -5034,7 +5034,7 @@ h4 {
 .pin {
   margin: 0 7px 7px 0;
   padding: 10px;
-  height: 80px;
+  height: 90px;
   width: 140px;
   overflow: hidden;
   background-color: #f8f8f8;
@@ -5048,11 +5048,23 @@ h4 {
 .pin-extra {
   border: 1px solid;
   border-color: #f8f8f8;
+  width: 15px;
+  height: 90px;
 }
 .pin-extra:hover {
   border-color: #333333;
 }
+.pin-extra i {
+  margin: 38px 0;
+}
 .pin-actions a {
   display: block;
   color: #3c3c3c;
+}
+.pin-tag {
+  margin-right: 3px;
+}
+.pin-tag i {
+  margin-right: 2px;
+  cursor: pointer;
 }
