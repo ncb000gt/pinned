@@ -181,14 +181,13 @@ app.put('/api/:pin/tags/:tag', function(req, res) {
 
 			function up(_tagId) {
 				return pins.get(pinId, function(err, p) {
-					if (p && p.tags.indexOf(_tagId) > 0) {
-						//should this be a 200? probably not.
-						return res.send(200);
-					}
+					//should this be a 200? probably not.
+					if (p && p.tags && p.tags.indexOf(_tagId) > 0) return res.json({"id": _tagId, "name": tagName});
+					
 					return pins.update(pinId, {"$push": {"tags": _tagId}}, function(err) {
 						if (err) return res.send(500, err);
 
-						return res.send(200);
+						return res.json({"id": _tagId, "name": tagName});
 					});
 				});
 			}

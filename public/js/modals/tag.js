@@ -18,6 +18,7 @@ define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', '
       this.tagCollection = new PinTags();
 			this.tagCollection.pin = this.model.get('id');
       this.tagCollection.bind('reset', this.listTags, this);
+      this.tagCollection.bind('reset', this.fetchAllTags, this);
       this.tagCollection.bind('add', this.add, this);
     },
 		"postRender": function() {
@@ -26,6 +27,9 @@ define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', '
 
 			this.collection.fetch();
 			this.tagCollection.fetch();
+		},
+		"fetchAllTags": function() {
+			this.collection.fetch();
 		},
     "modalData": function() {
       return {
@@ -42,21 +46,27 @@ define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', '
 			}
 		},
     "addTag": function() {
-			var name = this.input.val().toLowerCase();
+			var self = this;
+			var name = self.input.val().toLowerCase();
 			if (name === '') return;
 
 			var found = false;
-			_.each(this.tagCollection.models, function(m) {
+			_.each(self.tagCollection.models, function(m) {
 				if (m.get('name') === name) found = true;
 			});
 
-			this.input.val('');
+			self.input.val('');
 			if (found) return;
 
-      this.tagCollection.create({
+      self.tagCollection.create({
 				"id": name,
 				"name": name
-      });
+      }, {
+				"wait": true,
+				"success": function(model, res) {
+					self.collection.fetch();
+				}
+			});
     },
     "add": function(model) {
 			var tag = new Tag({
