@@ -234,7 +234,7 @@ app.get('/api/pins', function(req, res) {
       size = req.query.size,
 			tagNames = req.query.tags;
 
-  var findObj = {};
+  var findObj = { "sort": { "created_on": 1 }};
   if (offset || offset === 0) findObj.skip = offset;
   if (size) findObj.limit = size;
 	function go(filter) {
