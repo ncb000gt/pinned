@@ -81,7 +81,7 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/del
     }
   });
 
-  var PinList = Backbone.View.extend({
+  return Backbone.View.extend({
     "initialize": function() {
       this.offset = 0;
       this.size = 10;
@@ -94,11 +94,15 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/del
       this.fetch();
     },
     "fetch": function(data) {
-      this.collection.fetch({data: {offset: this.offset, size: this.size}});
+			if (!data) data = {};
+			data.offest = data.offset || this.offset;
+			data.size = data.size || this.size;
+      this.collection.fetch({data: data});
     },
     "render": function() {
       var self = this;
 
+			self.$el.find('div').remove();
       _.each(self.collection.models, function(model) {
         self.add(model);
       });
@@ -121,6 +125,4 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/del
       });
     }
   });
-
-  return PinList;
 });

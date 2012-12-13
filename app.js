@@ -4,6 +4,7 @@ var express = require('express'),
     timeago = require('timeago'),
     querystring = require('querystring'),
     uuid = require('node-uuid'),
+		_ = require('lodash'),
 
     mongoDB = require('mongodb').Db,
     mongoServer = require('mongodb').Server,
@@ -177,9 +178,10 @@ app.put('/api/:pin/tags/:tag', function(req, res) {
 		var tagId = uuid.v4();
 		tagName = tagName.toLowerCase();
 		return tags.find({name: tagName}, function(err, tag) {
+
 			function up(_tagId) {
 				return pins.get(pinId, function(err, p) {
-					if (p && p.tags.indexOf(_tagId) <= 0) {
+					if (p && p.tags.indexOf(_tagId) > 0) {
 						//should this be a 200? probably not.
 						return res.send(200);
 					}
@@ -190,6 +192,7 @@ app.put('/api/:pin/tags/:tag', function(req, res) {
 					});
 				});
 			}
+
 			if (!tag || tag.length === 0) {
 				return tags.save(tagId, {id: tagId, name: tagName}, function(err) {
 					if (err) return res.send(500, err);
@@ -198,7 +201,7 @@ app.put('/api/:pin/tags/:tag', function(req, res) {
 					return up(tagId);
 				});
 			} else {
-				return up(tagId);
+				return up(tag[0].id);
 			}
 		});
 	} else {
@@ -228,19 +231,34 @@ app.get('/api/tags', function(req, res) {
 
 app.get('/api/pins', function(req, res) {
   var offset = req.query.offset,
-      size = req.query.size;
+      size = req.query.size,
+			tagNames = req.query.tags;
 
   var findObj = {};
   if (offset || offset === 0) findObj.skip = offset;
   if (size) findObj.limit = size;
-  return pins.page({}, findObj, function(err, _pins) {
-    return pins.count({}, function(err, count) {
-      return res.json({
-        total: count,
-        results: _pins.map(pinMap)
-      });
-    });
-  });
+	function go(filter) {
+		return pins.page(filter, findObj, function(err, _pins) {
+			return pins.count(filter, function(err, count) {
+				return res.json({
+					"total": count,
+				  "results": _pins.map(pinMap)
+				});
+			});
+		});
+	}
+
+	if (tagNames) {
+		return tags.find({'$or': tagNames.map(function(tag) {
+			return {"name": tag};
+		})}, function(err, _tags) {
+			if (err) return res.send(500, err);
+
+			return go({"tags": {"$in": _.pluck(_tags, 'id')}});
+		});
+	} else {
+		return go({});
+	}
 });
 
 app.get('/login', function(req, res) {

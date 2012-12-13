@@ -11,7 +11,8 @@
     "node-uuid": "*",
     "request": "*",
     "timeago": "*",
-    "connect-mongodb": "*"
+    "connect-mongodb": "*",
+		"lodash": "*"
   },
   "devDependencies": {
     "nodeunit": "*"

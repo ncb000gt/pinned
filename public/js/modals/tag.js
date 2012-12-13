@@ -1,6 +1,6 @@
 'use strict';
 
-define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', 'text!views/tag.html', 'backbone', 'data/alltags'], function(_, ModalView, Mustache, tmpl, tagTmpl, Backbone, AllTags, undefined) {
+define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', 'backbone', 'tag', 'data/alltags'], function(_, ModalView, Mustache, tmpl, Backbone, Tag, AllTags, undefined) {
   var PinTags = Backbone.Collection.extend({
     "url": function() {
       return "/api/" + this.pin + "/tags";
@@ -11,16 +11,14 @@ define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', '
     "events": {
       "click .cancel": "hide",
       "click .add": "addTag",
-			"keypress input": "checkSubmit",
-			"click i": "removeTag"
+			"keypress input": "checkSubmit"
     },
     "postInit": function() {
-			this.collection = new AllTags();
+			this.collection = AllTags;
       this.tagCollection = new PinTags();
 			this.tagCollection.pin = this.model.get('id');
       this.tagCollection.bind('reset', this.listTags, this);
       this.tagCollection.bind('add', this.add, this);
-			this.tagCollection.bind('remove', this.remove, this);
     },
 		"postRender": function() {
 			this.input = this.$el.find('input');
@@ -45,6 +43,8 @@ define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', '
 		},
     "addTag": function() {
 			var name = this.input.val().toLowerCase();
+			if (name === '') return;
+
 			var found = false;
 			_.each(this.tagCollection.models, function(m) {
 				if (m.get('name') === name) found = true;
@@ -59,25 +59,14 @@ define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', '
       });
     },
     "add": function(model) {
-      this.pinTags.append(
-					Mustache.render(tagTmpl, model.toJSON()));
-    },
-		"removeTag": function(e) {
-			var self = this;
-			if (e) e.preventDefault();
-
-			var name = $(e.target).data('name');
-			_.each(self.tagCollection.models, function(m) {
-				if (m && m.get('name') === name) {
-					m.destroy();
-				}
+			var tag = new Tag({
+				"model": model,
+				"removable": true
 			});
-		},
-    "remove": function(model) {
-			this.$el.find('#tag_' + model.get('name')).remove();
+      this.pinTags.append(tag.render());
     },
     "listTags": function() {
-			this.pinTags.find('span').remove();
+			this.pinTags.find('a').remove();
 			_.each(this.tagCollection.models, $.proxy(this.add, this));
     }
   });

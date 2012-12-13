@@ -1,9 +1,15 @@
 'use strict';
 
+var AllTags = null;
+
 define(['backbone'], function(Backbone, undefined) {
-  return Backbone.Collection.extend({
-    "url": function() {
-      return "/api/tags";
-    }
-  });
+	if (!AllTags) {
+		AllTags = new (Backbone.Collection.extend({
+			"url": function() {
+				return "/api/tags";
+			}
+		}))();
+	}
+
+	return AllTags;
 });

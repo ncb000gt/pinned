@@ -8,15 +8,5 @@ block content
   .span2
     .filters
       .module
-        div
-          h4 Tags
-        .group.tags
-          - if (tags && tags.length)
-            - each tag in tags
-              - if (tag.selected)
-                a.tag.selected(href=tag.url) #{tag.value}
-              - if (!(tag.selected))
-                a.tag(href=tag.url) #{tag.value}
-          - if (!tags || !(tags.length))
-            span No Tags Found
-      .categories
+        h4 Tags
+        #tags

@@ -5061,10 +5061,12 @@ h4 {
   display: block;
   color: #3c3c3c;
 }
-.pin-tag {
+.pin-tag,
+.tag {
   margin-right: 3px;
 }
 .pin-tag i {
   margin-right: 2px;
-  cursor: pointer;
+  /*cursor: pointer;*/
+
 }
