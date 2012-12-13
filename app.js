@@ -223,7 +223,7 @@ app.del('/api/pins/:pin', function(req, res) {
 });
 
 app.get('/api/tags', function(req, res) {
-	return tags.find({}, function(err, tags) {
+	return tags.find({}, {"sort": {"name": 1}}, function(err, tags) {
 		return res.json(tags);
 	});
 });
