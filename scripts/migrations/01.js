@@ -18,9 +18,9 @@ db.open(function(err, db) {
 						var pin = pins[i];
 						var findObj = {url: pin.url};
 
-						len += pin.tags.length;
 						var tagIds = [];
 						if (pin.tags && pin.tags.length > 0) {
+							len += pin.tags.length;
 							for (var j = 0; j < pin.tags.length; j++) {
 								var tagName = pin.tags[j].toLowerCase();
 								var tagId = uuid.v4();
