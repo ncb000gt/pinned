@@ -18,34 +18,42 @@ db.open(function(err, db) {
 						var pin = pins[i];
 						var findObj = {href: pin.href};
 
+						function updatePin(_t) {
+							var alter = {'$set': {'tags': _t}};
+							pc.update(findObj, alter, {upsert: true}, function(err) {
+								console.log(' PIN: updated - ' + pin.href + ' - ' + _t.join(','));
+								count++;
+							});
+						}
+
 						var tagIds = [];
 						if (pin.tags && pin.tags.length > 0) {
 							len += pin.tags.length;
+							var tagies = 0;
 							for (var j = 0; j < pin.tags.length; j++) {
 								var tagName = pin.tags[j].toLowerCase();
 								tc.find({name: tagName}, function(err, tagcursor) {
 									tagcursor.toArray(function(err, tags) {
+										var tagId;
 										if (tags && tags.length > 0) {
-											tagIds.push(tags[0].id);
+											tagId = tags[0].id;
 											count++;
 										} else {
-											var tagId = uuid.v4();
-											tagIds.push(tagId);
+											tagId = uuid.v4();
 											tc.save(tagId, {id: tagId, name: tagName}, function(err) {
 												console.log(' TAG: created - ' + tagName + ':' + tagId);
 												count++;
 											});
 										}
+										tagIds.push(tagId);
+
+										if (++taggies === pin.tags.length) {
+											updatePin(tagIds);
+										}
 									});
 								});
 							}
 						}
-
-						var alter = {'$set': {'tags': tagIds}};
-						pc.update(findObj, alter, {upsert: true}, function(err) {
-							console.log(' PIN: updated - ' + pin.href + ' - ' + tagIds.join(','));
-							count++;
-						});
 					}
 
 					function check() {
