@@ -84,7 +84,7 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/del
   return Backbone.View.extend({
     "initialize": function() {
       this.offset = 0;
-      this.size = 10;
+      this.size = 12;
 
       this.collection = new Pins({
         "model": Backbone.Model
