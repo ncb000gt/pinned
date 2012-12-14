@@ -4,7 +4,7 @@ var mongo = require('mongodb'),
     mongodb = mongo.Db,
 		uuid = require('node-uuid');
 
-var db = new mongodb('pinned', new mongo.Server('pinned.digitaltumbleweed.com', mongo.Connection.DEFAULT_PORT, {}));
+var db = new mongodb('pinned', new mongo.Server('localhost', mongo.Connection.DEFAULT_PORT, {}));
 
 db.open(function(err, db) {
 	console.log(err);
