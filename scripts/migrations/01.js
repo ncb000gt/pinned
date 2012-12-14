@@ -20,22 +20,24 @@ db.open(function(err, db) {
 
 						len += pin.tags.length;
 						var tagIds = [];
-						for (var j = 0; j < pin.tags.length; j++) {
-							var tagName = pin.tags[j].toLowerCase();
-							var tagId = uuid.v4();
-							tagIds.push(tagId);
-							tc.find({id: tagId}, function(err, tagcursor) {
-								tagcursor.toArray(function(err, tags) {
-									if (tags && tags.length > 0) {
-										count++;
-									} else {
-										tc.save(tagId, {id: tagId, name: tagName}, function(err) {
-											console.log(' TAG: created - ' + tagName + ':' + tagId);
+						if (pin.tags && pin.tags.length > 0) {
+							for (var j = 0; j < pin.tags.length; j++) {
+								var tagName = pin.tags[j].toLowerCase();
+								var tagId = uuid.v4();
+								tagIds.push(tagId);
+								tc.find({id: tagId}, function(err, tagcursor) {
+									tagcursor.toArray(function(err, tags) {
+										if (tags && tags.length > 0) {
 											count++;
-										});
-									}
+										} else {
+											tc.save(tagId, {id: tagId, name: tagName}, function(err) {
+												console.log(' TAG: created - ' + tagName + ':' + tagId);
+												count++;
+											});
+										}
+									});
 								});
-							});
+							}
 						}
 
 						var alter = {'$set': {'tags': tagIds}};
