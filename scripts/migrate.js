@@ -1,4 +1,4 @@
-var db = require('./lib/db'),
+var db = require('../lib/db'),
     pins = new db({'cb': fire, 'key': 'id'}),
     uuid = require('node-uuid');
 
