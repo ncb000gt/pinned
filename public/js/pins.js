@@ -113,7 +113,7 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/del
         "model": model
       });
       pin.bind('rendered', function($pin) {
-        self.$el.prepend($pin);
+        self.$el.append($pin);
       });
       pin.bind('delete', $.proxy(self.remove, self));
       pin.render();
