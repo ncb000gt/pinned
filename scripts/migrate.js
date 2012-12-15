@@ -10,7 +10,7 @@ function fire(pindb) {
 		var total = _pins.length;
 		var count = 0;
     _pins.forEach(function(pin) {
-			var created_on = pin.created_on;
+			var created_on = old_created_on = pin.created_on;
 			if (isNaN(created_on)) {
 				created_on = pin.updated_on;
 			}
@@ -18,7 +18,7 @@ function fire(pindb) {
 				created_on = pin.updated;
 			}
       pindb.update(pin.id, {'$set': {id: (pin.id || uuid.v4()), created_on: created_on}}, function(err) {
-				console.log(pin.id);
+				console.log(pin.id + ": [" + old_created_on + "] to [" + created_on + "].");
 				count++;
       });
     });
