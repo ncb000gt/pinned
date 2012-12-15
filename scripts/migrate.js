@@ -17,6 +17,9 @@ function fire(pindb) {
 			if (isNaN(created_on)) {
 				created_on = pin.updated;
 			}
+			if (created_on instanceof Date) {
+				created_on = created_on.getTime();
+			}
       pindb.update(pin.id, {'$set': {id: (pin.id || uuid.v4()), created_on: created_on}}, function(err) {
 				console.log(pin.id + ": [" + old_created_on + "] to [" + created_on + "].");
 				count++;
