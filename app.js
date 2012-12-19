@@ -91,7 +91,8 @@ app.post('/pin', function(req, res) {
           "target" : req.body.target || "_blank",
           "image" : req.body.image || false,
           "show" : req.body.show || true,
-          "username": users[0].username
+          "username": users[0].username,
+					"tags": []
         }, function(err) {
           if (err) console.log(err);
         });
