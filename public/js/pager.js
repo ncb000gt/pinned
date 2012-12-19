@@ -32,13 +32,18 @@ define(['backbone'], function(Backbone, undefined) {
 					}
 				});
 			}
+
+			self.bind('filter', self.fetch, self);
 		},
-		"fetch": function() {
+		"fetch": function(data) {
 			if (this.collection) {
-				var data = {
-					"offset": this.offset,
-					"size": this.size
-				};
+				if (data) {
+					this.page = 0;
+					this.offset = 0;
+				}
+				data = data || {};
+				data.offset = this.offset;
+				data.size = this.size;
 
 				this.collection.fetch({data: data});
 			}

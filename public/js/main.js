@@ -24,7 +24,7 @@ define(["modernizr", "jquery", "backbone", "bootstrap", "pins", "tags"], functio
 				"el": $("#tags")
 			});
 			tags.bind('filter', function(_tags) {
-				pins.fetch({"tags": _tags});
+				pins.trigger('filter', {"tags": _tags});
 			});
     }
   };

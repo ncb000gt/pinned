@@ -90,6 +90,7 @@ define(['underscore', 'jquery', 'jquery-ui', 'backbone', 'mustache', 'pager', 'm
 				"el": $('#pager'),
 				"collection": this.collection
 			});
+			this.bind('filter', function(data) { this.pager.trigger('filter', data); }, this);
       this.collection.bind('reset', $.proxy(this.render, this));
 
       this.pager.fetch();
