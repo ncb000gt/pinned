@@ -2,7 +2,12 @@ extends layout
 
 block content
   .span9.offset2
-    #pins.pins
+    #pins.pins.span9
+    ul#pager.pager
+      li.previous.disabled
+        a(href="#") &larr; Newer
+      li.next.disabled
+        a(href="#") Older &rarr;
     #tagModal.modal.fade.hide
 
   .span2

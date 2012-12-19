@@ -1,10 +1,10 @@
 'use strict';
 
-define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/delete', 'modals/info', 'modals/tag', "text!views/pin.html"], function(_, $, _jqui, Backbone, Mustache, DeleteModal, InfoModal, TagModal, pinTmpl, undefined) {
+define(['underscore', 'jquery', 'jquery-ui', 'backbone', 'mustache', 'pager', 'modals/delete', 'modals/info', 'modals/tag', 'text!views/pin.html'], function(_, $, _jqui, Backbone, Mustache, Pager, DeleteModal, InfoModal, TagModal, pinTmpl, undefined) {
   var Pins = Backbone.Collection.extend({
     "url": '/api/pins',
     "parse": function(resp) {
-      this.totalPages = Math.ceil(resp.total / this.perPage);
+      this.total = resp.total;
 
       return resp.results;
     }
@@ -83,21 +83,16 @@ define(['underscore', 'jquery', "jquery-ui", 'backbone', "mustache", 'modals/del
 
   return Backbone.View.extend({
     "initialize": function() {
-      this.offset = 0;
-      this.size = 12;
-
       this.collection = new Pins({
         "model": Backbone.Model
       });
+			this.pager = new Pager({
+				"el": $('#pager'),
+				"collection": this.collection
+			});
       this.collection.bind('reset', $.proxy(this.render, this));
 
-      this.fetch();
-    },
-    "fetch": function(data) {
-			if (!data) data = {};
-			data.offest = data.offset || this.offset;
-			data.size = data.size || this.size;
-      this.collection.fetch({data: data});
+      this.pager.fetch();
     },
     "render": function() {
       var self = this;
