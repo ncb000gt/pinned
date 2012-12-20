@@ -2439,6 +2439,7 @@ table th[class*="span"],
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  z-index: 1100;
 }
 .well {
   min-height: 20px;

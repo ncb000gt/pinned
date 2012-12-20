@@ -1,6 +1,7 @@
 'use strict';
 
-define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', 'backbone', 'tag', 'data/alltags'], function(_, ModalView, Mustache, tmpl, Backbone, Tag, AllTags, undefined) {
+define(['underscore', 'jquery', 'backbone', 'bootstrap', 'mustache', 'modals/index', 'text!views/tag-modal.html', 'tag', 'data/alltags'], function(_, $, Backbone, Bootstrap, Mustache, ModalView, tmpl, Tag, AllTags, undefined) {
+	window.bstrap = Bootstrap;
   var PinTags = Backbone.Collection.extend({
     "url": function() {
       return "/api/" + this.pin + "/tags";
@@ -25,8 +26,15 @@ define(['underscore', 'modals/index', 'mustache', 'text!views/tag-modal.html', '
 			this.input = this.$el.find('input');
 			this.pinTags = this.$el.find('.pin-tags');
 
+			this.input.typeahead({
+				source: $.proxy(this.tagNames, this)
+			});
+
 			this.collection.fetch();
 			this.tagCollection.fetch();
+		},
+		"tagNames": function() {
+			return this.collection.pluck('name');
 		},
 		"fetchAllTags": function() {
 			this.collection.fetch();
