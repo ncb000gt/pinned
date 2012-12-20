@@ -21,10 +21,15 @@ var express = require('express'),
     setup = require('./lib/urls/setup'),
     errors = require('./lib/errors'),
     setupdb = new db({key: 'setup', collection_name: 'setup'}),
-    config = {};
+    config = {
+			"session": {
+				"secret": "say WUUUUT?!?",
+				"maxAge": 60000 * 60 * 24	
+			}
+		};
 
 try {
-  config = require('./config');
+	_.extend(config, require('./config'));
 } catch(e) {}
 
 var BOOKMARKLET_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmarklet.js.template', 'utf8');
@@ -37,8 +42,8 @@ app.use(express.bodyParser())
   .use(express.cookieParser())
   .use(express.static(__dirname + '/public'))
   .use(express.session({
-    cookie: {maxAge: 60000 * 60 * 24},
-    secret: "say WUUUUT?!?",
+    cookie: {maxAge: config.session.maxAge},
+    secret: config.session.secret,
     store: new mongostore({db: mongodb})
   }))
   .use(app.router);

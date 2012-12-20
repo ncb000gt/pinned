@@ -1,3 +1,5 @@
 *.sw[a-z]
-node_modules
+node_modules/
 deploy.conf
+certs/
+config.json
