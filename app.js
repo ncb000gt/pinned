@@ -1,5 +1,7 @@
 var express = require('express'),
     fs = require('fs'),
+		http = require('http'),
+		https = require('https'),
     bcrypt = require('bcrypt'),
     timeago = require('timeago'),
     querystring = require('querystring'),
@@ -29,8 +31,9 @@ var express = require('express'),
 		};
 
 try {
-	_.extend(config, require('./config'));
-} catch(e) {}
+	config = _.assign(config, require('./config'));
+} catch(e) {
+}
 
 var BOOKMARKLET_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmarklet.js.template', 'utf8');
 var BOOKMARK_TEMPLATE = fs.readFileSync(__dirname + '/templates/bookmark.js.template', 'utf8');
@@ -55,7 +58,7 @@ app.post('/setup', setup.post);
 // app.use('/share', express.router(share));
 
 app.get(/bookmark.js/, function(req, res) {
-  var host = 'http://' + req.headers['host'];
+  var host = 'https://' + req.headers['host'];
   //TODO: consider; per-user auth codes may be a terrible way to go about this task.
   if (req.query && req.query.auth_code) {
     res.set('Content-Type', 'application/javascript');
@@ -326,7 +329,7 @@ app.get('/', function(req, res, next) {
     pins.find(findObj, function(err, _pins) {
       if (err) throw err;
 
-      var host = 'http://' + req.headers['host'];
+      var host = 'https://' + req.headers['host'];
 
 			tags.find({}, function(err, _tags) {
 				res.render('index', {
@@ -353,9 +356,21 @@ app.get('/', function(req, res, next) {
 
 var port = (process.env.NODE_PORT || (process.env.NODE_ENV === 'production' ? 80 : 8000)); 
 
-app.listen(port);
-
+http.createServer(app).listen(port);
 console.log('Server listening on ' + port);
+
+if (config.certs && fs.existsSync(config.certs.key) && fs.existsSync(config.certs.cert)) {
+	var ssl = {};
+	if (config.certs.key) ssl.key = fs.readFileSync(config.certs.key);
+	if (config.certs.cert) ssl.cert = fs.readFileSync(config.certs.cert);
+	if (config.certs.ca) {
+		 ssl.ca = config.certs.ca.map(function(ca) {
+			 return fs.readFileSync(ca);
+		 });
+	}
+	https.createServer(ssl, app).listen(8443);
+	console.log('Server listening on 8443');
+}
 
 process.on("exit", function() {
   console.log("Shutdown Server.");
