@@ -2,6 +2,7 @@ var express = require('express'),
     fs = require('fs'),
 		http = require('http'),
 		https = require('https'),
+		path = require('path'),
     bcrypt = require('bcrypt'),
     timeago = require('timeago'),
     querystring = require('querystring'),
@@ -359,13 +360,13 @@ var port = (process.env.NODE_PORT || (process.env.NODE_ENV === 'production' ? 80
 http.createServer(app).listen(port);
 console.log('Server listening on ' + port);
 
-if (config.certs && fs.existsSync(config.certs.key) && fs.existsSync(config.certs.cert)) {
+if (config.certs && fs.existsSync(path.join(__dirname, config.certs.key)) && fs.existsSync(path.join(__dirname, config.certs.cert))) {
 	var ssl = {};
-	if (config.certs.key) ssl.key = fs.readFileSync(config.certs.key);
-	if (config.certs.cert) ssl.cert = fs.readFileSync(config.certs.cert);
+	if (config.certs.key) ssl.key = fs.readFileSync(path.join(__dirname, config.certs.key));
+	if (config.certs.cert) ssl.cert = fs.readFileSync(path.join(__dirname, config.certs.cert));
 	if (config.certs.ca) {
 		 ssl.ca = config.certs.ca.map(function(ca) {
-			 return fs.readFileSync(ca);
+			 return fs.readFileSync(path.join(__dirname, ca));
 		 });
 	}
 	https.createServer(ssl, app).listen(8443);
