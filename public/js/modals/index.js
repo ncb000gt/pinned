@@ -15,7 +15,9 @@ define(['backbone', 'mustache', "text!views/modal.html"], function(Backbone, Mus
     "show": function() {
       this.$el.modal('show');
     },
-    "hide": function() {
+    "hide": function(e) {
+			if (e) e.preventDefault();
+
       this.$el.modal('hide');
     }
   });
