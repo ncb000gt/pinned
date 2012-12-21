@@ -23,7 +23,9 @@ define(['backbone', 'mustache', 'text!views/tag.html'], function(Backbone, Musta
 			this.model.destroy();
 			this.$el.remove();
 		},
-		"selected": function() {
+		"selected": function(e) {
+			if (e) e.preventDefault();
+
 			this.$el.toggleClass('label-info');
 			this.trigger('selection', this.model.get('name'));
 		}
