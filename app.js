@@ -75,7 +75,7 @@ app.get(/bookmark.js/, function(req, res) {
     return res.send(
       200,
       BOOKMARK_TEMPLATE
-        .replace(/{{REPLACE_HOST}}/g, host)
+        .replace(/{{REPLACE_HOST}}/g, (host + ':' + config.sslport))
         .replace(/{{AUTH_TOKEN}}/, "'" + req.query.auth_code+ "'")
     );
   }
@@ -345,7 +345,7 @@ app.get('/', function(req, res, next) {
 				res.render('index', {
 					error: null,
 					status: req.session.authed,
-					bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, host).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
+					bookmarklet: BOOKMARKLET_TEMPLATE.replace(/{{REPLACE_HOST}}/, (host + ':' + config.sslport)).replace(/{{AUTH_TOKEN}}/, req.session.user.auth_code).replace(/[\s]/g, " "),
 					pinned: _pins.map(pinMap),
 					tags: _tags
 				});
@@ -353,16 +353,6 @@ app.get('/', function(req, res, next) {
     });
   }
 });
-
-//app.error(function(err, req, res, next) {
-  //if (err instanceof errors.NotFound) {
-    //res.send(404);
-  //} else if (err instanceof errors.BadRequest) {
-    //res.send(400);
-  //} else {
-    //next(err);
-  //}
-//});
 
 http.createServer(app).listen(config.port);
 console.log('Server listening on ' + config.port);
