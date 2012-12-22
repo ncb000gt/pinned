@@ -28,7 +28,9 @@ var express = require('express'),
 			"session": {
 				"secret": "say WUUUUT?!?",
 				"maxAge": 60000 * 60 * 24	
-			}
+			},
+			"port": 8000,
+			"sslport": 8443
 		};
 
 try {
@@ -50,6 +52,13 @@ app.use(express.bodyParser())
     secret: config.session.secret,
     store: new mongostore({db: mongodb})
   }))
+	.use(function(req, res, next) {
+		if (!(req.client.pair && req.client.pair.ssl)) {
+			return res.redirect('https://' + req.headers.host.replace(/\:.*$/, '') + ':' + config.sslport + req.url);
+		}
+
+		return next();
+	})
   .use(app.router);
 app.set('view engine', 'jade')
 app.set('views', __dirname + '/views')
@@ -355,10 +364,8 @@ app.get('/', function(req, res, next) {
   //}
 //});
 
-var port = (process.env.NODE_PORT || (process.env.NODE_ENV === 'production' ? 80 : 8000)); 
-
-http.createServer(app).listen(port);
-console.log('Server listening on ' + port);
+http.createServer(app).listen(config.port);
+console.log('Server listening on ' + config.port);
 
 if (config.certs && fs.existsSync(path.join(__dirname, config.certs.key)) && fs.existsSync(path.join(__dirname, config.certs.cert))) {
 	var ssl = {};
@@ -369,8 +376,8 @@ if (config.certs && fs.existsSync(path.join(__dirname, config.certs.key)) && fs.
 			 return fs.readFileSync(path.join(__dirname, ca));
 		 });
 	}
-	https.createServer(ssl, app).listen(8443);
-	console.log('Server listening on 8443');
+	https.createServer(ssl, app).listen(config.sslport);
+	console.log('Server listening on ' + config.sslport);
 }
 
 process.on("exit", function() {
